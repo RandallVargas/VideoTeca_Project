@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Video_Teca.Models.Domain;
-using Video_Teca.Models.DTO;
+using Video_Teca.Repositories.Abstract;
+using Video_Teca.Repositories.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login");
-//builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,11 +33,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=UserAuthentication}/{action=Login}/{id?}");
 
 app.Run();
