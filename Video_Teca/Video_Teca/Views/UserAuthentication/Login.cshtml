@@ -10,7 +10,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Login</title>
-    <style>
+    @*<style>
         form {
             border: 3px solid #f1f1f1;
             width: 60%;
@@ -49,24 +49,30 @@
             color: red;
         }
 
-    </style>
+    </style>*@
+    <link rel="stylesheet" type="text/css" href="~/css/Login.css">
 </head>
 <body>
     <form asp-action="Login" method="post">
-        <div class="container">
-
+       <div class="form">
+        <div class="login-box">
+            <h2>Login</h2>
+            
+            <div class="user-box">
             <label asp-for="Username">Username</label>
+            
             <input type="text" asp-for="Username" />
             <div class="msg">
                 <span class="err" asp-validation-for="Username"></span>
             </div>
-
+            </div>
+            <div class="user-box">
             <label asp-for="Password">Password</label>
             <input type="password" asp-for="Password" />
             <div class="msg">
                 <span class="err" asp-validation-for="Password"></span>
             </div>
-
+            </div>
             @if (TempData["msg"] != null)
             {
                 <div class="msg">
@@ -75,8 +81,13 @@
             }
 
             <button type="submit">Login</button>
-            <a href="/UserAuthentication/Registration">Not a User? Click Here to Sign Up</a>
-
+            <a href="/UserAuthentication/Registration">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>Not a User? Click Here to Sign Up
+            </a>
+            </div>
         </div>
     </form>
 </body>
