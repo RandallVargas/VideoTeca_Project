@@ -26,7 +26,7 @@ namespace Video_Teca.Controllers
             {
                 return View(model);
             }
-            model.Role = "user";
+            model.Role = "client";
             var result = await _service.RegistrationAsync(model);
             TempData["msg"] = result.Message;
             return RedirectToAction(nameof(Registration));
