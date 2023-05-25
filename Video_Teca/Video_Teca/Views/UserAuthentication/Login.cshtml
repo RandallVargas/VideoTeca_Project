@@ -20,20 +20,18 @@
             <h2>Login</h2>
             <form>
                 <div class="user-box">
-
-                    <label asp-for="Username">Username</label>
-                     <input type="text" asp-for="Username" />
-                   
-                    <div class="msg">
-                         <span class="err" asp-validation-for="Username"></span>
-                    </div>
+                    <input type="text" asp-for="Username" required="" />
+                    <label asp-for="Username">Username</label>       
+                </div>
+                <div class="msg">
+                    <span class="err" asp-validation-for="Username"></span>
                 </div>
                 <div class="user-box">
-                     <label asp-for="Password">Password</label>
-                    <input type="password" asp-for="Password" />
-                     <div class="msg">
-                        <span class="err" asp-validation-for="Password"></span>
-                    </div>
+                    <input type="password" asp-for="Password" required="" />
+                     <label asp-for="Password" >Password</label> 
+                </div>
+                <div class="msg">
+                    <span class="err" asp-validation-for="Password"></span>
                 </div>
                  @if (TempData["msg"] != null)
                   {
@@ -42,12 +40,15 @@
                        </div>
                     }
 
-                 <button type="submit">Login</button>
-                <a href="/UserAuthentication/Registration">
-                     <span></span>
+                <button class="login" type="submit">
                     <span></span>
-                     <span></span>
                     <span></span>
+                    <span></span>
+                    <span></span>
+                    Login
+                </button>
+                <a class="Registration" href="/UserAuthentication/Registration">
+                     
                     Sign Up
                  </a>
             </form>
