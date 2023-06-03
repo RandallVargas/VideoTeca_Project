@@ -2,12 +2,15 @@
 using Video_Teca.Repositories.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Video_Teca.Models.Domain;
+using Video_Teca.Data;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Video_Teca.Controllers
 {
     public class UserAuthenticationController : Controller
     {
-
+        private VideoTecaDbContext db = new VideoTecaDbContext();
         private readonly IUserAuthenticationService _service;
         public UserAuthenticationController(IUserAuthenticationService service)
         {
@@ -26,9 +29,11 @@ namespace Video_Teca.Controllers
             {
                 return View(model);
             }
+            
             model.Role = "client";
             var result = await _service.RegistrationAsync(model);
             TempData["msg"] = result.Message;
+            
             return RedirectToAction(nameof(Registration));
         }
 
@@ -47,6 +52,10 @@ namespace Video_Teca.Controllers
             var result = await _service.LoginAsync(model);
             if (result.StatusCode == 1)
             {
+                string imageUrl = "./../images/img-default.webp";
+                TempData["img-url"] = imageUrl;
+                
+                //Hacer la busqueda del user y retornarlo
                 return RedirectToAction("Index", "Home");
             }
             else

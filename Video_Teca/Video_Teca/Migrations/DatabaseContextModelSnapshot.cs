@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Video_Teca.Models.Domain;
+using Video_Teca.Models.Users;
 
 #nullable disable
 
@@ -277,6 +278,8 @@ namespace Video_Teca.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
+
+           
 #pragma warning restore 612, 618
         }
     }

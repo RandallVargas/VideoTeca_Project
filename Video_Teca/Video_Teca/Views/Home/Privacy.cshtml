@@ -4,3 +4,16 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+@section scripts {
+    <script type="text/javascript">
+        window.onload = function () {
+            var imageUrl = localStorage.getItem('ImageUrl');
+            if (imageUrl) {
+                console.log(imageUrl);
+                var imgElement = document.getElementById('img-perfil');
+                imgElement.setAttribute("src", imageUrl);
+            }
+        };
+    </script>
+}

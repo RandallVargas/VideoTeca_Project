@@ -5,4 +5,23 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+   
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        window.onload = function () {
+            if ('@ViewBag.ImageUrl' != "") {
+                var imageUrl = '@ViewBag.ImageUrl';
+                localStorage.setItem('ImageUrl', imageUrl);
+            }
+
+            var imageUrl = localStorage.getItem('ImageUrl');
+            if (imageUrl) {
+                console.log(imageUrl);
+                var imgElement = document.getElementById('img-perfil');
+                imgElement.setAttribute("src", imageUrl);
+            }
+        };
+    </script>
+}

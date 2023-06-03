@@ -4,29 +4,81 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Video_Teca</title>
+   
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+
     <link rel="stylesheet" href="~/Video_Teca.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 mx-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Video_Teca</a>
+                <a class="navbar-brand order-1" href="#">
+                    <img class="img-logo" src="~/images/logo.webp"/>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+               @* <button class="btn navbar-toggler" data-toggle="collapse" data-target="#essentialmenus" id="yui_3_17_2_1_1685653455677_128">
+                    
+                </button>*@
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between order-2">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark px-2 link-secondary" asp-area="" asp-controller="Home" asp-action="Index">Videos</a> @*Cambiar por la vista de peliculas*@
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        @if (!User.IsInRole("client"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark px-2 link-dark" asp-area="" asp-controller="Home" asp-action="Index">Administracion de usuarios</a>  @*Cambiar por la vista de administracion*@
+                            </li>
+                        }
+                                    
+                    </ul>
+                </div>
+
+                @*<div class="col-12 col-lg-auto me-lg-auto justify-content-center order-3">  PARA MOSTRAR UN ICONO DE BUSQUEDA
+                    <button class="btn btn-light" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+
+                </div>*@ 
+
+                <div class="dropdown order-3 drop-margin" id="drop-hiddenn">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img id="img-perfil" class="img-profile rounded-circle img-thumbnail" />
+                    </a>                                                
+                    <ul class="dropdown-menu text-small dropdown-menu-lg-end dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownuser">
+                        <li>
+                            <button class="dropdown-item">Nuevo</button> 
+                        </li>
+
+                        <li>
+                            <button class="dropdown-item">Configuraci&oacuten</button>
+                        </li>
+
+                        <li>
+                            <button class="dropdown-item">Perfil</button>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+
+                        <li>
+                        @*<li><a href="/UserAuthentication/Logout">Logout</a></li>*@
+                            <button class="dropdown-item">Cerrar sesi&oacuten</button>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </nav>
     </header>
@@ -47,3 +99,10 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+@section scripts {
+    <script type="text/javascript">
+        
+    </script>
+}

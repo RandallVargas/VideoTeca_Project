@@ -15,6 +15,18 @@ namespace Video_Teca.Controllers
 
         public IActionResult Index()
         {
+            
+            if (TempData.Keys.Count>0)
+            {
+                ViewBag.ImageUrl = TempData["img-url"].ToString();
+            }
+            return View();
+        }
+
+        public IActionResult Profile()
+        {
+            string imageUrl = "./../images/img-default.webp";
+            ViewBag.ImageUrl = imageUrl;
             return View();
         }
 
