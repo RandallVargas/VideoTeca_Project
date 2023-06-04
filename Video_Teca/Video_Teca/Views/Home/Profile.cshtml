@@ -1,10 +1,12 @@
-﻿@*
+﻿@model Video_Teca.Models.UserModel
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 <form asp-action="EditProfile" method="post">
-    <h3>Registration</h3>
+    <h3>Perfil</h3>
     @*
     <div class="form-group">
         <label>Name</label>
@@ -66,7 +68,6 @@
         function cambiarImagen(input) {  //Cambia la imagen por la seleccionada
             if (input.files && input.files[0]) {
                 var leer = new FileReader();
-
                 leer.onload = function (e) {
                     document.getElementsByClassName("img-profile")[0].setAttribute("src", e.target.result);
                     document.getElementsByClassName("img-profile")[1].setAttribute("src", e.target.result);

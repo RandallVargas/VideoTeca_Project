@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Video_Teca.Models.Domain;
 using Video_Teca.Data;
 using Microsoft.IdentityModel.Tokens;
+using Video_Teca.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Video_Teca.Controllers
 {
@@ -33,7 +37,36 @@ namespace Video_Teca.Controllers
             model.Role = "client";
             var result = await _service.RegistrationAsync(model);
             TempData["msg"] = result.Message;
-            
+
+            if (result.StatusCode == 1) {
+                byte[] archivoBytes = null;
+
+                var archivo = Request.Form.Files["ImageData"];
+                var files = HttpContext.Request;
+
+                if (archivo != null && archivo.Length > 0) //Si el usuario escoge una imagen
+                {
+                    var ms = new MemoryStream();
+                    archivo.OpenReadStream().CopyTo(ms);
+                    archivoBytes = ms.ToArray();
+
+                }
+                else
+                {
+                    string imagePath = "wwwroot/images/img-default.webp"; //Se selecciona la imagen por defecto
+                    archivoBytes = System.IO.File.ReadAllBytes(imagePath);
+                }
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@Username", model.UserName));
+                parameter.Add(new SqlParameter("@Email", model.Email));
+                parameter.Add(new SqlParameter("@Name", model.Name));
+                parameter.Add(new SqlParameter("@imagen", archivoBytes));
+
+                Task.Run(() => db.Database.ExecuteSqlRaw(@"exec insert_user @Username, @Email, @Name, @imagen", parameter.ToArray()));
+                
+
+            }
+
             return RedirectToAction(nameof(Registration));
         }
 
@@ -52,9 +85,17 @@ namespace Video_Teca.Controllers
             var result = await _service.LoginAsync(model);
             if (result.StatusCode == 1)
             {
-                string imageUrl = "./../images/img-default.webp";
-                TempData["img-url"] = imageUrl;
                 
+                TempData["username"] = model.Username;
+                //var resultDb = db.Users.First(x =>x.Username==model.Username );
+                //var imgUser = db.UserImgs.First(x=> x.UserID==resultDb.Id);
+                
+                //UserModel userView = new UserModel();
+                //userView.Id = resultDb.Id;
+                //userView.Name = resultDb.Name;
+                //userView.Username = resultDb.Username;
+                //userView.Email = resultDb.Email;
+                //userView.imagen = imgUser.imagen;
                 //Hacer la busqueda del user y retornarlo
                 return RedirectToAction("Index", "Home");
             }
