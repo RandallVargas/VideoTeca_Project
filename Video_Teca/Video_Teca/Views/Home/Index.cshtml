@@ -4,5 +4,89 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core </a>.</p>
+    <label class="text-username"></label>
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Realizar la solicitud AJAX para obtener los bytes de la imagen desde el controlador
+            //$.ajax({
+            //    url: '/Home/GetImage',
+            //    type: 'GET',
+            //    dataType: 'json',
+            //    success: function (response) {
+            //        // Convertir los bytes a una cadena base64
+            //        var base64String = btoa(String.fromCharCode.apply(null, response));
+
+            //        // Guardar la cadena base64 en el localStorage
+            //        localStorage.setItem('imagen', base64String);
+
+            //        // Mostrar la imagen en la página
+            //        var imagen = document.getElementById('imagen');
+            //        imagen.src = 'data:image/jpeg;base64,' + base64String;
+            //    }
+            //});
+        });
+        window.onload = function () {
+            if ('@ViewBag.Username' != "") {
+                var imageId = '@ViewBag.UserId';
+                var username = '@ViewBag.Username';
+                var imageBytes = '@Url.Action("getBytesImage", "Home")';
+                console.log(imageBytes);
+                var imgElement = document.getElementById('img-perfil');
+                imgElement.setAttribute("src", '@Url.Action("getImage", "Home")');
+
+                //$.ajax({
+                //    url: '/Home/getImage',
+                //    type: 'GET',
+                //    data: imageBytes,
+                    
+                //    success: function (response) {
+                //        imgElement.setAttribute("src", response);
+                        
+
+                //            // Guardar la cadena base64 en el localStorage
+                //        localStorage.setItem('imagen', response);
+                       
+                //        // Guardar la cadena base64 en el localStorage
+                //        //localStorage.setItem('imagen', base64String);
+
+                //        //localStorage.setItem('imagen2', base64String);
+
+                        
+                        
+                        
+                //    }
+                //});
+            }
+
+            //var ImageBytes = localStorage.getItem('imagen');
+            //var username = localStorage.getItem('Username');
+            //if (ImageBytes && username) {
+            //    console.log(ImageBytes);
+            //    console.log(username);
+            //    var imgElement = document.getElementById('img-perfil');
+            //    //imgElement.setAttribute("src", 'data:image/webp;base64,' + ImageBytes);
+            //    //$.ajax({
+            //    //    url: '/Home/getImage',
+            //    //    type: 'POST',
+            //    //    data: ImageBytes,
+            //    //    processData: false,
+            //    //    contentType: 'application/octet-stream',
+            //    //    success: function (response) {
+            //    //        // Asignar la imagen utilizando JavaScript
+            //    //        imgElement.setAttribute("src",response);
+            //    //        console.log("perreo")
+            //    //    }
+            //    //});
+
+            //    //imgElement.setAttribute("src", '/Home/getImage');
+            //    console.log("siseñor");
+            //    var textUser = document.getElementsByClassName('text-username')[0];
+            //    textUser.setAttribute("text", username);
+            //}
+        };
+    </script>
+}
