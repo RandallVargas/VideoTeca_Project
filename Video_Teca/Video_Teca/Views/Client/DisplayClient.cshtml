@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Video_Teca.Models.MoviesAndSeries>
+
+@{
+    ViewData["Title"] = "DisplayClient";
+}
+
+<h1>DisplayClient</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<  <div id="div_galery">
+    <div class="galery">
+
+        @foreach (var item in Model)
+        {
+            
+                    @Html.DisplayFor(modelItem => item.title)
+                
+                    @Html.DisplayFor(modelItem => item.synopsis)
+               
+                    @Html.DisplayFor(modelItem => item.release_year)
+               
+                    @Html.DisplayFor(modelItem => item.duration)
+              
+                    @Html.DisplayFor(modelItem => item.clasification)
+               
+                    @Html.DisplayFor(modelItem => item.director)
+
+                    @Html.DisplayFor(modelItem => item.genre_id)
+                
+                    @Html.DisplayFor(modelItem => item.num_seasons)
+              
+                    @Html.DisplayFor(modelItem => item.num_episodes)
+                
+                    @Html.DisplayFor(modelItem => item.episode_duration)
+
+            <img src="@Html.DisplayFor(modelItem => item.movie_cover)" style="width: 200px; height: 200px" />
+                    @Html.DisplayFor(modelItem => item.year_of_release)
+                
+                    @Html.DisplayFor(modelItem => item.date_addded)
+               
+                    @Html.DisplayFor(modelItem => item.media_type)
+               
+        }
+        </div>
+    </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".galery").slick({
+                dots: true,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                centerMode: true,
+                variableWidth: true
+            });
+           
+        });
+
+    </script>
+
+ }

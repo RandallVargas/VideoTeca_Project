@@ -1,14 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Video_Teca.Data;
+using Video_Teca.Models;
 
 namespace Video_Teca.Controllers
 {
     public class ClientController : Controller
     {
+        private VideoTecaDbContext db = new VideoTecaDbContext();
         // GET: ClientController
-        public ActionResult Index()
+        public ActionResult DisplayClient()
         {
-            return View();
+            var pelis = new List<MoviesAndSeries>();
+            using (var dbContext = new VideoTecaDbContext())
+            {
+              pelis= dbContext.MoviesAndSeries.ToList();
+            }
+            return View(pelis);
         }
 
         // GET: ClientController/Details/5

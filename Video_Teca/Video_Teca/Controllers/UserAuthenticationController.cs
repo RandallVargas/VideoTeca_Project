@@ -97,7 +97,7 @@ namespace Video_Teca.Controllers
                 //userView.Email = resultDb.Email;
                 //userView.imagen = imgUser.imagen;
                 //Hacer la busqueda del user y retornarlo
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("DisplayClient", "Client");
             }
             else
             {

@@ -7,7 +7,6 @@ namespace Video_Teca.Data;
 
 public partial class VideoTecaDbContext : DbContext
 {
-
     public VideoTecaDbContext()
     {
     }
@@ -29,13 +28,15 @@ public partial class VideoTecaDbContext : DbContext
 
     public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
 
+    public virtual DbSet<MoviesAndSeries> MoviesAndSeries { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserImg> UserImgs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=163.178.173.130;Database=Video_Teca_C13448_B98314;TrustServerCertificate=True; User Id=basesdedatos; Password=rpbases.2022");
+        => optionsBuilder.UseSqlServer("Server=163.178.173.130;Database=Video_Teca_C13448_B98314;TrustServerCertificate=True; User Id=basesdedatos; Password=rpbases.2022;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -103,6 +104,40 @@ public partial class VideoTecaDbContext : DbContext
             entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
 
             entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
+        });
+
+        modelBuilder.Entity<MoviesAndSeries>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PK__MoviesAn__3213E83F45A5D960");
+
+            entity.Property(e => e.id)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.clasification)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.date_addded).HasColumnType("date");
+            entity.Property(e => e.director)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.genre_id)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.media_type)
+                .HasMaxLength(10)
+                .IsUnicode(false);
+            entity.Property(e => e.movie_cover)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.release_year).HasColumnType("date");
+            entity.Property(e => e.synopsis)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.title)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.year_of_release).HasColumnType("date");
         });
 
         modelBuilder.Entity<User>(entity =>
