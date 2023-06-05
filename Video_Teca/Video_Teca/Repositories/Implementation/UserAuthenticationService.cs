@@ -34,7 +34,6 @@ namespace Video_Teca.Repositories.Implementation
                 status.Message = "Invalid Password";
                 return status;
             }
-
             var signInResult = await signInManager.PasswordSignInAsync(user, model.Password, false, true);
             if (signInResult.Succeeded)
             {
@@ -73,6 +72,7 @@ namespace Video_Teca.Repositories.Implementation
 
         public async Task<Status> RegistrationAsync(RegistrationModel model)
         {
+            
             var status = new Status();
             var userExists = await userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
@@ -99,6 +99,9 @@ namespace Video_Teca.Repositories.Implementation
                 status.Message = "User Creation Failed";
                 return status;
             }
+
+            //validar tamaño de imagen
+            //agregar imagen al registration model
 
             //Role Managment
             if (!await roleManager.RoleExistsAsync(model.Role))

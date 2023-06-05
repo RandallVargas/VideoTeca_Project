@@ -1,0 +1,3 @@
+Usuario: cristo
+Clave: Cristo1234*
+Rol: cliente
