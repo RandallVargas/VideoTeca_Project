@@ -9,7 +9,8 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="~/css/Client.css">
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/popup.js"></script>
 </head>
 <body>
     <div id="div_galery">
@@ -18,36 +19,18 @@
             @foreach (var item in Model)
             {
                 <div>
-                    <a href="#" id="btn-popup" class="btn-popup">
+                    @*<a href="#" id="btn-popup" class="btn-popup" data-movie-id="@item.id">
                         abrir
                     </a>
-                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" style="width: 200px; height: 200px" />
-                    @*@Html.DisplayFor(modelItem => item.title)
+                @using (Html.BeginForm("PokemonDetails", "Pokemon", FormMethod.Post))
+                {
 
-                    @Html.DisplayFor(modelItem => item.synopsis)
-
-                    @Html.DisplayFor(modelItem => item.release_year)
-
-                    @Html.DisplayFor(modelItem => item.duration)
-
-                    @Html.DisplayFor(modelItem => item.clasification)
-
-                    @Html.DisplayFor(modelItem => item.director)
-
-                    @Html.DisplayFor(modelItem => item.genre_id)
-
-                    @Html.DisplayFor(modelItem => item.num_seasons)
-
-                    @Html.DisplayFor(modelItem => item.num_episodes)
-
-                    @Html.DisplayFor(modelItem => item.episode_duration)
-
-
-                    @Html.DisplayFor(modelItem => item.year_of_release)
-
-                    @Html.DisplayFor(modelItem => item.date_addded)
-
-                    @Html.DisplayFor(modelItem => item.media_type)*@
+                <input type="hidden" name="id" value="@item.id" />
+                <button type="submit" class="btn_Details">More Details</button>
+                }*@
+                    <a class="btn-popup" href="@Url.Action("GetMovieInfo","Client")" data-movie-id="@item.id">abrir</a>
+                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" class="image-popup" style="width: 200px; height: 200px" />
+                   
                 </div>
 
              
@@ -55,13 +38,7 @@
         </div>
     </div>
 
-    <div class="overlay" id="overlay">
-        <div class="popup" id="popup">
-            <a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup">Cerrar</a>
-
-        </div>
-    </div>
-       
+  
     @section Scripts {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -85,7 +62,9 @@
             });
 
         </script>
-        <script src="~/js/popup.js"></script>
+
+       
+      
     }
    
 </body>

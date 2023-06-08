@@ -109,7 +109,7 @@ public partial class VideoTecaDbContext : DbContext
         modelBuilder.Entity<MoviesAndSeries>(entity =>
         {
             entity.HasKey(e => e.id).HasName("PK__MoviesAn__3213E83F45A5D960");
-
+         
             entity.Property(e => e.id)
                 .HasMaxLength(50)
                 .IsUnicode(false);

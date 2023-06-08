@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Video_Teca.Data;
 using Video_Teca.Models;
 
@@ -87,5 +88,32 @@ namespace Video_Teca.Controllers
                 return View();
             }
         }
+
+
+        public IActionResult GetMovieInfo(string id)
+        {
+            // Aquí debes escribir la lógica para obtener la información detallada de la película
+            // basada en el ID proporcionado. Por ejemplo, puedes consultar la base de datos
+            // o algún otro origen de datos para obtener los detalles de la película.
+
+            // Supongamos que tienes una variable llamada 'movieInfo' que contiene los detalles de la película.
+            var movieInfo = db.MoviesAndSeries.FirstOrDefault(m => m.id .Equals( id));
+            Console.WriteLine(movieInfo.id);
+            // Retornar la vista parcial '_MovieInfoPartial' con el modelo de la película.
+            return PartialView("MoviesInfoPartial", movieInfo);
+        }
+
+        private MoviesAndSeries GetMovieDetailsFromDatabase(string id)
+        {
+            // Aquí debes implementar la lógica para obtener los detalles de la película
+            // desde la base de datos o cualquier otra fuente de datos.
+            // Retorna un objeto de tipo MoviesAndSeries con los detalles de la película.
+            Console.Write(id);
+            // Ejemplo de código:
+            var movie = db.MoviesAndSeries.FirstOrDefault(m => m.id == id);
+            return movie;
+        }
     }
+  
 }
+
