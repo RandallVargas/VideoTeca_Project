@@ -59,20 +59,40 @@
 
 @section scripts {
     <script type="text/javascript">
-        $(document).ready(function () {
-
+        //$(document).ready(function () {
             
 
-        });
+        //});
 
         function cambiarImagen(input) {  //Cambia la imagen por la seleccionada
             if (input.files && input.files[0]) {
                 var leer = new FileReader();
                 leer.onload = function (e) {
-                    document.getElementsByClassName("img-profile")[0].setAttribute("src", e.target.result);
-                    document.getElementsByClassName("img-profile")[1].setAttribute("src", e.target.result);
 
-                    //document.getElementById("img-profile")[0].setAttribute("src", e.target.result);
+                    var dataUrl = e.target.result;
+                    document.getElementsByClassName("img-profile")[0].setAttribute("src", dataUrl);
+                    document.getElementsByClassName("img-profile")[1].setAttribute("src", dataUrl);
+                    
+                    var base64String = dataUrl.split(',')[1]; // Obtener solo la parte base64 de la cadena
+                    localStorage.setItem('bytesImg', base64String);
+
+                    var imageId = localStorage.getItem('idUser');
+
+                    $.ajax({ //Actualiza la imagen en la base de datos 
+                        url: '/Home/UploadUserImage',
+                        type: 'POST',
+                        data: { id: imageId,
+                                imgBytes: base64String
+                        },
+                        success: function (e) {
+                            if(e){
+                                alert("Imagen Actualizada correctamente")
+
+                            }else{
+                                alert("error al actualizar la imagen")
+                            }
+                        }
+                    });
                 }
 
                 leer.readAsDataURL(input.files[0]);
@@ -81,10 +101,10 @@
         }
 
         window.onload = function () {
-            var imageUrl = '@ViewBag.ImageUrl';
-            localStorage.setItem('ImageUrl', imageUrl);
-            console.log(imageUrl.toString());
-            console.log("laputamadre");
+            LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+
+            var bytesImg = localStorage.getItem('bytesImg');
+            document.getElementsByClassName("img-profile")[1].setAttribute("src", 'data:image/webp;base64,' + bytesImg); //La imagen ampliada
         };
     </script>
 }

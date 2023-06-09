@@ -87,16 +87,7 @@ namespace Video_Teca.Controllers
             {
                 
                 TempData["username"] = model.Username;
-                //var resultDb = db.Users.First(x =>x.Username==model.Username );
-                //var imgUser = db.UserImgs.First(x=> x.UserID==resultDb.Id);
                 
-                //UserModel userView = new UserModel();
-                //userView.Id = resultDb.Id;
-                //userView.Name = resultDb.Name;
-                //userView.Username = resultDb.Username;
-                //userView.Email = resultDb.Email;
-                //userView.imagen = imgUser.imagen;
-                //Hacer la busqueda del user y retornarlo
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -107,6 +98,7 @@ namespace Video_Teca.Controllers
         }
 
         [Authorize]
+        
         public async Task<IActionResult> Logout()
         {
             await _service.LogoutAsync();

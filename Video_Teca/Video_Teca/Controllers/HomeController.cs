@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -20,8 +24,7 @@ namespace Video_Teca.Controllers
         }
 
         public IActionResult Index()
-        {
-            
+        {       
             if (TempData.Keys.Count>0)
             {
                 var username = TempData["username"].ToString();
@@ -60,23 +63,34 @@ namespace Video_Teca.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public ActionResult getImage()
+        public ActionResult getImage(byte[] imgBytes)
         {
-            byte[] imgByte = db.UserImgs.First(y => y.UserID == 2).imagen;
-            //MemoryStream memoryStream = new MemoryStream(imgByte);
-            //Image image = Image.FromStream(memoryStream);
+            imgBytes = db.UserImgs.First(y => y.UserID == 2).imagen;
 
-            //memoryStream = new MemoryStream();
-            //image.Save(memoryStream, ImageFormat.Webp);
-            //memoryStream.Position = 0;
-
-            return File(imgByte, "image/webp");
+            return File(imgBytes, "image/webp");
 
         }
 
-        public IActionResult getBytesImage() {
-            byte[] imgByte = db.UserImgs.First(y => y.UserID == 2).imagen;
+        public IActionResult getBytesImage(int id) {
+            byte[] imgByte = db.UserImgs.First(y => y.UserID == id).imagen;
             return Ok(imgByte);
+        }
+
+        public bool UploadUserImage(int id, byte[] imgBytes) {
+
+            try {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@Id", id));
+                parameter.Add(new SqlParameter("@imagen", imgBytes));
+
+                var result = Task.Run(() => db.Database.ExecuteSqlRaw(@"exec UpdateImage @Id, @imagen", parameter.ToArray()));
+                db.SaveChangesAsync();
+
+                return true;
+            }
+            catch {
+                return false;
+            }         
         }
     }
 }
