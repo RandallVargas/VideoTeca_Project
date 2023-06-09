@@ -19,25 +19,22 @@
             @foreach (var item in Model)
             {
                 <div>
-                    @*<a href="#" id="btn-popup" class="btn-popup" data-movie-id="@item.id">
-                        abrir
-                    </a>
-                @using (Html.BeginForm("PokemonDetails", "Pokemon", FormMethod.Post))
-                {
-
-                <input type="hidden" name="id" value="@item.id" />
-                <button type="submit" class="btn_Details">More Details</button>
-                }*@
-                    <a class="btn-popup" href="@Url.Action("GetMovieInfo","Client")" data-movie-id="@item.id">abrir</a>
-                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" class="image-popup" style="width: 200px; height: 200px" />
+                 
+                    @*<a class="btn-popup" href="@Url.Action("GetMovieInfo","Client")" data-movie-id="@item.id">abrir</a>*@
+                    @*<a href="#" class="btn-popup" data-movie-id="@item.id">abrir</a>*@
+                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" href="#" class="btn-popup" data-movie-id="@item.id" style="width: 200px; height: 200px" />
                    
                 </div>
-
+                
              
             }
         </div>
     </div>
-
+    <div id="popup-container">
+        <div id="popup-content">
+            @*@Html.Partial("MoviesInfoPartial", Model)*@
+        </div>
+    </div>
   
     @section Scripts {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

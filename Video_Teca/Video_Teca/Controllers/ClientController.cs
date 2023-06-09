@@ -95,9 +95,10 @@ namespace Video_Teca.Controllers
             // Aquí debes escribir la lógica para obtener la información detallada de la película
             // basada en el ID proporcionado. Por ejemplo, puedes consultar la base de datos
             // o algún otro origen de datos para obtener los detalles de la película.
-
+            Console.WriteLine(id);
             // Supongamos que tienes una variable llamada 'movieInfo' que contiene los detalles de la película.
-            var movieInfo = db.MoviesAndSeries.FirstOrDefault(m => m.id .Equals( id));
+          //  var movieInfo = db.MoviesAndSeries.FirstOrDefault(m => m.id.Equals(id));
+            var movieInfo = db.MoviesAndSeries.Find(id);
             Console.WriteLine(movieInfo.id);
             // Retornar la vista parcial '_MovieInfoPartial' con el modelo de la película.
             return PartialView("MoviesInfoPartial", movieInfo);
