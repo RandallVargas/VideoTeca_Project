@@ -5,86 +5,308 @@
 *@
 @{
 }
-<form asp-action="EditProfile" method="post">
     <h3>Perfil</h3>
-    @*
-    <div class="form-group">
-        <label>Name</label>
-        <input type="text" class="form-control" asp-for="Name" />
-        <span class="text-danger" asp-validation-for="Name"></span>
+
+    <fieldset class="row">
+        <div class="container-xl text-black-50 row">
+            <div class="col-6 row justify-content-center">
+                <div class="d-flex align-items-center col-auto">
+                    <fieldset>
+                        <div class="row">
+                            <img id="img-perfil-ampliada" class="img-profile form-control img-thumbnail"/>
+                        </div>
+
+                        <div class="row">
+                            <input type="file" name="ImageData" id="ImageData" onchange="cambiarImagen(this)" />
+                        </div>
+
+                       
+                    </fieldset>
+                </div>
+
+                <div class="row">
+                    <span id="lb-error" class="text-danger"></span>
+
+                </div>
+
+            </div>
+
+            <div class="col-6 row justify-content-center">
+                <div class="align-items-center col-auto">
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-database">Datos Personales</i>
+                        </legend>
+                    <table class="table">
+                            <tr>
+                                <th>
+                                <label class="col-form-label text-label">Nombre:</label>
+                                </th>
+
+                                <th>
+                                   <input readonly  id="inNombre" class="form-control input-readonly"></input>
+                                </th>
+                            </tr>
+                          
+                        </table>
+                    </fieldset>
+                    <br/>
+
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-envelope">Datos de contacto</i>
+                        </legend>
+                    <table class="table">
+                            <tr> 
+                                <th>
+                                    <label class="col-form-label text-label">Correo:</label>
+                                </th>
+
+                                <th>
+                                    <input readonly id="inCorreo" class="form-control input-readonly"></input>
+                                </th>
+
+                            </tr>
+
+                            <tr>
+                                <th>
+                                <button class="form-control btn btn-danger fw-bold btn-cancelar-correo hidden">Cancelar</button>
+                                </th>
+
+                                <th>
+                                <button class="form-control btn btn-warning fw-bold btn-correo">Cambiar Correo</button>
+                                </th>
+
+                            </tr>
+                       
+                        <div class="modal fade" id="modal-correo" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    
+                                    <div class="modal-body alert-success">
+                                        Show a second modal and hide this one with the button below.
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                            <span id="span-correo" class="span-validation"></span>
+
+                        </table>
+                    </fieldset>
+
+                    <br />
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-key">Datos de sesión</i>
+                        </legend>
+                    <table class="table">
+                            <tr>
+                                <th>
+                                <label class="col-form-label text-label">Usuario:</label>
+                                </th>
+
+                                <th>
+                                <input readonly id="inUsuario" class="form-control input-readonly"></input>
+                                </th>
+                            </tr>
+
+                        <tr>
+                            <th>
+                                <button class="form-control btn btn-danger fw-bold btn-cancelar-contrasena hidden">Cancelar</button>
+                            </th>
+
+                            <th>
+                                <button class="form-control btn btn-warning fw-bold btn-contrasena">Cambiar Contrase&ntildea</button>
+                            </th>
+                        </tr>
+
+                          
+
+                        </table>
+                         
+                        <table id="table-contrasena" class="hidden">
+                            <tr>
+                                <th>
+                                <label class="col-form-label lb-password ">Contrase&ntildea:</label>
+                                </th>
+
+                                <th>
+                                <input id="inContrasena" class="form-control input-pass" placeholder="New Password" type="password"></input>
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                <label class="col-form-label lb-password ">Repetir Contrase&ntildea:</label>
+                                </th>
+
+                                <th>
+                                    <input id="inContrasenaRepetida" class="form-control input-pass" placeholder="New Password Again " type="password"></input>
+                                
+
+                                </th>
+                            <span id="span-contrasena" class="span-validation"></span>
+
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+            </div>
+
+
+    </fieldset>
+    <br />
+    <br />
+    <div class="container d-flex justify-content-end">
+        <button class="btn btn-danger">Eliminar Cuenta</button>
     </div>
-
-    <div class="form-group">
-        <label>UserName</label>
-        <input type="text" class="form-control" asp-for="UserName" />
-        <span class="text-danger" asp-validation-for="UserName"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Email</label>
-        <input type="text" class="form-control" asp-for="Email" />
-        <span class="text-danger" asp-validation-for="Email"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" class="form-control" asp-for="Password" />
-        <span class="text-danger" asp-validation-for="Password"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Password Confirm</label>
-        <input type="password" class="form-control" asp-for="PasswordConfirm" />
-        <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
-    </div>*@
-
-    @if (TempData["msg"] != null)
-    {
-        <div class="form-group">
-            @TempData["msg"]
-        </div>
-    }
-
-    <button type="submit" class="btn btn-primary">SignUp</button>
-</form>
-
-<div class="row justify-content-center">
-    <img class="img-profile" src="~/images/img-default.webp" />
-</div>
-
-<div class="row justify-content-center">
-    <input type="file" name="ImageData" id="ImageData" onchange="cambiarImagen(this)"/>
-</div>
-
-
+   
 @section scripts {
     <script type="text/javascript">
-        $(document).ready(function () {
-
+        //$(document).ready(function () {
             
 
-        });
+        //});
 
         function cambiarImagen(input) {  //Cambia la imagen por la seleccionada
             if (input.files && input.files[0]) {
                 var leer = new FileReader();
                 leer.onload = function (e) {
-                    document.getElementsByClassName("img-profile")[0].setAttribute("src", e.target.result);
-                    document.getElementsByClassName("img-profile")[1].setAttribute("src", e.target.result);
 
-                    //document.getElementById("img-profile")[0].setAttribute("src", e.target.result);
+                    var dataUrl = e.target.result;
+                    
+                    
+                    var base64String = dataUrl.split(',')[1]; // Obtener solo la parte base64 de la cadena
+                    localStorage.setItem('bytesImg', base64String);
+
+                    var imageId = localStorage.getItem('idUser');
+
+                    $.ajax({ //Actualiza la imagen en la base de datos 
+                        url: '/Home/UploadUserImage',
+                        type: 'POST',
+                        data: { id: imageId,
+                                imgBytes: base64String
+                        },
+                        success: function (e) {
+                            if(e=='1'){
+                                alert("Imagen Actualizada correctamente");
+
+                            }else if(e=='-1'){
+                                alert("error al actualizar la imagen, la imagen debe pesar menos de 4 Mb");
+                            }else{
+                                alert("error al actualizar la imagen");
+                            }
+                        }
+                    });
+
+                    document.getElementsByClassName("img-profile")[0].setAttribute("src", dataUrl);
+                    document.getElementsByClassName("img-profile")[1].setAttribute("src", dataUrl);
                 }
 
                 leer.readAsDataURL(input.files[0]);
             }
 
         }
+      
+        $('.btn-correo').click( function(){
+            const botonCancelar = document.getElementsByClassName('btn-cancelar-correo')[0];
+            const botonGuardar = document.getElementsByClassName('btn-correo')[0];
+            const input = document.getElementById("inCorreo");
+
+            if (botonCancelar.classList.contains('hidden')) {
+
+                botonCancelar.classList.remove('hidden');
+
+                botonGuardar.classList.remove('btn-warning');
+                botonGuardar.classList.add('btn-success');
+                botonGuardar.classList.add('input-change');
+                botonGuardar.textContent = "Guardar";
+
+                input.readOnly = false;
+                input.classList.add('input-change');
+            } else {
+                hideButtonCorreo(botonCancelar, botonGuardar, input);
+                var correo = input.value;
+                correo = correo.trim();
+
+                var correoAntiguo = localStorage.getItem('email');
+                var imageId = localStorage.getItem('idUser');
+                if (correo != correoAntiguo) {
+                    $.ajax({
+                        url: '/Home/changeEmail',
+                        type: 'POST',
+                        data: {
+                            id: imageId, email:correo
+                        },
+                        success: function (e) {
+
+                            
+                            console.log(e);
+                            //span.classList.add('alert-success')
+                            //span.classList.remove('alert-danger')
+                           
+                        }
+
+                    });
+                }
+                var modal = new bootstrap.Modal(document.getElementById('modal-correo'))
+                console.log(modal);
+                modal.show();
+                
+            }
+            
+        } );
+
+        $('.btn-cancelar-correo').click( function() {
+            const botonCancelar = document.getElementsByClassName('btn-cancelar-correo')[0];
+            const botonGuardar = document.getElementsByClassName('btn-correo')[0];
+            const input = document.getElementById("inCorreo");
+
+            hideButtonCorreo(botonCancelar, botonGuardar, input);
+
+        });
+        
+        $('.btn-contrasena').click(cambiarContrasena);
+
+        $('.btn-cancelar-contrasena').click(function () {
+            const botonCancelar = document.getElementsByClassName('btn-cancelar-contrasena')[0];
+            const botonGuardar = document.getElementsByClassName('btn-contrasena')[0];
+            const divContrasena = document.getElementById('table-contrasena');
+            const input = document.getElementById("inUsuario");
+
+            hideButtonContrasena(botonCancelar, botonGuardar, input, divContrasena);
+        });
 
         window.onload = function () {
-            var imageUrl = '@ViewBag.ImageUrl';
-            localStorage.setItem('ImageUrl', imageUrl);
-            console.log(imageUrl.toString());
-            console.log("laputamadre");
+            LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+
+            var imageId = localStorage.getItem('idUser');
+
+            $.ajax({ //Obtiene los datos del usuario
+                url: '/Home/getUserData',
+                type: 'GET',
+                data: {
+                    id: imageId
+                },
+                success: function (e) {
+                    const inputName = document.getElementById("inNombre");
+                    inputName.value = e.name;
+
+                    const inputCorreo = document.getElementById("inCorreo");
+                    inputCorreo.value = e.email;
+                    localStorage.setItem('email', e.email)
+                    
+                    const inputUsuario = document.getElementById("inUsuario");
+                    inputUsuario.value = e.username;
+                    console.log(e);
+                    console.log(e.username);
+                }
+            });
+
+            var bytesImg = localStorage.getItem('bytesImg');
+            
+            document.getElementsByClassName("img-profile")[1].setAttribute("src", 'data:image/webp;base64,' + bytesImg); //La imagen ampliada
         };
     </script>
 }

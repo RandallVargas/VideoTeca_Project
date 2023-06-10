@@ -11,82 +11,34 @@
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
-            // Realizar la solicitud AJAX para obtener los bytes de la imagen desde el controlador
-            //$.ajax({
-            //    url: '/Home/GetImage',
-            //    type: 'GET',
-            //    dataType: 'json',
-            //    success: function (response) {
-            //        // Convertir los bytes a una cadena base64
-            //        var base64String = btoa(String.fromCharCode.apply(null, response));
 
-            //        // Guardar la cadena base64 en el localStorage
-            //        localStorage.setItem('imagen', base64String);
+            window.onload = function () {
+                if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
+                    localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
+                    var UserId = '@ViewBag.UserId';
+                    localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
 
-            //        // Mostrar la imagen en la página
-            //        var imagen = document.getElementById('imagen');
-            //        imagen.src = 'data:image/jpeg;base64,' + base64String;
-            //    }
-            //});
+                    var username = '@ViewBag.Username';
+                    localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
+                    $.ajax({
+                        url: '/Home/getBytesImage',
+                        type: 'GET',
+                        data: { id: UserId },
+                        success: function (response) {
+                            localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
+
+                            var outputElement = document.getElementById('img-perfil');
+                            outputElement.src = 'data:image/webp;base64,' + response;
+
+                        }
+                    });
+                }else{
+                    LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+                }
+            };
+
+
         });
-        window.onload = function () {
-            if ('@ViewBag.Username' != "") {
-                var imageId = '@ViewBag.UserId';
-                var username = '@ViewBag.Username';
-                var imageBytes = '@Url.Action("getBytesImage", "Home")';
-                console.log(imageBytes);
-                var imgElement = document.getElementById('img-perfil');
-                imgElement.setAttribute("src", '@Url.Action("getImage", "Home")');
-
-                //$.ajax({
-                //    url: '/Home/getImage',
-                //    type: 'GET',
-                //    data: imageBytes,
-                    
-                //    success: function (response) {
-                //        imgElement.setAttribute("src", response);
-                        
-
-                //            // Guardar la cadena base64 en el localStorage
-                //        localStorage.setItem('imagen', response);
-                       
-                //        // Guardar la cadena base64 en el localStorage
-                //        //localStorage.setItem('imagen', base64String);
-
-                //        //localStorage.setItem('imagen2', base64String);
-
-                        
-                        
-                        
-                //    }
-                //});
-            }
-
-            //var ImageBytes = localStorage.getItem('imagen');
-            //var username = localStorage.getItem('Username');
-            //if (ImageBytes && username) {
-            //    console.log(ImageBytes);
-            //    console.log(username);
-            //    var imgElement = document.getElementById('img-perfil');
-            //    //imgElement.setAttribute("src", 'data:image/webp;base64,' + ImageBytes);
-            //    //$.ajax({
-            //    //    url: '/Home/getImage',
-            //    //    type: 'POST',
-            //    //    data: ImageBytes,
-            //    //    processData: false,
-            //    //    contentType: 'application/octet-stream',
-            //    //    success: function (response) {
-            //    //        // Asignar la imagen utilizando JavaScript
-            //    //        imgElement.setAttribute("src",response);
-            //    //        console.log("perreo")
-            //    //    }
-            //    //});
-
-            //    //imgElement.setAttribute("src", '/Home/getImage');
-            //    console.log("siseñor");
-            //    var textUser = document.getElementsByClassName('text-username')[0];
-            //    textUser.setAttribute("text", username);
-            //}
-        };
+      
     </script>
 }

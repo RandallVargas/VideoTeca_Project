@@ -26,6 +26,6 @@ width: 100px;
     height: 50px;
 }
 
-#drop-hidden {
+.hidden {
     display: none;
 }

@@ -1,7 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-function cambiarImagen(input) {  //Cambia la imagen por la seleccionada
+﻿function cambiarImagen(input) {  //Cambia la imagen por la seleccionada
     if (input.files && input.files[0]) {
         var leer = new FileReader();
         leer.onload = function (e) {
@@ -17,4 +14,29 @@ function cambiarImagen(input) {  //Cambia la imagen por la seleccionada
         leer.readAsDataURL(input.files[0]);
     }
 
+}
+
+function logout() {
+    localStorage.clear();
+    $.ajax({
+        url: '/UserAuthentication/Logout',
+        type: 'POST',
+        success: function (response) {
+            window.location.href = response; // Redireccionar a la página de login
+        },
+        error: function (xhr, status, error) {
+            // Manejar el error, si es necesario
+        }
+    });
+}
+
+function ocultarImagen() {
+    const boton = document.getElementById("drop-hidden");
+
+    if (boton.classList.contains('hidden')) {
+        
+        boton.classList.remove('hidden');
+    } else {
+        boton.classList.add('hidden');
+    }
 }

@@ -34,7 +34,7 @@
                     <img class="img-logo" src="~/images/logo.webp"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        aria-expanded="false" aria-label="Toggle navigation" onclick="ocultarImagen()">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -64,21 +64,24 @@
 
                 </div>*@ 
 
-                <div class="dropdown order-3 drop-margin" id="drop-hiddenn">
+                <div class="dropdown order-3 drop-margin" id="drop-hidden">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img id="img-perfil" class="img-profile rounded-circle img-thumbnail" />
                     </a>                                                
                     <ul class="dropdown-menu text-small dropdown-menu-lg-end dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownuser">
                         <li>
-                            <button class="dropdown-item">Nuevo</button> 
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Nuevo">Nuevo</a>
+
                         </li>
 
                         <li>
-                            <button class="dropdown-item">Configuraci&oacuten</button>
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Configuration">Configuraci&oacuten</a>
+
                         </li>
 
-                        <li>
-                            <button class="dropdown-item">Perfil</button>
+                        <li>                          
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Profile">Perfil</a>
+
                         </li>
 
                         <li>
@@ -86,8 +89,7 @@
                         </li>
 
                         <li>
-                        @*<li><a href="/UserAuthentication/Logout">Logout</a></li>*@
-                            <button class="dropdown-item">Cerrar sesi&oacuten</button>
+                            <a class="dropdown-item" asp-area="" asp-controller="UserAuthentication" asp-action="Logout">Cerrar sesi&oacuten</a>
                         </li>
                     </ul>
                 </div>
@@ -109,6 +111,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/profile.js" asp-append-version="true"></script>
+
+    <script src="~/js/LoadUserData.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Video_Teca.Data;
 using Video_Teca.Models;
-using Video_Teca.Models.Users;
+using Video_Teca.Models.DTO;
 namespace Video_Teca.Controllers
 {
     public class HomeController : Controller
@@ -20,8 +24,7 @@ namespace Video_Teca.Controllers
         }
 
         public IActionResult Index()
-        {
-            
+        {       
             if (TempData.Keys.Count>0)
             {
                 var username = TempData["username"].ToString();
@@ -60,23 +63,64 @@ namespace Video_Teca.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public ActionResult getImage()
+        public ActionResult getImage(byte[] imgBytes)
         {
-            byte[] imgByte = db.UserImgs.First(y => y.UserID == 2).imagen;
-            //MemoryStream memoryStream = new MemoryStream(imgByte);
-            //Image image = Image.FromStream(memoryStream);
+            imgBytes = db.UserImgs.First(y => y.UserID == 2).imagen;
 
-            //memoryStream = new MemoryStream();
-            //image.Save(memoryStream, ImageFormat.Webp);
-            //memoryStream.Position = 0;
-
-            return File(imgByte, "image/webp");
+            return File(imgBytes, "image/webp");
 
         }
 
-        public IActionResult getBytesImage() {
-            byte[] imgByte = db.UserImgs.First(y => y.UserID == 2).imagen;
-            return Ok(imgByte);
+        public byte[] getBytesImage(int id) {
+            byte[] imgByte = db.UserImgs.First(y => y.UserID == id).imagen;
+            return imgByte;
+        }
+
+        public int UploadUserImage(int id, byte[] imgBytes) {
+
+            if (imgBytes.Length > 4194304) {
+                return -1;
+            }
+
+            try {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@Id", id));
+                parameter.Add(new SqlParameter("@imagen", imgBytes));
+
+                var result = Task.Run(() => db.Database.ExecuteSqlRaw(@"exec UpdateImage @Id, @imagen", parameter.ToArray()));
+                db.SaveChangesAsync();
+
+                return 1;
+            }
+            catch {
+                return 0;
+            }         
+        }
+
+        public User getUserData(int id) {
+
+            User usuario = db.Users.First(x => x.Id == id);
+            return usuario;
+        }
+
+        public string changeEmail(int id, string email) {
+
+            try
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@Id", id));
+                parameter.Add(new SqlParameter("@email", email));
+
+                var result = Task.Run(() => db.Database.ExecuteSqlRaw(@"exec changeEmail @Id, @email", parameter.ToArray()));
+                db.SaveChangesAsync();
+
+                return "Correo Actualzado Correctamente";
+            }
+            catch
+            {
+                return "Error al actualizar el correo";
+            }
+            
         }
     }
 }
