@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Video_Teca.Data;
 using Video_Teca.Models;
-using Video_Teca.Models.Users;
+//using Video_Teca.Models.Users;
 
 namespace Video_Teca.Controllers
 {
@@ -14,7 +14,7 @@ namespace Video_Teca.Controllers
         // GET: ClientController
         public ActionResult DisplayClient()
         {
-            var username = localStorage.getItem('username');
+            //var username = localStorage.getItem('username');
             //var client = db.Users.Find();
             //Console.WriteLine(db.Users.Find("Vargas13"));
             var pelis = new List<MoviesAndSeries>();
