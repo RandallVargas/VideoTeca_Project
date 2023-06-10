@@ -21,7 +21,7 @@
                     <img class="img-logo" src="~/images/logo.webp"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        aria-expanded="false" aria-label="Toggle navigation" onclick="ocultarImagen()">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -51,7 +51,7 @@
 
                 </div>*@ 
 
-                <div class="dropdown order-3 drop-margin" id="drop-hiddenn">
+                <div class="dropdown order-3 drop-margin" id="drop-hidden">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img id="img-perfil" class="img-profile rounded-circle img-thumbnail" />
                     </a>                                                
@@ -98,6 +98,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/profile.js" asp-append-version="true"></script>
+
     <script src="~/js/LoadUserData.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

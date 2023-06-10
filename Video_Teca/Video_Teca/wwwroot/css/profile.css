@@ -1,4 +1,38 @@
 ﻿.img-profile {
-width: 150px;
+}
 
+.img-perfil-ampliada {
+    height: 39vmin;
+    width: 39vmin
+}
+
+#ImageData {
+    font-size: calc(3px + 2vmin);
+}
+
+.input-readonly, .btn-correo, .btn-contrasena {
+    width: 39vmin;
+    font-size: calc(7px + 1vmin);
+}
+.btn-cancelar-contrasena, .btn-cancelar-correo {
+    width: 16vmin;
+    font-size: calc(7px + 1vmin);
+}
+
+.text-label {
+    width: 9.5vmin;
+    font-size: calc(8px + 1vmin);
+}
+
+.lb-password {
+    font-size: calc(8px + 1vmin);
+}
+
+.input-change {
+    width: 33vmin;
+}
+
+.input-pass, .span-validation {
+    width: 35vmin;
+    calc(8px + 1vmin)
 }

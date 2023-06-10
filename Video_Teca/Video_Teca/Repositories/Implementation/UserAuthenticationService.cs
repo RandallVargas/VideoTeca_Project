@@ -100,8 +100,6 @@ namespace Video_Teca.Repositories.Implementation
                 return status;
             }
 
-            //validar tamaño de imagen
-            //agregar imagen al registration model
 
             //Role Managment
             if (!await roleManager.RoleExistsAsync(model.Role))

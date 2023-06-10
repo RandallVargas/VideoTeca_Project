@@ -29,3 +29,14 @@ function logout() {
         }
     });
 }
+
+function ocultarImagen() {
+    const boton = document.getElementById("drop-hidden");
+
+    if (boton.classList.contains('hidden')) {
+        
+        boton.classList.remove('hidden');
+    } else {
+        boton.classList.add('hidden');
+    }
+}

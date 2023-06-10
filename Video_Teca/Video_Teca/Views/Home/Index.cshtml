@@ -13,14 +13,17 @@
         $(document).ready(function () {
 
             window.onload = function () {
-                if ('@ViewBag.UserId' != "") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
+                if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
                     localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
-                    var imageId = '@ViewBag.UserId';
-                    localStorage.setItem('idUser', imageId); //Guarda el id del usuario en localstorage
+                    var UserId = '@ViewBag.UserId';
+                    localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
+
+                    var username = '@ViewBag.Username';
+                    localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
                     $.ajax({
                         url: '/Home/getBytesImage',
                         type: 'GET',
-                        data: { id: imageId },
+                        data: { id: UserId },
                         success: function (response) {
                             localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
 
@@ -36,7 +39,6 @@
 
 
         });
-
       
     </script>
 }
