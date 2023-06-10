@@ -34,4 +34,8 @@ public partial class MoviesAndSeries
     public DateTime? date_addded { get; set; }
 
     public string? media_type { get; set; }
+
+    public virtual ICollection<Actor> Actors { get; set; } = new List<Actor>();
+
+    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }
