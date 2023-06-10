@@ -7,7 +7,6 @@ namespace Video_Teca.Data;
 
 public partial class VideoTecaDbContext : DbContext
 {
-
     public VideoTecaDbContext()
     {
     }
@@ -16,6 +15,8 @@ public partial class VideoTecaDbContext : DbContext
         : base(options)
     {
     }
+
+    public virtual DbSet<Actor> Actors { get; set; }
 
     public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
@@ -29,16 +30,42 @@ public partial class VideoTecaDbContext : DbContext
 
     public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
 
+    public virtual DbSet<Comment> Comments { get; set; }
+
+    public virtual DbSet<Episode> Episodes { get; set; }
+
+    public virtual DbSet<MoviesAndSeries> MoviesAndSeries { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserImg> UserImgs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=163.178.173.130;Database=Video_Teca_C13448_B98314;TrustServerCertificate=True; User Id=basesdedatos; Password=rpbases.2022");
+        => optionsBuilder.UseSqlServer("Server=163.178.173.130;Database=Video_Teca_C13448_B98314;TrustServerCertificate=True; User Id=basesdedatos; Password=rpbases.2022;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Actor>(entity =>
+        {
+            entity.HasKey(e => e.actor_id).HasName("PK__Actors__8B2447B436E375B0");
+
+            entity.Property(e => e.actor_id).ValueGeneratedNever();
+            entity.Property(e => e.actor_first_name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.actor_last_name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.movies_series_id)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.movies_series).WithMany(p => p.Actors)
+                .HasForeignKey(d => d.movies_series_id)
+                .HasConstraintName("FK__Actors__movies_s__6C190EBB");
+        });
+
         modelBuilder.Entity<AspNetRole>(entity =>
         {
             entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
@@ -103,6 +130,80 @@ public partial class VideoTecaDbContext : DbContext
             entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
 
             entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
+        });
+
+        modelBuilder.Entity<Comment>(entity =>
+        {
+            entity.HasKey(e => e.comment_id).HasName("PK__Comments__E79576872F1834ED");
+
+            entity.Property(e => e.comment_id)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.comment1)
+                .HasMaxLength(250)
+                .IsUnicode(false)
+                .HasColumnName("comment");
+            entity.Property(e => e.movie_series_id)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.movie_series).WithMany(p => p.Comments)
+                .HasForeignKey(d => d.movie_series_id)
+                .HasConstraintName("FK__Comments__movie___68487DD7");
+
+            entity.HasOne(d => d.user).WithMany(p => p.Comments)
+                .HasForeignKey(d => d.userid)
+                .HasConstraintName("FK__Comments__userid__693CA210");
+        });
+
+        modelBuilder.Entity<Episode>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.movie_series_id)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.title)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.movie_series).WithMany()
+                .HasForeignKey(d => d.movie_series_id)
+                .HasConstraintName("FK__Episodes__movie___6E01572D");
+        });
+
+        modelBuilder.Entity<MoviesAndSeries>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PK__MoviesAn__3213E83F45A5D960");
+
+            entity.Property(e => e.id)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.clasification)
+                .HasMaxLength(3)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.date_addded).HasColumnType("date");
+            entity.Property(e => e.director)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.genre_id)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.media_type)
+                .HasMaxLength(10)
+                .IsUnicode(false);
+            entity.Property(e => e.movie_cover)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.release_year).HasColumnType("date");
+            entity.Property(e => e.synopsis)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.title)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.year_of_release).HasColumnType("date");
         });
 
         modelBuilder.Entity<User>(entity =>
