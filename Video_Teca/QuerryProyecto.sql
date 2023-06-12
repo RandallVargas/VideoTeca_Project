@@ -15,7 +15,7 @@ movie_cover varchar(100),
 year_of_release date,
 date_addded date,
 media_type VARCHAR(10) CHECK (media_type IN ('movie', 'series')),
-FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
+
 );
 ALTER TABLE MoviesAndSeries
 DROP COLUMN genre_id;
@@ -92,7 +92,22 @@ BEGIN
     WHERE movie_series_id = @movieId
 END
 
+CREATE PROCEDURE GetGenresByMovieId
+    @MovieId VARCHAR(50)
+AS
+BEGIN
+  SELECT g.genre_name
+    FROM Genres g
+    WHERE EXISTS (
+        SELECT 1
+        FROM MovieGenre mg
+        WHERE mg.genre_id = g.genre_id
+        AND mg.movie_id = @MovieId
+    )
+END
+EXEC GetGenresByMovieId @MovieId = 'MVS002'
 Drop Procedure GetCommentsByMovieId
+Drop Procedure GetGenresByMovieId
 ALTER TABLE Comments
 ADD Username VARCHAR(30);
 EXEC GetCommentsByMovieId @movieId = 'MVS002'
