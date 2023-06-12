@@ -11,7 +11,5 @@ public partial class Actor
 
     public string? actor_last_name { get; set; }
 
-    public string? movies_series_id { get; set; }
-
-    public virtual MoviesAndSeries? movies_series { get; set; }
+    public string? actor_img { get; set; }
 }

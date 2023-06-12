@@ -19,8 +19,6 @@ public partial class MoviesAndSeries
 
     public string? director { get; set; }
 
-    public string? genre_id { get; set; }
-
     public int? num_seasons { get; set; }
 
     public int? num_episodes { get; set; }
@@ -34,8 +32,6 @@ public partial class MoviesAndSeries
     public DateTime? date_addded { get; set; }
 
     public string? media_type { get; set; }
-
-    public virtual ICollection<Actor> Actors { get; set; } = new List<Actor>();
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }

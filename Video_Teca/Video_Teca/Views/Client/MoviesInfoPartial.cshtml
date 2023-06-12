@@ -1,14 +1,27 @@
 ﻿@model Video_Teca.Models.MoviesAndSeries
 
+<script src="~/js/LoadData.js"></script>
+<script src="~/js/Details.js"></script>
 <div>
     <h2>@Model.title</h2>
     <p>@Model.synopsis</p>
     <p>Director: @Model.director</p>
     <p>Clasificación: @Model.clasification</p>
     <p>Año de lanzamiento: @Model.release_year</p>
-
+      
+    @*<button href="#" class="btn-more-details" data-movie-id="@Model.id">>Details</button>
+    using (Html.BeginForm("Details", "Client", FormMethod.Post))
+    {
+        <button href="#" class="btn-more-details" data-movie-id="@Model.id">>Details</button>
+       
+    }*@
+    <button class="btn-details" data-movie-id="@Model.id">Details</button>
+    <a href="@Url.Action("Details", "Client", new { id = Model.id })">Ver detalles</a>
+    <div id="detailsContainer"></div>
     <div class="Coments">
-    <input type="text" id="myInput" name="myInput" placeholder="Comments">
-
+    <input type="text" id="myComment" name="myInput" placeholder="Comments">
+        <button id="myButton" data-movie-id="@Model.id">Comentar</button>
     </div>
+
+
 </div>

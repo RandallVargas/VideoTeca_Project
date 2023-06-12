@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "DisplayClient";
 }
-
+@*@ViewBag.Username*@
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +11,12 @@
     <link rel="stylesheet" type="text/css" href="~/css/Client.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/popup.js"></script>
+    <script src="~/js/LoadData.js"></script>
+   
 </head>
 <body>
+
+ 
     <div id="div_galery">
         <div class="galery">
 
@@ -34,14 +38,16 @@
         <div id="popup-content">
             @*@Html.Partial("MoviesInfoPartial", Model)*@
 
-        
+            
         </div>
     </div>
-  
+    
+        
+    
     @section Scripts {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-        
+     
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".galery").slick({
