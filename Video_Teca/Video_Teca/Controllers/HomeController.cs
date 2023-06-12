@@ -38,17 +38,8 @@ namespace Video_Teca.Controllers
             return View();
         }
 
-        //public ActionResult Index(UserModel user) 
-        //{
-        //    return View(user);
-        //}
-
         public IActionResult Profile()
         {
-            ////UserModel userview = new UserModel();
-            ////var userdb = 
-            ////string imageUrl = "./../images/img-default.webp";
-            ////ViewBag.ImageUrl = imageUrl;
             return View();
         }
 
@@ -61,14 +52,6 @@ namespace Video_Teca.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public ActionResult getImage(byte[] imgBytes)
-        {
-            imgBytes = db.UserImgs.First(y => y.UserID == 2).imagen;
-
-            return File(imgBytes, "image/webp");
-
         }
 
         public byte[] getBytesImage(int id) {
@@ -87,8 +70,8 @@ namespace Video_Teca.Controllers
                 parameter.Add(new SqlParameter("@Id", id));
                 parameter.Add(new SqlParameter("@imagen", imgBytes));
 
-                var result = Task.Run(() => db.Database.ExecuteSqlRaw(@"exec UpdateImage @Id, @imagen", parameter.ToArray()));
-                db.SaveChangesAsync();
+                db.Database.ExecuteSqlRaw(@"exec UpdateImage @Id, @imagen", parameter.ToArray());
+                db.SaveChanges();
 
                 return 1;
             }
@@ -103,7 +86,7 @@ namespace Video_Teca.Controllers
             return usuario;
         }
 
-        public string changeEmail(int id, string email) {
+        public int changeEmail(int id, string email) {
 
             try
             {
@@ -111,14 +94,14 @@ namespace Video_Teca.Controllers
                 parameter.Add(new SqlParameter("@Id", id));
                 parameter.Add(new SqlParameter("@email", email));
 
-                var result = Task.Run(() => db.Database.ExecuteSqlRaw(@"exec changeEmail @Id, @email", parameter.ToArray()));
-                db.SaveChangesAsync();
+                db.Database.ExecuteSqlRaw(@"exec changeEmail @Id, @email", parameter.ToArray());
+                db.SaveChanges();
 
-                return "Correo Actualzado Correctamente";
+                return 1;
             }
             catch
             {
-                return "Error al actualizar el correo";
+                return -1;
             }
             
         }

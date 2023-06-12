@@ -17,8 +17,12 @@ body {
   margin-bottom: 60px;
 }
 
+.navbar {
+    background: rgb(7, 101, 164, 0.60);
+}
+
 .img-logo {
-width: 100px;
+    width: 100px;
 }
 
 #img-perfil {

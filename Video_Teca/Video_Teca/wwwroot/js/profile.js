@@ -1,22 +1,13 @@
-function cambiarCorreo() {
-    const botonCancelar = document.getElementsByClassName('btn-cancelar-correo')[0];
-    const botonGuardar = document.getElementsByClassName('btn-correo')[0];
-    const input = document.getElementById("inCorreo");
+function showButtonCancelar(botonCancelar, botonGuardar, input) {
+    botonCancelar.classList.remove('hidden');
 
-    if (botonCancelar.classList.contains('hidden')) {
+    botonGuardar.classList.remove('btn-warning');
+    botonGuardar.classList.add('btn-success');
+    botonGuardar.classList.add('input-change');
+    botonGuardar.textContent = "Guardar";
 
-        botonCancelar.classList.remove('hidden');
-
-        botonGuardar.classList.remove('btn-warning');
-        botonGuardar.classList.add('btn-success');
-        botonGuardar.classList.add('input-change');
-        botonGuardar.textContent = "Guardar";
-
-        input.readOnly = false;
-        input.classList.add('input-change');
-    } else {
-        hideButtonCorreo(botonCancelar, botonGuardar, input);
-    }
+    input.readOnly = false;
+    input.classList.add('input-change');
 }
 function hideButtonCorreo(botonCancelar, botonCorreo, input) {
     botonCancelar.classList.add('hidden');
@@ -29,28 +20,19 @@ function hideButtonCorreo(botonCancelar, botonCorreo, input) {
     input.readOnly = true;
     input.classList.remove('input-change');
 }
-function cambiarContrasena() {
-    const botonCancelar = document.getElementsByClassName('btn-cancelar-contrasena')[0];
-    const botonGuardar = document.getElementsByClassName('btn-contrasena')[0];
-    const input = document.getElementById("inUsuario");
-    const divContrasena = document.getElementById('table-contrasena');
 
-    if (botonCancelar.classList.contains('hidden')) {
+function showButtonContrasena(botonCancelar, botonGuardar, input, divContrasena){
+    botonCancelar.classList.remove('hidden');
 
-        botonCancelar.classList.remove('hidden');
+    divContrasena.classList.remove('hidden');
 
-        divContrasena.classList.remove('hidden');
+    botonGuardar.classList.remove('btn-warning');
+    botonGuardar.classList.add('btn-success');
+    botonGuardar.classList.add('input-change');
+    botonGuardar.textContent = "Guardar";
 
-        botonGuardar.classList.remove('btn-warning');
-        botonGuardar.classList.add('btn-success');
-        botonGuardar.classList.add('input-change');
-        botonGuardar.textContent = "Guardar";
+    input.classList.add('input-change');
 
-        input.classList.add('input-change');
-
-    } else {
-        hideButtonContrasena(botonCancelar, botonGuardar, input, divContrasena);
-    }
 }
 
 function hideButtonContrasena(botonCancelar, botonGuardar, input, divContrasena) {

@@ -116,5 +116,45 @@ namespace Video_Teca.Repositories.Implementation
             status.Message = "User Has Registered Successfully";
             return status;
         }
+
+        public async Task<StatusPassword> ChangePasswordAsync(string user, string oldPassword, string newPassword) {
+
+            StatusPassword status = new StatusPassword();
+            status.Message = new List<string>();
+            try
+            {
+               
+                var usuario = await userManager.FindByNameAsync(user);
+
+                var result = userManager.ChangePasswordAsync(usuario, oldPassword, newPassword);
+
+                //await signInManager.RefreshSignInAsync(usuario); //refresca la cookie de inicio de sesion
+                if (result.Result.Succeeded) {
+                    status.StatusCode = 1;
+                    return status;
+                }
+                else
+                {
+                    status.StatusCode = 0;
+                    foreach(var item in result.Result.Errors) {
+                        status.Message.Add(item.Description);                        
+                    }
+                    return status;
+                }
+                
+            }
+            catch {
+                status.StatusCode = 0;
+                status.Message.Add("Error al actualizar la contraseña");
+                return status;
+            }
+                   
+        }
+
+        public async Task DeleteAccountAsync(string user)
+        {
+            var usuario = await userManager.FindByNameAsync(user);
+            await userManager.DeleteAsync(usuario);
+        }
     }
 }

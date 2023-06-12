@@ -10,6 +10,9 @@ namespace Video_Teca.Repositories.Abstract
 
         Task LogoutAsync();
 
+        Task<StatusPassword> ChangePasswordAsync(string user, string oldPassword, string newPassword);
+
+        Task DeleteAccountAsync(string user);
 
     }
 }
