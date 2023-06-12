@@ -1,14 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Video_Teca.Data;
+using Video_Teca.Models;
+//using Video_Teca.Models.Users;
 
 namespace Video_Teca.Controllers
 {
     public class ClientController : Controller
     {
+        private VideoTecaDbContext db = new VideoTecaDbContext();
+
         // GET: ClientController
-        public ActionResult Index()
+        public ActionResult DisplayClient()
         {
-            return View();
+            //var username = localStorage.getItem('username');
+            //var client = db.Users.Find();
+            //Console.WriteLine(db.Users.Find("Vargas13"));
+            var pelis = new List<MoviesAndSeries>();
+            using (var dbContext = new VideoTecaDbContext())
+            {
+              pelis= dbContext.MoviesAndSeries.ToList();
+            }
+            return View(pelis);
         }
 
         // GET: ClientController/Details/5
@@ -79,5 +93,23 @@ namespace Video_Teca.Controllers
                 return View();
             }
         }
+
+
+        public IActionResult GetMovieInfo(string id)
+        {
+           
+            var movieInfo = db.MoviesAndSeries.Find(id); //Busca la pelicula para mostrar los datos necesarios en el popup
+            //Console.WriteLine(movieInfo.id);
+            // Retornar la vista parcial 'MovieInfoPartial' con el modelo de la película.
+            return PartialView("MoviesInfoPartial", movieInfo);
+        }
+        public void sendComment()
+        {
+            
+           //db.Comments.Add(new Comment { })
+        }
+
     }
+  
 }
+

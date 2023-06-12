@@ -87,8 +87,25 @@ namespace Video_Teca.Controllers
             {
                 
                 TempData["username"] = model.Username;
+
+                // var resultDb = db.Users.First(x =>x.Username==model.Username );
+              
+                //var imgUser = db.UserImgs.First(x=> x.UserID==resultDb.Id);
+            
+               // UserModel userView = new UserModel();
+                // userView.Id = resultDb.Id;
+
+                // Console.WriteLine(userView.Id);
+                //userView.Name = resultDb.Name;
+                //userView.Username = resultDb.Username;
+                //userView.Email = resultDb.Email;
+                //userView.imagen = imgUser.imagen;
+                //Hacer la busqueda del user y retornarlo
+                return RedirectToAction("DisplayClient", "Client");
+
                 
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+
             }
             else
             {
