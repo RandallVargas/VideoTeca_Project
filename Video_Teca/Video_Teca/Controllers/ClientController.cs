@@ -15,15 +15,35 @@ namespace Video_Teca.Controllers
         // GET: ClientController
         public ActionResult DisplayClient()
         {
-         
-            //var username = localStorage.getItem('username');
-            //var client = db.Users.Find();
-            //Console.WriteLine(db.Users.Find("Vargas13"));
+
             var pelis = new List<MoviesAndSeries>();
             using (var dbContext = new VideoTecaDbContext())
             {
-              pelis= dbContext.MoviesAndSeries.ToList();
+                pelis = dbContext.MoviesAndSeries.ToList();
             }
+
+            var genres = new List<string>();
+
+            using (var dbContext = new VideoTecaDbContext())
+            {
+                genres = dbContext.Genres.Select(g => g.genre_name).ToList();
+            }
+
+            var random = new Random();
+            genres = genres.OrderBy(x => random.Next()).ToList();
+
+            var carousels = new List<List<MoviesAndSeries>>();
+
+            int batchSize = (int)Math.Ceiling(genres.Count() / 3.0);
+            for (int i = 0; i < genres.Count(); i += batchSize)
+            {
+                var genreSubset = genres.Skip(i).Take(batchSize).ToList();
+                var carousel = pelis.Where(item => db.MovieGenres.Any(mg => mg.movie_id == item.id && genreSubset.Contains(mg.genre_id))).ToList();
+                carousels.Add(carousel);
+            }
+
+            ViewBag.Carousels = carousels;
+
             return View(pelis);
         }
 

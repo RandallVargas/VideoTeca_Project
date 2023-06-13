@@ -15,35 +15,42 @@
    
 </head>
 <body>
+    @foreach (var carousel in ViewBag.Carousels)
+    {
+        <div class="galery">
+            @foreach (var item in Model)
+            {
+                <div>
+                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" href="#" class="btn-popup" data-movie-id="@item.id" style="width: 200px; height: 200px" />
+                </div>
+            }
+        </div>
+    }
 
  
-    <div id="div_galery">
+   @* <div id="div_galery">
         <div class="galery">
 
             @foreach (var item in Model)
             {
                 <div>
                  
-                    @*<a class="btn-popup" href="@Url.Action("GetMovieInfo","Client")" data-movie-id="@item.id">abrir</a>*@
-                    @*<a href="#" class="btn-popup" data-movie-id="@item.id">abrir</a>*@
-                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" href="#" class="btn-popup" data-movie-id="@item.id" style="width: 200px; height: 200px" />
+                  
+               
                    
                 </div>
                 
              
             }
         </div>
-    </div>
+    </div>*@
     <div id="popup-container">
         <div id="popup-content">
-            @*@Html.Partial("MoviesInfoPartial", Model)*@
-
-            
+  
         </div>
     </div>
     
-        
-    
+
     @section Scripts {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -51,27 +58,24 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".galery").slick({
-                    //dots: true,
-                    //infinite: true,
-                    //speed: 300,
-                    //slidesToShow: 1,
-                    //centerMode: true,
-                    //variableWidth: true
-                                 dots: true,
+                    dots: true,
                     infinite: true,
                     speed: 300,
                     slidesToShow: 1,
-                    adaptiveHeight: true
+                    centerMode: true,
+                    variableWidth: true
+                    //             dots: true,
+                    //infinite: true,
+                    //speed: 300,
+                    //slidesToShow: 1,
+                    //adaptiveHeight: true
                 });
 
             });
 
         </script>
 
-       
-      
     }
-   
 </body>
 </html>
 
