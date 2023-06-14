@@ -1,0 +1,472 @@
+﻿@model Video_Teca.Models.UserModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+    <h3>Perfil</h3>
+
+    <fieldset class="row">
+        <div class="container-xl text-black-50 row">
+            <div class="col-6 row justify-content-center">
+                <div class="d-flex align-items-center col-auto">
+                    <fieldset>
+                        <div class="row">
+                            <img id="img-perfil-ampliada" class="img-profile form-control img-thumbnail"/>
+                        </div>
+
+                        <div class="row">
+                            <input type="file" name="ImageData" id="ImageData" onchange="cambiarImagen(this)" />
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <div class="row">
+                    <span id="lb-error" class="text-danger"></span>
+
+                </div>
+
+            </div>
+
+            <div class="col-6 row justify-content-center">
+                <div class="align-items-center col-auto">
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-database">Datos Personales</i>
+                        </legend>
+                    <table class="table">
+                            <tr>
+                                <th>
+                                <label class="col-form-label text-label">Nombre:</label>
+                                </th>
+
+                                <th>
+                                   <input readonly  id="inNombre" class="form-control input-readonly"></input>
+                                </th>
+                            </tr>
+                          
+                        </table>
+                    </fieldset>
+                    <br/>
+
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-envelope">Datos de contacto</i>
+                        </legend>
+                    <table class="table">
+                            <tr> 
+                                <th>
+                                    <label class="col-form-label text-label">Correo:</label>
+                                </th>
+
+                                <th>
+                                    <input readonly id="inCorreo" class="form-control input-readonly"></input>
+                                </th>
+
+                            </tr>
+
+                            <tr>
+                                <th>
+                                <button class="form-control btn btn-danger fw-bold btn-cancelar-correo hidden">Cancelar</button>
+                                </th>
+
+                                <th>
+                                <button class="form-control btn btn-warning fw-bold btn-correo">Cambiar Correo</button>
+                                </th>
+
+                            </tr>
+
+                        </table>
+                    </fieldset>
+
+                    <br />
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-key">Datos de sesión</i>
+                        </legend>
+                    <table class="table">
+                            <tr>
+                                <th>
+                                <label class="col-form-label text-label">Usuario:</label>
+                                </th>
+
+                                <th>
+                                <input readonly id="inUsuario" class="form-control input-readonly"></input>
+                                </th>
+                            </tr>
+
+                        <tr>
+                            <th>
+                                <button class="form-control btn btn-danger fw-bold btn-cancelar-contrasena hidden">Cancelar</button>
+                            </th>
+
+                            <th>
+                                <button class="form-control btn btn-warning fw-bold btn-contrasena">Cambiar Contrase&ntildea</button>
+                            </th>
+                        </tr>
+
+                        </table>
+                         
+                        <table id="table-contrasena" class="hidden">
+
+                            <tr>
+                                <th>
+                                    <label class="col-form-label lb-password ">Contrase&ntildea antigua:</label>
+                                </th>
+
+                                <th>
+                                    <input id="inContrasenaAntigua" class="form-control input-pass" placeholder="Old Password" type="password"></input>
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                <label class="col-form-label lb-password ">Contrase&ntildea:</label>
+                                </th>
+
+                                <th>
+                                <input id="inContrasena" class="form-control input-pass" placeholder="New Password" type="password"></input>
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                <label class="col-form-label lb-password ">Repetir Contrase&ntildea:</label>
+                                </th>
+
+                                <th>
+                                    <input id="inContrasenaRepetida" class="form-control input-pass" placeholder="New Password Again " type="password"></input>
+                                
+
+                                </th>
+                            <span id="span-contrasena" class="span-validation alert-danger"></span>
+
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+            </div>
+
+        <div class="modal fade" id="modal-correo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content ">
+
+                    <div id="modal-contain" class="modal-body d-flex justify-content-between">
+                        <label id="lb-modal"></label>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-delete" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content ">
+
+                    <div class="modal-body">
+                        <h5>¿Estas seguro que deseas eliminar tu cuenta?</h5>
+                        <br />
+                        <br />
+                        <div class="d-flex justify-content-evenly">
+                            <button type="button"class="btn btn-success" data-bs-dismiss="modal" aria-label="Close">No</button>
+                            <button type="button" id="btn-validado-eliminar-cuenta" class="btn btn-danger">Si</button>
+
+                        </div>
+                        
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+    <br />
+    <br />
+    <div class="container d-flex justify-content-end">
+        <button id="btn-eliminar-cuenta" class="btn btn-danger">Eliminar Cuenta</button>
+    </div>
+   
+@section scripts {
+    <script type="text/javascript">
+        
+        function cambiarImagen(input) {  //Cambia la imagen por la seleccionada
+            if (input.files && input.files[0]) {
+                var leer = new FileReader();
+                leer.onload = function (e) {
+
+                    var dataUrl = e.target.result;
+                    
+                    console.log(e);
+                    var base64String = dataUrl.split(',')[1]; // Obtener solo la parte base64 de la cadena
+                    localStorage.setItem('bytesImg', base64String);
+
+                    var imageId = localStorage.getItem('idUser');
+
+                    $.ajax({ //Actualiza la imagen en la base de datos 
+                        url: '/Client/UploadUserImage',
+                        type: 'POST',
+                        data: { id: imageId,
+                                imgBytes: base64String
+                        },
+                        success: function (e) {
+                            var modal = document.getElementById('modal-contain');
+                            var label = document.getElementById('lb-modal');
+
+                            if(e=='1'){
+                                modal.classList.remove('alert-danger');
+                                modal.classList.add('alert-success');
+
+                                label.textContent = 'Imagen Actualizada Correctamente'
+
+                            }else if(e=='-1'){
+                                modal.classList.add('alert-danger');
+                                modal.classList.remove('alert-success');
+
+                                label.textContent = 'Error al actualizar la imagen, la imagen debe pesar menos de 4 Mb'
+                               
+                            }else{
+                                modal.classList.add('alert-danger');
+                                modal.classList.remove('alert-success');
+
+                                label.textContent = 'Error al actualizar la imagen'
+                            }
+
+                            var modal = new bootstrap.Modal(document.getElementById('modal-correo')); //Muestra un pop-up informando la accion realizada
+                            modal.show();
+                        }
+                    });
+
+                    document.getElementsByClassName("img-profile")[0].setAttribute("src", dataUrl);
+                    document.getElementsByClassName("img-profile")[1].setAttribute("src", dataUrl);
+                }
+
+                leer.readAsDataURL(input.files[0]);
+            }
+
+        }
+      
+        $('.btn-correo').click( function(){
+            const botonCancelar = document.getElementsByClassName('btn-cancelar-correo')[0];  //obtiene los elementos a modificar
+            const botonGuardar = document.getElementsByClassName('btn-correo')[0];
+            const input = document.getElementById("inCorreo");
+
+            if (botonCancelar.classList.contains('hidden')) {
+
+                showButtonCancelar(botonCancelar, botonGuardar, input); //Muestra el boton para cancelar la accion y habilita para ingresar texto
+
+            } else {
+                hideButtonCorreo(botonCancelar, botonGuardar, input); //Oculta el boton cancelar y deshabilita para ingresar texto
+            
+                var correo = input.value;
+                correo = correo.trim();
+
+                var correoAntiguo = localStorage.getItem('email');
+                var Iduser = localStorage.getItem('idUser');
+                if (correo != correoAntiguo) {                        //Valida que hayan cambios en el correo
+               
+                    $.ajax({                              //Llama al metodo del controlador para cambiar el correo
+                        url: '/Client/changeEmail',
+                        type: 'POST',
+                        data: {
+                            id: Iduser, email: correo
+                        },
+                        success: function (e) {
+
+                            var modal = document.getElementById('modal-contain');
+                            var label = document.getElementById('lb-modal');
+
+                            if(e==1){                                            //Muestra que el cambio fue correcto
+                                modal.classList.remove('alert-danger');
+                                modal.classList.add('alert-success');
+
+                                label.textContent = 'Correo Actualizado Correctamente'
+                            } else {                                                //Muestra que el cambio fue incorrecto
+                                modal.classList.add('alert-danger');
+                                modal.classList.remove('alert-success');
+
+                                label.textContent = 'Error al actualizar el correo'
+                            }
+
+                            var modal = new bootstrap.Modal(document.getElementById('modal-correo')); //Muestra un pop-up informando la accion realizada
+                            modal.show();
+                        }
+
+                    });
+                    localStorage.setItem('email',correo);
+                }                             
+            }
+            
+        } );
+
+        $('.btn-cancelar-correo').click( function() {
+            const botonCancelar = document.getElementsByClassName('btn-cancelar-correo')[0];
+            const botonGuardar = document.getElementsByClassName('btn-correo')[0];
+            const input = document.getElementById("inCorreo");
+
+            var correoAnterior = localStorage.getItem('email');
+            input.value = correoAnterior;
+            hideButtonCorreo(botonCancelar, botonGuardar, input);
+
+        });
+        
+        $('.btn-contrasena').click( function(){
+            const botonCancelar = document.getElementsByClassName('btn-cancelar-contrasena')[0];
+            const botonGuardar = document.getElementsByClassName('btn-contrasena')[0];
+            const input = document.getElementById("inUsuario");
+            const divContrasena = document.getElementById('table-contrasena');
+
+            if (botonCancelar.classList.contains('hidden')) {
+                showButtonContrasena(botonCancelar, botonGuardar, input, divContrasena);
+            } else {
+                hideButtonContrasena(botonCancelar, botonGuardar, input, divContrasena);
+
+                var contrasena = document.getElementById("inContrasena").value;
+                var contrasenaRepetida = document.getElementById("inContrasenaRepetida").value;
+                var contrasenaAntigua = document.getElementById("inContrasenaAntigua").value;
+                if (contrasena != contrasenaRepetida) {                             //Valida que los campos de la nueva contraseña coincidan 
+                    var modal = document.getElementById('modal-contain');
+                    var label = document.getElementById('lb-modal');
+
+                    modal.classList.add('alert-danger');
+                    modal.classList.remove('alert-success');
+
+                    label.textContent = 'Los valores ingresados no coinciden'
+                    
+                }
+                else if(contrasena.trim() == "" || contrasenaRepetida.trim() == ""){ //Valida que los campos no esten en blanco
+                    var modal = document.getElementById('modal-contain');
+                    var label = document.getElementById('lb-modal');
+
+                    modal.classList.add('alert-danger');
+                    modal.classList.remove('alert-success');
+
+                    label.textContent = 'No debe dejar los campos vacios'
+                    
+                }
+                else{                                                           //Llama al metodo del controlador para cambiar la contraseña
+                    var username = localStorage.getItem('username');                   
+
+                    $.ajax({
+                        url: '/UserAuthentication/changePassword',
+                        type: 'POST',
+                        data: {
+                            user: username, oldPassword: contrasenaAntigua, newPassword: contrasena
+                        },
+                        success: function (e) {
+
+                            var modal = document.getElementById('modal-contain');
+                            var label = document.getElementById('lb-modal');
+
+                            if (e.length==0) {                                   //Muestra que el cambio fue correcto
+                                modal.classList.remove('alert-danger');
+                                modal.classList.add('alert-success');
+
+                                label.textContent = 'Contraseña Actualizada Correctamente';
+                            } else {                                             //Muestra los errores que surgieron al intentar cambiar la contraseña
+                                modal.classList.add('alert-danger');
+                                modal.classList.remove('alert-success');
+
+                                label.innerHTML = 'Error al actualizar la Contraseña, se encontraron los siguientes errores: <br>'
+                                for (var message of e) {
+                                    var contenido = label.innerHTML + ' <br> ';
+                                    label.innerHTML = contenido + message;
+                                }
+
+                                
+                            }
+                           
+                        }
+
+                    });
+                    
+                }
+
+
+                document.getElementById("inContrasenaAntigua").value = '';  //Limpia los campos de texto
+                document.getElementById("inContrasena").value = '';
+                document.getElementById("inContrasenaRepetida").value = '';
+
+                var modal = new bootstrap.Modal(document.getElementById('modal-correo')); //Muestra un pop-up informando la accion realizada
+                modal.show();
+            }
+
+        });
+
+        $('.btn-cancelar-contrasena').click(function () {
+            const botonCancelar = document.getElementsByClassName('btn-cancelar-contrasena')[0];
+            const botonGuardar = document.getElementsByClassName('btn-contrasena')[0];
+            const divContrasena = document.getElementById('table-contrasena');
+            const input = document.getElementById("inUsuario");
+
+            hideButtonContrasena(botonCancelar, botonGuardar, input, divContrasena);
+
+            document.getElementById("inContrasenaAntigua").value = '';  //Limpia los campos de texto
+            document.getElementById("inContrasena").value = '';
+            document.getElementById("inContrasenaRepetida").value = '';
+        });
+
+        window.onload = function () {
+            LoadUserData(); //Carga la imagen y al nav de la aplicacion
+
+            
+
+            getDataUser(); //Obtiene los datos del usuario y los asigna a los elementos
+
+            var bytesImg = localStorage.getItem('bytesImg');
+            document.getElementsByClassName("img-profile")[1].setAttribute("src", 'data:image/webp;base64,' + bytesImg); //La imagen ampliada
+        };
+
+        $('#btn-eliminar-cuenta').click(function () {
+
+            var modal = new bootstrap.Modal(document.getElementById('modal-delete')); //Muestra un pop-up informando la accion realizada
+            modal.show();
+        });
+
+        $('#btn-validado-eliminar-cuenta').click(function () {
+            var username = localStorage.getItem('username');
+            $.ajax({                                            //Elimina la cuenta
+                url: '/UserAuthentication/DeleteAccount',
+                type: 'POST',
+                data: { 
+                    user: username
+                },
+                success: function (response) {
+                    // Redireccionar al login
+                    window.location.href = '/UserAuthentication/Login';
+                },
+            });
+
+        });
+
+        function getDataUser(){
+
+            var imageId = localStorage.getItem('idUser');
+
+            $.ajax({ //Obtiene los datos del usuario
+                url: '/Client/getUserData',
+                type: 'GET',
+                data: {
+                    id: imageId
+                },
+                success: function (e) {
+                    const inputName = document.getElementById("inNombre");
+                    inputName.value = e.name;
+
+                    const inputCorreo = document.getElementById("inCorreo");
+                    inputCorreo.value = e.email;
+                    localStorage.setItem('email', e.email)
+
+                    const inputUsuario = document.getElementById("inUsuario");
+                    inputUsuario.value = e.username;                  
+                }
+            });
+        }
+    </script>
+}
+

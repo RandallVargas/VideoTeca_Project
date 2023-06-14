@@ -25,85 +25,21 @@ namespace Video_Teca.Controllers
 
         public IActionResult Index()
         {       
-            if (TempData.Keys.Count>0)
-            {
-                var username = TempData["username"].ToString();
-                var user = db.Users.First(x => x.Username == username);
-                byte[] imgByte = db.UserImgs.First(y => y.UserID == user.Id).imagen;
-                //var img = getImage(imgByte);
-                ViewBag.UserId= user.Id;
-                ViewBag.Username = user.Username;
-                ViewBag.ImageBytes = imgByte.ToList();
-            }
+            
             return View();
         }
 
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
+        
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public byte[] getBytesImage(int id) {
-            byte[] imgByte = db.UserImgs.First(y => y.UserID == id).imagen;
-            return imgByte;
-        }
-
-        public int UploadUserImage(int id, byte[] imgBytes) {
-
-            if (imgBytes.Length > 4194304) {
-                return -1;
-            }
-
-            try {
-                var parameter = new List<SqlParameter>();
-                parameter.Add(new SqlParameter("@Id", id));
-                parameter.Add(new SqlParameter("@imagen", imgBytes));
-
-                db.Database.ExecuteSqlRaw(@"exec UpdateImage @Id, @imagen", parameter.ToArray());
-                db.SaveChanges();
-
-                return 1;
-            }
-            catch {
-                return 0;
-            }         
-        }
-
-        public User getUserData(int id) {
-
-            User usuario = db.Users.First(x => x.Id == id);
-            return usuario;
-        }
-
-        public int changeEmail(int id, string email) {
-
-            try
-            {
-                var parameter = new List<SqlParameter>();
-                parameter.Add(new SqlParameter("@Id", id));
-                parameter.Add(new SqlParameter("@email", email));
-
-                db.Database.ExecuteSqlRaw(@"exec changeEmail @Id, @email", parameter.ToArray());
-                db.SaveChanges();
-
-                return 1;
-            }
-            catch
-            {
-                return -1;
-            }
-            
-        }
+        
     }
 }
