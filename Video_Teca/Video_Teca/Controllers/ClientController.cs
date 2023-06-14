@@ -18,6 +18,16 @@ namespace Video_Teca.Controllers
         
         public ActionResult DisplayClient()
         {
+            if (TempData.Keys.Count > 0)
+            {
+                var username = TempData["username"].ToString();
+                var user = db.Users.First(x => x.Username == username);
+                byte[] imgByte = db.UserImgs.First(y => y.UserID == user.Id).imagen;
+                //var img = getImage(imgByte);
+                ViewBag.UserId = user.Id;
+                ViewBag.Username = user.Username;
+                ViewBag.ImageBytes = imgByte.ToList();
+            }
 
 
             var pelis = new List<MoviesAndSeries>();
@@ -49,17 +59,7 @@ namespace Video_Teca.Controllers
             ViewBag.Carousels = carousels;
 
 
-            if (TempData.Keys.Count > 0)
-            {
-                var username = TempData["username"].ToString();
-                var user = db.Users.First(x => x.Username == username);
-                byte[] imgByte = db.UserImgs.First(y => y.UserID == user.Id).imagen;
-                //var img = getImage(imgByte);
-                ViewBag.UserId = user.Id;
-                ViewBag.Username = user.Username;
-                ViewBag.ImageBytes = imgByte.ToList();
-            }
-
+          
 
             //var username = localStorage.getItem('username');
             //var client = db.Users.Find();
