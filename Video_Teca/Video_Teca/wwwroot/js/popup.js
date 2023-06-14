@@ -9,6 +9,7 @@ $(document).ready(function () {
             success: function (result) {
                 $("#popup-container").fadeIn();
                 $("#popup-content").html(result);
+                  localStorage.getItem("idUser");
             },
             error: function () {
                 alert("Error al cargar la información de la película.");
@@ -25,18 +26,20 @@ $(document).ready(function () {
     });
 });
 
-var btnpopup = document.getElementById('btn-popup'),
-    overlay = document.getElementById('overlay'),
-    popup = document.getElementById('popup'),
-    btncerrarpopup = document.getElementById('btn-cerrar-popup');
 
-//btnpopup.addEventListener('click', function () {
-//    overlay.classList.add('active');
-//    popup.classList.add('active');
+
+//var btnpopup = document.getElementById('btn-popup'),
+//    overlay = document.getElementById('overlay'),
+//    popup = document.getElementById('popup'),
+//    btncerrarpopup = document.getElementById('btn-cerrar-popup');
+
+////btnpopup.addEventListener('click', function () {
+////    overlay.classList.add('active');
+////    popup.classList.add('active');
    
+////});
+//btncerrarpopup.addEventListener('click', function () {
+//    overlay.classList.remove('active');
+//    popup.classList.remove('active');
 //});
-btncerrarpopup.addEventListener('click', function () {
-    overlay.classList.remove('active');
-    popup.classList.remove('active');
-});
 

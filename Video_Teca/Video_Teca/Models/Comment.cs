@@ -13,6 +13,8 @@ public partial class Comment
 
     public string? comment1 { get; set; }
 
+    public string? Username { get; set; }
+
     public virtual MoviesAndSeries? movie_series { get; set; }
 
     public virtual User? user { get; set; }
