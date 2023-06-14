@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Video_Teca.Models.MoviesAndSeries>
 
 @{
+
     ViewData["Title"] = "DisplayClient";
 }
 @*@ViewBag.Username*@
@@ -15,35 +16,19 @@
    
 </head>
 <body>
+    
     @foreach (var carousel in ViewBag.Carousels)
     {
         <div class="galery">
+            
             @foreach (var item in Model)
             {
-                <div>
-                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" href="#" class="btn-popup" data-movie-id="@item.id" style="width: 200px; height: 200px" />
+                <div class="Image_Carrusel">
+                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" href="#" class="btn-popup" data-movie-id="@item.id"  />
                 </div>
             }
         </div>
     }
-
- 
-   @* <div id="div_galery">
-        <div class="galery">
-
-            @foreach (var item in Model)
-            {
-                <div>
-                 
-                  
-               
-                   
-                </div>
-                
-             
-            }
-        </div>
-    </div>*@
     <div id="popup-container">
         <div id="popup-content">
   
@@ -64,11 +49,7 @@
                     slidesToShow: 1,
                     centerMode: true,
                     variableWidth: true
-                    //             dots: true,
-                    //infinite: true,
-                    //speed: 300,
-                    //slidesToShow: 1,
-                    //adaptiveHeight: true
+                   
                 });
 
             });
@@ -76,6 +57,7 @@
         </script>
 
     }
+
 </body>
 </html>
 

@@ -53,13 +53,13 @@ namespace Video_Teca.Controllers
             Console.WriteLine(id);
 
             var movieInfo = db.MoviesAndSeries.Find(id);
-           
+
             //var genres = db.Genres.FromSqlRaw("EXEC GetGenresByMovieId @MovieId", new SqlParameter("@MovieId", id)).ToList();
-            //var genres = (from g in db.Genres
-            //              join mg in db.MovieGenres on g.genre_id equals mg.genre_id
-            //              where mg.movie_id == id
-            //              select g.genre_name).ToList();
-            //ViewBag.Genres = genres;
+            var genres = (from g in db.Genres
+                          join mg in db.MovieGenres on g.genre_id equals mg.genre_id
+                          where mg.movie_id == id
+                          select g.genre_name).ToList();
+            ViewBag.Genres = genres;
 
 
 

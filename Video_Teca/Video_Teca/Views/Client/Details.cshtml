@@ -20,11 +20,11 @@
     <h2>Synopsis</h2>
     <p>@Model.synopsis</p>
     <h2>Genres</h2>
-    @* @foreach (var genre in ViewBag.Genres)
+     @foreach (var genre in ViewBag.Genres)
     {
-    @genre
-    }*@
-    <img src="@Model.movie_cover" />
+        <h3>@genre</h3>
+    }
+    <img src="@Model.movie_cover" style="width:200px; height:200px;" />
 
     <div class="Additional">
         <button>Actors</button>

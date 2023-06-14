@@ -9,6 +9,12 @@ body {
     background: linear-gradient(rgb(7, 101, 164, 0.60), #550b82);
 }
 
+.Image_Carrusel img {
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    
+}
 
 #popup-container {
     display: none;
