@@ -45,12 +45,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between order-2">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark px-2 link-secondary" asp-area="" asp-controller="Home" asp-action="Index">Videos</a> @*Cambiar por la vista de peliculas*@
+                            <a class="nav-link text-dark px-2 link-secondary" asp-area="" asp-controller="Client" asp-action="DisplayClient">Videos</a> @*Cambiar por la vista de peliculas*@
                         </li>
                         @if (!User.IsInRole("client"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark px-2 link-dark" asp-area="" asp-controller="Home" asp-action="Index">Administracion de usuarios</a>  @*Cambiar por la vista de administracion*@
+                                <a class="nav-link text-dark px-2 link-dark" asp-area="" asp-controller="Admin" asp-action="UserAdministration">Administracion de usuarios</a>  @*Cambiar por la vista de administracion*@
                             </li>
                         }
                                     
@@ -70,17 +70,17 @@
                     </a>                                                
                     <ul class="dropdown-menu text-small dropdown-menu-lg-end dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownuser">
                         <li>
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Nuevo">Nuevo</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Client" asp-action="Nuevo">Nuevo</a>
 
                         </li>
 
                         <li>
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Configuration">Configuraci&oacuten</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Client" asp-action="Configuration">Configuraci&oacuten</a>
 
                         </li>
 
                         <li>                          
-                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Profile">Perfil</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Client" asp-action="Profile">Perfil</a>
 
                         </li>
 

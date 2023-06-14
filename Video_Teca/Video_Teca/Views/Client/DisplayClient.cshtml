@@ -52,7 +52,35 @@
                    
                 });
 
+                window.onload = function () {
+                    if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
+                        localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
+
+                        var UserId = '@ViewBag.UserId';
+                        localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
+
+                        var username = '@ViewBag.Username';
+                        localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
+
+                        $.ajax({
+                            url: '/Client/getBytesImage',
+                            type: 'GET',
+                            data: { id: UserId },
+                            success: function (response) {
+                                localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
+
+                                var outputElement = document.getElementById('img-perfil');
+                                outputElement.src = 'data:image/webp;base64,' + response;
+
+                            }
+                        });
+                    } else {
+                        LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+                    }
+                };
+
             });
+
 
         </script>
 

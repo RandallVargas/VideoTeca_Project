@@ -62,7 +62,7 @@ namespace Video_Teca.Controllers
                 parameter.Add(new SqlParameter("@Name", model.Name));
                 parameter.Add(new SqlParameter("@imagen", archivoBytes));
 
-                Task.Run(() => db.Database.ExecuteSqlRaw(@"exec insert_user @Username, @Email, @Name, @imagen", parameter.ToArray()));
+                db.Database.ExecuteSqlRaw(@"exec insert_user @Username, @Email, @Name, @imagen", parameter.ToArray());
                 
 
             }
@@ -136,6 +136,28 @@ namespace Video_Teca.Controllers
             return Ok(result);
 
         }*/
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> changePassword(string user, string oldPassword, string newPassword)
+        {
+            var result = await _service.ChangePasswordAsync(user, oldPassword, newPassword);           
+            return Ok(result.Message);
+
+        }
+
+        [Authorize]
+        
+        public async Task<IActionResult> DeleteAccount(string user)
+        {
+            await _service.DeleteAccountAsync(user);
+            var parameter = new List<SqlParameter>();
+            parameter.Add(new SqlParameter("@Username", user));
+            
+
+            db.Database.ExecuteSqlRaw(@"exec delete_user @Username", parameter.ToArray());
+            return RedirectToAction(nameof(Login));
+
+        }
     }
 
 

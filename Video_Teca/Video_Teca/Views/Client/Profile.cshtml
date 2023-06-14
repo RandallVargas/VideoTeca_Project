@@ -209,7 +209,7 @@
                     var imageId = localStorage.getItem('idUser');
 
                     $.ajax({ //Actualiza la imagen en la base de datos 
-                        url: '/Home/UploadUserImage',
+                        url: '/Client/UploadUserImage',
                         type: 'POST',
                         data: { id: imageId,
                                 imgBytes: base64String
@@ -271,7 +271,7 @@
                 if (correo != correoAntiguo) {                        //Valida que hayan cambios en el correo
                
                     $.ajax({                              //Llama al metodo del controlador para cambiar el correo
-                        url: '/Home/changeEmail',
+                        url: '/Client/changeEmail',
                         type: 'POST',
                         data: {
                             id: Iduser, email: correo
@@ -449,7 +449,7 @@
             var imageId = localStorage.getItem('idUser');
 
             $.ajax({ //Obtiene los datos del usuario
-                url: '/Home/getUserData',
+                url: '/Client/getUserData',
                 type: 'GET',
                 data: {
                     id: imageId
