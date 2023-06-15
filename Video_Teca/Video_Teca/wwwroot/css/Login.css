@@ -31,14 +31,15 @@ body {
 .login-box .user-box {
         position: relative;
 }
-input:-webkit-autofill {
-    border: 3px solid blue;
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px rgba(0,0,0,.5) inset !important;
+
 }
-.login-box .user-box input:-webkit-autofill {
-    border: 3px solid blue;
-    color:aquamarine;
-    background:aquamarine;
-}
+
 
 .login-box .user-box input {
     width: 100%;

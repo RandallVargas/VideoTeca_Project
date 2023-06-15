@@ -9,15 +9,15 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="~/css/Client.css">
+   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/popup.js"></script>
     <script src="~/js/LoadData.js"></script>
-   
+    <link rel="stylesheet" type="text/css" href="~/css/Client.css">
 </head>
 <body>
     
-    @foreach (var carousel in ViewBag.Carousels)
+   @* @foreach (var carousel in ViewBag.Carousels)
     {
         <div class="galery">
             
@@ -28,7 +28,39 @@
                 </div>
             }
         </div>
-    }
+    }*@
+    <h2>Películas más recientes agregadas</h2>
+    <div class="galery">
+      
+        @foreach (var pelicula in ViewBag.PelisRecientes)
+        {
+            <div class="Image_Carrusel_NewAdd">
+                <img src="@pelicula.movie_cover" href="#" class="btn-popup" data-movie-id="@pelicula.id" />
+            </div>
+        }
+    </div>
+    <h4>Genero1</h4>
+    <div class="galery">
+
+        @foreach (var pelicula in ViewBag.PelisGenero1)
+        {
+            <div class ="Image_Carrusel">
+                <img src="@pelicula.movie_cover" href="#" class="btn-popup" data-movie-id="@pelicula.id"  />
+            </div>
+        }
+    </div>
+    <h4>Genero2</h4>
+    <div class="galery">
+        
+        @foreach (var pelicula in ViewBag.PelisGenero2)
+        {
+            <div class="Image_Carrusel">
+                <img src="@pelicula.movie_cover" href="#" class="btn-popup" data-movie-id="@pelicula.id"  />
+            </div>
+        }
+    </div>
+
+
     <div id="popup-container">
         <div id="popup-content">
   

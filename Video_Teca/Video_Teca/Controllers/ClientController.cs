@@ -30,47 +30,89 @@ namespace Video_Teca.Controllers
             }
 
 
-            var pelis = new List<MoviesAndSeries>();
-            using (var dbContext = new VideoTecaDbContext())
-            {
-                pelis = dbContext.MoviesAndSeries.ToList();
-            }
+            //var pelis = new List<MoviesAndSeries>();
+            //using (var dbContext = new VideoTecaDbContext())
+            //{
+            //    pelis = dbContext.MoviesAndSeries.ToList();
+            //}
 
-            var genres = new List<string>();
+            //var genres = new List<string>();
 
-            using (var dbContext = new VideoTecaDbContext())
-            {
-                genres = dbContext.Genres.Select(g => g.genre_name).ToList();
-            }
+            //using (var dbContext = new VideoTecaDbContext())
+            //{
+            //    genres = dbContext.Genres.Select(g => g.genre_name).ToList();
+            //}
 
-            var random = new Random();
-            genres = genres.OrderBy(x => random.Next()).ToList();
+            //var random = new Random();
+            //genres = genres.OrderBy(x => random.Next()).ToList();
 
-            var carousels = new List<List<MoviesAndSeries>>();
+            //var carousels = new List<List<MoviesAndSeries>>();
 
-            int batchSize = (int)Math.Ceiling(genres.Count() / 3.0);
-            for (int i = 0; i < genres.Count(); i += batchSize)
-            {
-                var genreSubset = genres.Skip(i).Take(batchSize).ToList();
-                var carousel = pelis.Where(item => db.MovieGenres.Any(mg => mg.movie_id == item.id && genreSubset.Contains(mg.genre_id))).ToList();
-                carousels.Add(carousel);
-            }
+            //int batchSize = (int)Math.Ceiling(genres.Count() / 3.0);
+            //for (int i = 0; i < genres.Count(); i += batchSize)
+            //{
+            //    var genreSubset = genres.Skip(i).Take(batchSize).ToList();
+            //    var carousel = pelis.Where(item => db.MovieGenres.Any(mg => mg.movie_id == item.id && genreSubset.Contains(mg.genre_id))).ToList();
+            //    carousels.Add(carousel);
+            //}
 
-            ViewBag.Carousels = carousels;
+            //ViewBag.Carousels = carousels;
 
 
-          
+
 
             //var username = localStorage.getItem('username');
             //var client = db.Users.Find();
             //Console.WriteLine(db.Users.Find("Vargas13"));
-           // var pelis = new List<MoviesAndSeries>();
+            // var pelis = new List<MoviesAndSeries>();
             //using (var dbContext = new VideoTecaDbContext())
             //{
             //  pelis= dbContext.MoviesAndSeries.ToList();
             //}
+            ///////////////////////////////////////
+            var pelisRecientes = new List<MoviesAndSeries>();
+            var pelisGenero1 = new List<MoviesAndSeries>();
+            var pelisGenero2 = new List<MoviesAndSeries>();
 
-            return View(pelis);
+            using (var dbContext = new VideoTecaDbContext())
+            {
+               // pelisRecientes = dbContext.MoviesAndSeries.OrderByDescending(m => m.date_addded).Take(10).ToList();
+                pelisRecientes = dbContext.MoviesAndSeries.FromSqlRaw("EXEC GetRecentMovies").ToList();
+                // Obtener dos géneros aleatorios
+                var generos = dbContext.Genres.ToList();
+                var random = new Random();
+                var generosAleatorios = generos.OrderBy(x => random.Next()).Take(2).ToList();
+
+                // Obtener películas para cada género aleatorio
+                var genreId1 = generosAleatorios[0].genre_id;
+                var genreId2 = generosAleatorios[1].genre_id;
+
+
+                pelisGenero1 = dbContext.MoviesAndSeries.FromSqlRaw("EXEC GetMoviesByGenre @GenreId", new SqlParameter("@GenreId", genreId1)).ToList();
+                pelisGenero2 = dbContext.MoviesAndSeries.FromSqlRaw("EXEC GetMoviesByGenre @GenreId", new SqlParameter("@GenreId", genreId2)).ToList();
+                //pelisGenero1 = dbContext.MoviesAndSeries
+                //    .Join(dbContext.MovieGenres, m => m.id, mg => mg.movie_id, (m, mg) => new { Movie = m, MovieGenre = mg })
+                //    .Where(j => j.MovieGenre.genre_id == genreId1)
+                //    .OrderByDescending(j => j.Movie.date_addded)
+                //    .Select(j => j.Movie)
+                //    .Take(10)
+                //    .ToList();
+
+                //pelisGenero2 = dbContext.MoviesAndSeries
+                //    .Join(dbContext.MovieGenres, m => m.id, mg => mg.movie_id, (m, mg) => new { Movie = m, MovieGenre = mg })
+                //    .Where(j => j.MovieGenre.genre_id == genreId2)
+                //    .OrderByDescending(j => j.Movie.date_addded)
+                //    .Select(j => j.Movie)
+                //    .Take(10)
+                //    .ToList();
+
+            }
+
+            ViewBag.PelisRecientes = pelisRecientes;
+            ViewBag.PelisGenero1 = pelisGenero1;
+            ViewBag.PelisGenero2 = pelisGenero2;
+            return View();
+           // return View(pelis);
         }
 
         // GET: ClientController/Details/5
@@ -87,8 +129,13 @@ namespace Video_Teca.Controllers
                           select g.genre_name).ToList();
             ViewBag.Genres = genres;
 
+            var actor = (from a in db.Actors
+                         join ma in db.MovieActors on a.actor_id equals ma.actor_id
+                         where ma.movie_id == id
+                         select a.actor_first_name).ToList();
 
 
+             ViewBag.actor = actor;
 
             //Console.WriteLine(id);
             // Console.WriteLine(movieInfo.title);
