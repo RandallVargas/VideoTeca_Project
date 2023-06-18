@@ -7,7 +7,7 @@ namespace Video_Teca.Controllers
 {
     
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, superAdmin")]
     public class AdminController : Controller
     {
         private readonly IUserAuthenticationService _service;
@@ -19,6 +19,10 @@ namespace Video_Teca.Controllers
 
         public IActionResult Display()
         {
+            return View();
+        }
+
+        public IActionResult UserAdministration() {
             return View();
         }
 
