@@ -149,25 +149,51 @@ INSERT INTO Genres (genre_id, genre_name) VALUES ('10', 'Documentary');
 
 'MVS024': Animation (AC004)
 
-
+Use Video_Teca_C13448_B98314
 Delete from Actors
 INSERT INTO Actors (actor_id, actor_first_name, actor_last_name, actor_img) 
 VALUES (1, 'Chris', 'Evans', 'https://media.revistavanityfair.es/photos/60e8605006a9cde9aea6d749/master/w_1600%2Cc_limit/45447.jpg');
 
 INSERT INTO Actors (actor_id, actor_first_name, actor_last_name, actor_img) 
-VALUES (2, 'Hayley', 'Atwell', 'hayley_atwell.jpg');
+VALUES (2, 'Hayley', 'Atwell', 'https://img.wegreenkw.com/sites/3/2023/03/Hayley-Atwell.webp');
 
 INSERT INTO Actors (actor_id, actor_first_name, actor_last_name, actor_img) 
-VALUES (3, 'Sebastian', 'Stan', 'sebastian_stan.jpg');
+VALUES (3, 'Sebastian', 'Stan', 'https://images.mubicdn.net/images/cast_member/15647/cache-120716-1600344240/image-w856.jpg');
 
 INSERT INTO Actors (actor_id, actor_first_name, actor_last_name, actor_img) 
-VALUES (4, 'Tommy', 'Lee Jones', 'tommy_lee_jones.jpg');
+VALUES (4, 'Tommy', 'Lee Jones', 'https://es.web.img2.acsta.net/r_1280_720/pictures/18/02/28/11/42/1899408.jpg');
 
 INSERT INTO Actors (actor_id, actor_first_name, actor_last_name, actor_img) 
-VALUES (5, 'Hugo', 'Weaving', 'hugo_weaving.jpg');
+VALUES (5, 'Hugo', 'Weaving', 'https://flxt.tmsimg.com/assets/27163_v9_bb.jpg');
 
 INSERT INTO Actors (actor_id, actor_first_name, actor_last_name, actor_img) 
-VALUES (6, 'Dominic', 'Cooper', 'dominic_cooper.jpg');
+VALUES (6, 'Dominic', 'Cooper', 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/kYSnlEahZCwHprsWtOO0OJB346P.jpg');
+
+
+INSERT INTO MovieActor(movie_id, actor_id) VALUES
+
+('MVS003', '1')
+INSERT INTO MovieActor(movie_id, actor_id) VALUES
+
+('MVS002', '2')
+
+INSERT INTO MovieActor(movie_id, actor_id) VALUES
+
+('MVS002', '3')
+
+INSERT INTO MovieActor(movie_id, actor_id) VALUES
+
+('MVS002', '4')
+
+INSERT INTO MovieActor(movie_id, actor_id) VALUES
+
+('MVS002', '5')
+
+INSERT INTO MovieActor(movie_id, actor_id) VALUES
+
+('MVS002', '6')
+
+
 
 INSERT INTO MoviesAndSeries(id, title, synopsis, release_year, duration, clasification, director, genre_id, num_seasons, num_episodes, episode_duration, movie_cover, year_of_release, date_addded, media_type)
 VALUES ('MVS002', 'Captain America: The First Avenger', 'During World War II, Steve Rogers volunteers for an experimental program that turns him into the super soldier known as Captain America.',

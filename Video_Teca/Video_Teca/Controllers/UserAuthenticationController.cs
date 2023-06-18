@@ -130,6 +130,10 @@ namespace Video_Teca.Controllers
                 Name = "Cristofer-Guanipa",
                 Email = "cristofer@gmail.com",
                 Password = "Admin2023*",
+         UserName = "admin_R",
+                Name = "RandallVargas",
+                Email = "randall@gmail.com",
+                Password = "Admin2023*",
             };
             model.Role = "admin";
             var result = await _service.RegistrationAsync(model);

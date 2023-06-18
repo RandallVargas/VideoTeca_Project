@@ -1,0 +1,40 @@
+﻿@model dynamic
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/css/Additional.css">
+</head>
+<body>
+    @if (Model.Type == "actors")
+    {
+     
+        @foreach (var actor in Model.Actors)
+        {
+            <div class="DivAutor">
+           
+            <img src=@actor.actor_img style="height:100px;width:100px;" />
+                <h3>@actor.actor_first_name @actor.actor_last_name</h3>
+            </div>
+        }
+    }
+    else if (Model.Type == "comments")
+    {
+      
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="containerText">
+                <strong>Author:</strong> @comment.Username
+                <br>
+                @comment.comment1
+            </div>
+            
+               
+            
+        }
+    }
+</body>
+</html>

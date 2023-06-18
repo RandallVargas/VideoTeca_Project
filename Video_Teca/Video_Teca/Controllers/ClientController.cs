@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Dynamic;
 using Video_Teca.Data;
 using Video_Teca.Models;
 //using Video_Teca.Models.Users;
@@ -33,6 +34,7 @@ namespace Video_Teca.Controllers
             var pelisRecientes = new List<MoviesAndSeries>();
             var pelisGenero1 = new List<MoviesAndSeries>();
             var pelisGenero2 = new List<MoviesAndSeries>();
+            var gns = new List<Genre>();
 
             using (var dbContext = new VideoTecaDbContext())
             {
@@ -46,16 +48,19 @@ namespace Video_Teca.Controllers
                 // Obtener películas para cada género aleatorio
                 var genreId1 = generosAleatorios[0].genre_id;
                 var genreId2 = generosAleatorios[1].genre_id;
-
+                var genreName1 = generosAleatorios[0].genre_name;
+                var genreName2 = generosAleatorios[1].genre_name;
+                ViewBag.GenreName1 = genreName1;
+                ViewBag.GenreName2 = genreName2;
 
                 pelisGenero1 = dbContext.MoviesAndSeries.FromSqlRaw("EXEC GetMoviesByGenre @GenreId", new SqlParameter("@GenreId", genreId1)).ToList();
                 pelisGenero2 = dbContext.MoviesAndSeries.FromSqlRaw("EXEC GetMoviesByGenre @GenreId", new SqlParameter("@GenreId", genreId2)).ToList();
-
+             
             }
-
             ViewBag.PelisRecientes = pelisRecientes;
             ViewBag.PelisGenero1 = pelisGenero1;
             ViewBag.PelisGenero2 = pelisGenero2;
+            
             return View();
            // return View(pelis);
         }
@@ -188,7 +193,49 @@ namespace Video_Teca.Controllers
         {
             var comments = db.Comments.FromSqlRaw("EXEC GetCommentsByMovieId @movieId", new SqlParameter("@movieId", id)).ToList();
             Console.WriteLine(comments);
-            return PartialView("CommentsView",comments);
+            return PartialView("CommentsView", comments);
+        }
+        public IActionResult GetActors(string id)
+        {
+            var actors = db.Actors.FromSqlRaw("EXEC GetActorsByMovie @movieId", new SqlParameter("@movieId", id)).ToList();
+            Console.WriteLine(actors);
+            return PartialView("CommentsView", actors);
+        }
+        public IActionResult GetContent(string id, string type)
+        {
+            dynamic model = new ExpandoObject();
+
+            if (type == "actors")
+            {
+                var actors = db.Actors.FromSqlRaw("EXEC GetActorsByMovie @movieId", new SqlParameter("@movieId", id)).ToList();
+                model.Type = "actors";
+                model.Actors = actors;
+            }
+            else if (type == "reviews")
+            {
+                var comments = db.Comments.FromSqlRaw("EXEC GetCommentsByMovieId @movieId", new SqlParameter("@movieId", id)).ToList();
+                model.Type = "comments";
+                model.Comments = comments;
+            }
+
+            return PartialView("ContentViewPartial", model);
+        }
+        public IActionResult GetSearch(string searchText)
+        {
+          var results = db.MoviesAndSeries
+                 .Where(m => m.title.Contains(searchText))
+                .ToList();
+
+            return PartialView("SearchResultsPartial", results);
+        }
+        public IActionResult FilterByGenres(string[] genres)
+        {
+            string genreList = string.Join(",", genres);
+
+            var results = db.MoviesAndSeries
+                .FromSqlRaw("EXEC GetMoviesByGenres @Genres", new SqlParameter("@Genres", genreList))
+                .ToList();
+            return PartialView("SearchResultsPartial", results);
         }
 
 
