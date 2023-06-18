@@ -115,33 +115,44 @@ namespace Video_Teca.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        public async Task<IActionResult> Reg()
-        {
-            var model = new RegistrationModel
-            {
-                UserName = "adminadmin",
-                Name = "Super Administrador",
-                Email = "cristofer.guanipa@ucr.ac.cr",
-                Password = "Lenguajes2023*",
-            };
-            model.Role = "superAdmin";
-            var result = await _service.RegistrationAsync(model);
+     //   public async Task<IActionResult> Reg()
+     //   {
+        //    var model = new RegistrationModel
+        //    {
 
-            string imagePath = "wwwroot/images/img-default.webp"; //Se selecciona la imagen por defecto
-            byte[] archivoBytes = System.IO.File.ReadAllBytes(imagePath);
+             //   UserName = "admin_c",
+              //  Name = "Cristofer-Guanipa",
+             //   Email = "cristofer@gmail.com",
+            //    Password = "Admin2023*",
+      //   UserName = "admin_R",
+           //     Name = "RandallVargas",
+          //      Email = "randall@gmail.com",
+          //      Password = "Admin2023*",
 
-            var parameter = new List<SqlParameter>();
-            parameter.Add(new SqlParameter("@Username", model.UserName));
-            parameter.Add(new SqlParameter("@Email", model.Email));
-            parameter.Add(new SqlParameter("@Name", model.Name));
-            parameter.Add(new SqlParameter("@imagen", archivoBytes));
+          //      UserName = "adminadmin",
+         ///       Name = "Super Administrador",
+           //     Email = "cristofer.guanipa@ucr.ac.cr",
+          //      Password = "Lenguajes2023*",
 
-            db.Database.ExecuteSqlRaw(@"exec insert_user @Username, @Email, @Name, @imagen", parameter.ToArray());
+     //       };
+        //    model.Role = "superAdmin";
+        //    var result = await _service.RegistrationAsync(model);
+
+       //     string imagePath = "wwwroot/images/img-default.webp"; //Se selecciona la imagen por defecto
+        //    byte[] archivoBytes = System.IO.File.ReadAllBytes(imagePath);
+
+        //    var parameter = new List<SqlParameter>();
+        //    parameter.Add(new SqlParameter("@Username", model.UserName));
+        //    parameter.Add(new SqlParameter("@Email", model.Email));
+        //    parameter.Add(new SqlParameter("@Name", model.Name));
+        //    parameter.Add(new SqlParameter("@imagen", archivoBytes));
+
+        //    db.Database.ExecuteSqlRaw(@"exec insert_user @Username, @Email, @Name, @imagen", parameter.ToArray());
 
 
-            return Ok(result);
+         //   return Ok(result);
 
-        }
+       // }
 
         [Authorize]
         [HttpPost]

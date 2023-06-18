@@ -1,6 +1,5 @@
 ﻿@model Video_Teca.Models.MoviesAndSeries
 
-
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,31 +9,36 @@
     <title>Details</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/js/CommentPopup.js"></script>
+    @*<script src="~/js/CommentPopup.js"></script>*@
+    <script src="~/js/Content.js"></script>
     <link rel="stylesheet" type="text/css" href="~/css/details.css">
 </head>
 <body>
-    <h2>@Model.title</h2>
-    <h2>Synopsis</h2>
-    <p>@Model.synopsis</p>
-    <h2>Genres</h2>
-     @foreach (var genre in ViewBag.Genres)
-    {
-        <h3>@genre</h3>
-    }
-    <img src="@Model.movie_cover" style="width:200px; height:200px;" />
-
-    <div class="Additional">
-        <button>Actors</button>
-        <button href="#" class="btn-popup" data-movie-id="@Model.id">Reviews</button>
-
-
-    </div>
-    <div id="popup-container">
-        <div id="popup-content">
+    <div class="Content">
+        <div class="Content_Img">
+            <img class="Cover" src="@Model.movie_cover" />
         </div>
+        
+       <div class="Content_Text">
+        <h1>@Model.title</h1>
+        <h2>Synopsis:</h2>
+        <p>@Model.synopsis</p>
+        <h2>Genres:</h2>
+        @foreach (var genre in ViewBag.Genres)
+        {
+            <h7>@genre,</h7>
+        }
+        </div>
+        <div class="Additional">
+            <button href="#" class="btn-popup" data-movie-id="@Model.id" data-popup-type="actors">Actors</button>
+            <button href="#" class="btn-popup" data-movie-id="@Model.id" data-popup-type="reviews">Reviews</button>
+        </div>
+    </div>
+   
+    <div id="popup-container">
+        <div id="popup-content"></div>
     </div>
 </body>
 </html>
