@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Video_Teca.Models.UserModel>
+
+@{
+    ViewData["Title"] = "UserAdministration";
+}
+<body>
+    <h1>UserAdministration</h1>
+
+</body>
+
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 container-cards">
+    @foreach (var item in Model)
+    {
+        <div class="col div-card">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                </div>
+
+                <div class="card-body height-card">
+                    <p class="card-text">
+                        Username: @Html.DisplayFor(modelItem => item.Username)
+                    <br>
+                        Role: @Html.DisplayFor(modelItem => item.Role)
+                    </p>
+                   
+                    <br>
+                   @* @Html.DisplayFor(modelItem => item.Email)*@
+                    <br>
+                    @*@Html.DisplayFor(modelItem => item.imagen)*@
+                    
+
+                </div>
+
+                <div class="card-footer">
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                </div>
+
+            </div>
+        </div>        
+    } 
+</div>
+    
+
+   
+
+
+@section Scripts {           
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    
+                    window.onload = function () {
+                        if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
+                            localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
+
+                            var UserId = '@ViewBag.UserId';
+                            localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
+
+                            var username = '@ViewBag.Username';
+                            localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
+
+                            $.ajax({
+                                url: '/Client/getBytesImage',
+                                type: 'GET',
+                                data: { id: UserId },
+                                success: function (response) {
+                                    localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
+
+                                    var outputElement = document.getElementById('img-perfil');
+                                    outputElement.src = 'data:image/webp;base64,' + response;
+
+                                }
+                            });
+                        } else {
+                            LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+                        }
+                    };
+
+                });
+
+
+            </script>
+
+    }
