@@ -88,24 +88,17 @@ namespace Video_Teca.Controllers
                 
                 TempData["username"] = model.Username;
 
-                // var resultDb = db.Users.First(x =>x.Username==model.Username );
-              
-                //var imgUser = db.UserImgs.First(x=> x.UserID==resultDb.Id);
-            
-               // UserModel userView = new UserModel();
-                // userView.Id = resultDb.Id;
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@Username", model.Username));
 
-                // Console.WriteLine(userView.Id);
-                //userView.Name = resultDb.Name;
-                //userView.Username = resultDb.Username;
-                //userView.Email = resultDb.Email;
-                //userView.imagen = imgUser.imagen;
-                //Hacer la busqueda del user y retornarlo
-                return RedirectToAction("DisplayClient", "Client");
-
+                var role = db.AspNetRoles.FromSqlRaw(@"exec get_role_user @Username", parameter.ToArray()).ToList();
                 
-                //return RedirectToAction("Index", "Home");
+                if (role.FirstOrDefault().Name == "superAdmin")
+                {
+                    return RedirectToAction("UserAdministration", "Admin");
+                }
 
+                return RedirectToAction("DisplayClient", "Client");
             }
             else
             {
@@ -122,24 +115,45 @@ namespace Video_Teca.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        /*public async Task<IActionResult> Reg()
-        {
-            var model = new RegistrationModel
-            {
-                UserName = "admin_c",
-                Name = "Cristofer-Guanipa",
-                Email = "cristofer@gmail.com",
-                Password = "Admin2023*",
-         UserName = "admin_R",
-                Name = "RandallVargas",
-                Email = "randall@gmail.com",
-                Password = "Admin2023*",
-            };
-            model.Role = "admin";
-            var result = await _service.RegistrationAsync(model);
-            return Ok(result);
+     //   public async Task<IActionResult> Reg()
+     //   {
+        //    var model = new RegistrationModel
+        //    {
 
-        }*/
+             //   UserName = "admin_c",
+              //  Name = "Cristofer-Guanipa",
+             //   Email = "cristofer@gmail.com",
+            //    Password = "Admin2023*",
+      //   UserName = "admin_R",
+           //     Name = "RandallVargas",
+          //      Email = "randall@gmail.com",
+          //      Password = "Admin2023*",
+
+          //      UserName = "adminadmin",
+         ///       Name = "Super Administrador",
+           //     Email = "cristofer.guanipa@ucr.ac.cr",
+          //      Password = "Lenguajes2023*",
+
+     //       };
+        //    model.Role = "superAdmin";
+        //    var result = await _service.RegistrationAsync(model);
+
+       //     string imagePath = "wwwroot/images/img-default.webp"; //Se selecciona la imagen por defecto
+        //    byte[] archivoBytes = System.IO.File.ReadAllBytes(imagePath);
+
+        //    var parameter = new List<SqlParameter>();
+        //    parameter.Add(new SqlParameter("@Username", model.UserName));
+        //    parameter.Add(new SqlParameter("@Email", model.Email));
+        //    parameter.Add(new SqlParameter("@Name", model.Name));
+        //    parameter.Add(new SqlParameter("@imagen", archivoBytes));
+
+        //    db.Database.ExecuteSqlRaw(@"exec insert_user @Username, @Email, @Name, @imagen", parameter.ToArray());
+
+
+         //   return Ok(result);
+
+       // }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> changePassword(string user, string oldPassword, string newPassword)

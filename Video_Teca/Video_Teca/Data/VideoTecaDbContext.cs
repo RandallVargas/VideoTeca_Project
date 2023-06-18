@@ -15,7 +15,6 @@ public partial class VideoTecaDbContext : DbContext
         : base(options)
     {
     }
-
     public virtual DbSet<Actor> Actors { get; set; }
 
     public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
