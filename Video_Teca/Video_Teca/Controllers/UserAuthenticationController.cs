@@ -32,9 +32,9 @@ namespace Video_Teca.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
-            }
+            }          
+                model.Role = "client";
             
-            model.Role = "client";
             var result = await _service.RegistrationAsync(model);
             TempData["msg"] = result.Message;
 
@@ -119,7 +119,6 @@ namespace Video_Teca.Controllers
      //   {
         //    var model = new RegistrationModel
         //    {
-
              //   UserName = "admin_c",
               //  Name = "Cristofer-Guanipa",
              //   Email = "cristofer@gmail.com",
@@ -175,6 +174,16 @@ namespace Video_Teca.Controllers
             db.Database.ExecuteSqlRaw(@"exec delete_user @Username", parameter.ToArray());
             return RedirectToAction(nameof(Login));
 
+        }
+
+        public async Task<IActionResult> DeleteUser(string user) {
+            await _service.DeleteAccountAsync(user);
+            var parameter = new List<SqlParameter>();
+            parameter.Add(new SqlParameter("@Username", user));
+
+
+            db.Database.ExecuteSqlRaw(@"exec delete_user @Username", parameter.ToArray());
+            return Ok();
         }
     }
 

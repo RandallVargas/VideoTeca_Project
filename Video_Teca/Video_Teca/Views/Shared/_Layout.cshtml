@@ -15,9 +15,7 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="~/slick-1.8.1/slick/slick.css" />
-    <link rel="stylesheet"
-          type="text/css"
-          href="~/slick-1.8.1/slick/slick-theme.css" />
+    <link rel="stylesheet" type="text/css" href="~/slick-1.8.1/slick/slick-theme.css" />
     <link rel="stylesheet" href="https://code.jquery.com/jquery-3.6.4.min.js" />
 
     <!-- End Slick -->
@@ -26,9 +24,9 @@
 <body>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="slick/slick.min.js"></script>
+    
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 mx-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3 px-3">
             <div class="container-fluid">
                 <a class="navbar-brand order-1" href="#">
                     <img class="img-logo" src="~/images/logo.webp"/>
@@ -72,16 +70,7 @@
                         <img id="img-perfil" class="img-profile rounded-circle img-thumbnail" />
                     </a>                                                
                     <ul class="dropdown-menu text-small dropdown-menu-lg-end dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownuser">
-                        <li>
-                            <a class="dropdown-item" asp-area="" asp-controller="Client" asp-action="Nuevo">Nuevo</a>
-
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item" asp-area="" asp-controller="Client" asp-action="Configuration">Configuraci&oacuten</a>
-
-                        </li>
-
+                        
                         <li>                          
                             <a class="dropdown-item" asp-area="" asp-controller="Client" asp-action="Profile">Perfil</a>
 
@@ -106,17 +95,14 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Video_Teca - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/profile.js" asp-append-version="true"></script>
-
+    <script src="~/js/DeleteUser.js"></script>
+    
     <script src="~/js/LoadUserData.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

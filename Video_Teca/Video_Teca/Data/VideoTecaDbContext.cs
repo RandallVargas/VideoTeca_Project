@@ -305,4 +305,6 @@ public partial class VideoTecaDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public DbSet<Video_Teca.Models.UserModel>? UserModel { get; set; }
 }
