@@ -26,10 +26,6 @@ header {
     background: linear-gradient( #0b7282,rgb(0 109 167 / 10%));
 }
 
-footer {
-    position:initial!important;
-}
-
 .dropdown-toggle::after {
     display: inline-block;
     margin-left: 0.255em;
