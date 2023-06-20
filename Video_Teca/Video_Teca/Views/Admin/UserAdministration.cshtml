@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Video_Teca.Models.UserModel>
+
+@{
+    ViewData["Title"] = "UserAdministration";
+}
+
+<h1>Administracion de Usuarios</h1>
+
+<p>
+    <a class="btn btn-detalles" asp-action="Registration">Crear Nuevo usuario</a>
+</p>
+
+<hr>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 container-cards">
+    @foreach (var item in Model)
+    {
+        <div class="col div-card">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                </div>
+
+                <div class="card-body height-card">
+                    <p class="card-text">
+                            <strong>Username:</strong> @Html.DisplayFor(modelItem => item.Username)
+                    <br>
+                       <strong>Role:</strong> @Html.DisplayFor(modelItem => item.Role)
+                    </p>
+                   
+                    <br>
+   
+                </div>
+
+                        <div class="card-footer text-center d-flex justify-content-evenly">
+                            <a class="btn btn-detalles" asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                    <button id="btn-eliminar" class="btn btn-eliminar" data-user-username="@item.Username">Eliminar</button>
+                        </div>
+
+            </div>
+        </div>        
+    } 
+
+    <div class="modal fade" id="modal-delete" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content content-delete-user">
+
+                <div class="modal-body">
+                    <h5>¿Estas seguro que deseas eliminar al usuario seleccionado?</h5>
+                    <br />
+                    <br />
+                    <div class="d-flex justify-content-evenly">
+                        <button class="btn btn-detalles" id="cancelar-eliminar" data-bs-dismiss="modal" aria-label="Close">No</button>
+                        <a class="btn btn-validado-eliminar" id="btn-validado-eliminar-cuenta" data-bs-dismiss="modal" aria-label="Close">Si</a>
+                    </div>
+                     
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade alert-danger" id="modal-user-deleted" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content ">
+
+                <div class="modal-body">
+                    
+                    
+                        <p id="text-user-deleted">A ocurrido un error al intentar eliminar al usuario</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+   
+
+
+@section Scripts {
+            
+            <script type="text/javascript">
+        
+
+                $(document).ready(function () {
+                    
+                    window.onload = function () {
+                        if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
+                            localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
+
+                            var UserId = '@ViewBag.UserId';
+                            localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
+
+                            var username = '@ViewBag.Username';
+                            localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
+
+                            $.ajax({
+                                url: '/Client/getBytesImage',
+                                type: 'GET',
+                                data: { id: UserId },
+                                success: function (response) {
+                                    localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
+
+                                    var outputElement = document.getElementById('img-perfil');
+                                    outputElement.src = 'data:image/webp;base64,' + response;
+
+                                }
+                            });
+                        } else {
+                            LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+                        }
+                    };
+
+
+                    $('#btn-eliminar').click(deleteUser);
+                    
+                });
+            </script>
+}

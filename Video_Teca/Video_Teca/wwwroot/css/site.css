@@ -16,11 +16,36 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(rgb(7, 101, 164, 0.60), #550b82);
+}
+
+header {
+    background: linear-gradient( #0b7282,rgb(0 109 167 / 10%));
+}
+
+footer {
+    position:initial!important;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
 }
 
 .navbar {
-    background: rgb(7, 101, 164, 0.60);
 }
 
 .img-logo {
@@ -30,8 +55,80 @@ body {
 #img-perfil {
     width: 50px;
     height: 50px;
+    background-color: transparent;
+    border: none;
 }
 
 .hidden {
     display: none;
+}
+
+.height-card{
+    height: 90px;
+
+}
+
+.dropdown-menu {
+    background: rgb(0 109 167 / 80%);
+}
+
+.dropdown-item:hover {
+    background: rgb(0 95 145);
+}
+
+.card {
+    background: rgb(0 109 167 / 50%);
+}
+
+@media (max-width: 576px) {
+
+    .container-cards {
+        justify-content: center;
+    }
+
+    .div-card {
+        width: 60%;
+    }
+}
+
+.div-card {
+    color: lightgray;
+    font-weight: initial;
+}
+
+.btn-detalles {
+    background: rgb(1 49 73 / 85%);
+    border-color: rgb(1 49 73 / 85%);
+    color:white;
+}
+
+.btn-detalles:hover {
+        background: rgb(1 49 73 );
+        color: white;
+}
+
+.btn-eliminar, .btn-validado-eliminar {
+    background: rgb(121 0 0 / 80%);
+    border-color: rgb(121 0 0 / 80%);
+    color: white;
+}
+
+    .btn-eliminar:hover, .btn-validado-eliminar:hover {
+        background: rgb(121 0 0 / 100%);
+        color: white;
+    }
+
+.content-delete-user {
+    background: rgb(0 109 167 / 100%);
+    color: white;
+    font-weight: initial;
+}
+
+#img-usuario {
+    width: calc(50px + 50vmin);
+}
+
+.container-card {
+    margin: 0 auto;
+    width: calc(52px + 50vmin);
 }
