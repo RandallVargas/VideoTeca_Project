@@ -9,26 +9,60 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="~/css/Client.css">
+   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/popup.js"></script>
     <script src="~/js/LoadData.js"></script>
-   
+    <script src="~/js/search.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/Client.css">
 </head>
 <body>
-    
-    @foreach (var carousel in ViewBag.Carousels)
-    {
-        <div class="galery">
-            
-            @foreach (var item in Model)
-            {
-                <div class="Image_Carrusel">
-                    <img src="@Html.DisplayFor(modelItem => item.movie_cover)" href="#" class="btn-popup" data-movie-id="@item.id"  />
-                </div>
-            }
-        </div>
-    }
+  
+    <input type="text" id="searchInput" />
+    <div id="searchResults"></div>
+
+
+    <div id="genreFilter">
+        <label><input type="checkbox" name="genre" value="Action" />Action</label>
+        <label><input type="checkbox" name="genre" value="Drama" />Drama</label>
+        <!-- Agrega más checkboxes para los otros géneros -->
+    </div>
+
+    <button id="filterButton">Filtrar</button>
+
+    <div id="filteredResults"></div>
+    <h2>New Release</h2>
+    <div class="galery">
+      
+        @foreach (var pelicula in ViewBag.PelisRecientes)
+        {
+            <div class="Image_Carrusel_NewAdd">
+                <img src="@pelicula.movie_cover" href="#" class="btn-popup" data-movie-id="@pelicula.id" />
+            </div>
+        }
+    </div>
+    <h4>@ViewBag.GenreName1</h4>
+    <div class="galery">
+        
+        @foreach (var pelicula in ViewBag.PelisGenero1)
+        {
+            <div class ="Image_Carrusel">
+                <img src="@pelicula.movie_cover" href="#" class="btn-popup" data-movie-id="@pelicula.id"  />
+            </div>
+        }
+    </div>
+    <h4>@ViewBag.GenreName2</h4>
+    <div class="galery">
+        
+        @foreach (var pelicula in ViewBag.PelisGenero2)
+        {
+            <div class="Image_Carrusel">
+                <img src="@pelicula.movie_cover" href="#" class="btn-popup" data-movie-id="@pelicula.id"  />
+            </div>
+        }
+    </div>
+
+  
     <div id="popup-container">
         <div id="popup-content">
   

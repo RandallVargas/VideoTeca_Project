@@ -1,0 +1,90 @@
+﻿body{
+
+}
+
+.containerText {
+    margin: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+    width: 385px; /* Tamaño fijo deseado */
+    height: 100px; /* Tamaño fijo deseado */
+    overflow: auto;
+    color:aliceblue;
+}
+.DivAutor {
+    display: flex;
+    margin: 20px;
+    height: 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: aliceblue;
+}
+
+@media only screen and (max-width: 1280px) {
+
+    .containerText {
+        width: 280px; /* Tamaño fijo deseado */
+    }
+}
+@media only screen and (max-width: 912px) {
+
+    .containerText {
+        width: 200px; /* Tamaño fijo deseado */
+    }
+}
+
+
+
+    @media only screen and (max-width: 820px) {
+
+        .containerText {
+            width: 200px; /* Tamaño fijo deseado */
+        }
+    }
+}
+
+
+    @media only screen and (max-width: 768px) {
+        .containerText {
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+            width: 300px; /* Tamaño fijo deseado */
+            height: 80px; /* Tamaño fijo deseado */
+            overflow: auto;
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+
+        .containerText {
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+            width: 350px; /* Tamaño fijo deseado */
+            height: 80px; /* Tamaño fijo deseado */
+            overflow: auto;
+        }
+    }
+
+    @media only screen and (max-width: 390px) {
+
+        .containerText {
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+            width: 325px; /* Tamaño fijo deseado */
+            height: 80px; /* Tamaño fijo deseado */
+            overflow: auto;
+        }
+    }
+
+    @media only screen and (max-width: 374px) {
+        .containerText {
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+            width: 220px; /* Tamaño fijo deseado */
+            height: 80px; /* Tamaño fijo deseado */
+            overflow: auto;
+        }
+    }
