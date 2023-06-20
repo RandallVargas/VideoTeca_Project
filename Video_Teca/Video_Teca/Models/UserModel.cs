@@ -10,7 +10,7 @@ namespace Video_Teca.Models
         public string Name { get; set; } = null!;
         
         [NotMapped]
-        public byte?[] imagen { get; set; }
+        public byte[] imagen { get; set; } = null!;
 
         public string? Role { get; set; }
     }

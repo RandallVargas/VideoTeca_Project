@@ -32,9 +32,9 @@ namespace Video_Teca.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
-            }
+            }          
+                model.Role = "client";
             
-            model.Role = "client";
             var result = await _service.RegistrationAsync(model);
             TempData["msg"] = result.Message;
 
@@ -119,12 +119,12 @@ namespace Video_Teca.Controllers
         {
             var model = new RegistrationModel
             {
-                UserName = "adminadmin",
-                Name = "Super Administrador",
+                UserName = "cristofer_admin",
+                Name = "Administrador Cristofer",
                 Email = "cristofer.guanipa@ucr.ac.cr",
-                Password = "Lenguajes2023*",
+                Password = "Asdf1234*",
             };
-            model.Role = "superAdmin";
+            model.Role = "admin";
             var result = await _service.RegistrationAsync(model);
 
             string imagePath = "wwwroot/images/img-default.webp"; //Se selecciona la imagen por defecto
@@ -164,6 +164,16 @@ namespace Video_Teca.Controllers
             db.Database.ExecuteSqlRaw(@"exec delete_user @Username", parameter.ToArray());
             return RedirectToAction(nameof(Login));
 
+        }
+
+        public async Task<IActionResult> DeleteUser(string user) {
+            await _service.DeleteAccountAsync(user);
+            var parameter = new List<SqlParameter>();
+            parameter.Add(new SqlParameter("@Username", user));
+
+
+            db.Database.ExecuteSqlRaw(@"exec delete_user @Username", parameter.ToArray());
+            return Ok();
         }
     }
 

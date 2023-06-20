@@ -24,6 +24,10 @@ header {
     background: linear-gradient( #0b7282,rgb(0 109 167 / 10%));
 }
 
+footer {
+    position:initial!important;
+}
+
 .dropdown-toggle::after {
     display: inline-block;
     margin-left: 0.255em;
@@ -58,12 +62,12 @@ header {
 }
 
 .height-card{
-    height: 80px;
+    height: 90px;
 
 }
 
 .dropdown-menu {
-    background: rgb(0 109 167 / 60%);
+    background: rgb(0 109 167 / 80%);
 }
 
 .dropdown-item:hover {
@@ -83,4 +87,46 @@ header {
     .div-card {
         width: 60%;
     }
+}
+
+.div-card {
+    color: lightgray;
+    font-weight: initial;
+}
+
+.btn-detalles {
+    background: rgb(1 49 73 / 85%);
+    border-color: rgb(1 49 73 / 85%);
+    color:white;
+}
+
+.btn-detalles:hover {
+        background: rgb(1 49 73 );
+        color: white;
+}
+
+.btn-eliminar, .btn-validado-eliminar {
+    background: rgb(121 0 0 / 80%);
+    border-color: rgb(121 0 0 / 80%);
+    color: white;
+}
+
+    .btn-eliminar:hover, .btn-validado-eliminar:hover {
+        background: rgb(121 0 0 / 100%);
+        color: white;
+    }
+
+.content-delete-user {
+    background: rgb(0 109 167 / 100%);
+    color: white;
+    font-weight: initial;
+}
+
+#img-usuario {
+    width: calc(50px + 50vmin);
+}
+
+.container-card {
+    margin: 0 auto;
+    width: calc(52px + 50vmin);
 }

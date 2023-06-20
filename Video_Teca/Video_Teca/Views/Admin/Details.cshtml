@@ -1,0 +1,83 @@
+﻿@model Video_Teca.Models.UserModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Detalles del usuario</h3>
+<hr/>
+<div>
+    <a class="btn btn-detalles" asp-action="UserAdministration">Volver</a>
+</div>
+
+<div class="d-flex justify-content-center container-card div-card">
+    <div class="card mb-3">
+        <img id="img-usuario" src=" data:image/webp;base64,@Convert.ToBase64String(Model.imagen)" class="card-img-top" alt="Imagen de usuario">
+        <div class="card-body">
+           
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Username):
+                </dt>
+                <dd class="col-sm-5">
+                    @Html.DisplayFor(model => model.Username)
+                </dd>
+
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Email):
+                </dt>
+                <dd class="col-sm-5">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Name):
+                </dt>
+                <dd class="col-sm-5">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Role):
+                </dt>
+                <dd class="col-sm-5">
+                    @Html.DisplayFor(model => model.Role)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+    <div class="text-center justify-content-center">
+    <button id="btn-eliminar" class="btn btn-eliminar" data-user-username="@Model.Username">Eliminar</button>
+    </div>
+<div class="modal fade" id="modal-delete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content content-delete-user">
+
+            <div class="modal-body">
+                <h5>¿Estas seguro que deseas eliminar al usuario?</h5>
+                <br />
+                <br />
+                <div class="d-flex justify-content-evenly">
+                    <button class="btn btn-detalles" id="cancelar-eliminar" data-bs-dismiss="modal" aria-label="Close">No</button>
+                    <a class="btn btn-validado-eliminar" id="btn-validado-eliminar-cuenta" data-bs-dismiss="modal" aria-label="Close">Si</a>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            window.onload = function () {               
+                    LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+            };
+
+            $('#btn-eliminar').click(deleteUserByDetails);
+        });
+    </script>
+}

@@ -3,16 +3,14 @@
 @{
     ViewData["Title"] = "UserAdministration";
 }
-<body>
-    <h1>UserAdministration</h1>
 
-</body>
-
-
+<h1>Administracion de Usuarios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-detalles" asp-action="Registration">Crear Nuevo usuario</a>
 </p>
+
+<hr>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 container-cards">
     @foreach (var item in Model)
@@ -25,37 +23,68 @@
 
                 <div class="card-body height-card">
                     <p class="card-text">
-                        Username: @Html.DisplayFor(modelItem => item.Username)
+                            <strong>Username:</strong> @Html.DisplayFor(modelItem => item.Username)
                     <br>
-                        Role: @Html.DisplayFor(modelItem => item.Role)
+                       <strong>Role:</strong> @Html.DisplayFor(modelItem => item.Role)
                     </p>
                    
                     <br>
-                   @* @Html.DisplayFor(modelItem => item.Email)*@
-                    <br>
-                    @*@Html.DisplayFor(modelItem => item.imagen)*@
-                    
-
+   
                 </div>
 
-                <div class="card-footer">
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-
-                </div>
+                        <div class="card-footer text-center d-flex justify-content-evenly">
+                            <a class="btn btn-detalles" asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                    <button id="btn-eliminar" class="btn btn-eliminar" data-user-username="@item.Username">Eliminar</button>
+                        </div>
 
             </div>
         </div>        
     } 
+
+    <div class="modal fade" id="modal-delete" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content content-delete-user">
+
+                <div class="modal-body">
+                    <h5>¿Estas seguro que deseas eliminar al usuario seleccionado?</h5>
+                    <br />
+                    <br />
+                    <div class="d-flex justify-content-evenly">
+                        <button class="btn btn-detalles" id="cancelar-eliminar" data-bs-dismiss="modal" aria-label="Close">No</button>
+                        <a class="btn btn-validado-eliminar" id="btn-validado-eliminar-cuenta" data-bs-dismiss="modal" aria-label="Close">Si</a>
+                    </div>
+                     
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade alert-danger" id="modal-user-deleted" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content ">
+
+                <div class="modal-body">
+                    
+                    
+                        <p id="text-user-deleted">A ocurrido un error al intentar eliminar al usuario</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
     
 
    
 
 
-@section Scripts {           
+@section Scripts {
+            
             <script type="text/javascript">
+        
+
                 $(document).ready(function () {
                     
                     window.onload = function () {
@@ -85,9 +114,9 @@
                         }
                     };
 
+
+                    $('#btn-eliminar').click(deleteUser);
+                    
                 });
-
-
             </script>
-
-    }
+}

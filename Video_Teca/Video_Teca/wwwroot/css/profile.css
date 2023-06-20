@@ -1,9 +1,9 @@
 ﻿.img-profile {
 }
 
-.img-perfil-ampliada {
-    height: 39vmin;
-    width: 39vmin
+#img-perfil-ampliada {
+    background: transparent;
+    background: none;
 }
 
 #ImageData {
