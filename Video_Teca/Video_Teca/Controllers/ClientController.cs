@@ -87,9 +87,7 @@ namespace Video_Teca.Controllers
 
              ViewBag.actor = actor;
 
-            //Console.WriteLine(id);
-            // Console.WriteLine(movieInfo.title);
-            //return View(movieInfo);
+           
             return PartialView("Details",movieInfo);
           
         }

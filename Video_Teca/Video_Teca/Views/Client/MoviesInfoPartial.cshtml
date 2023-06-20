@@ -2,13 +2,17 @@
 
 <script src="~/js/LoadData.js"></script>
 <script src="~/js/Details.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/Info.css">
 <div>
+    <div class="InfoDiv">
     <h2>@Model.title</h2>
+        <img src=@Model.movie_cover style="width:100px;height100px" ></img>
     <p>@Model.synopsis</p>
+ 
     <p>Director: @Model.director</p>
     <p>Clasificación: @Model.clasification</p>
-    <p>Año de lanzamiento: @Model.release_year</p>
-      
+  
+    </div>
     @*<button href="#" class="btn-more-details" data-movie-id="@Model.id">>Details</button>
     using (Html.BeginForm("Details", "Client", FormMethod.Post))
     {
