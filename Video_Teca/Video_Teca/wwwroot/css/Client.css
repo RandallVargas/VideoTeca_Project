@@ -1,5 +1,5 @@
 ﻿html {
-  height:100%;
+
 }
 
 body {
@@ -41,9 +41,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: aliceblue;
     padding: 20px;
-    width: 400px;
+    width: 1000px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
@@ -76,16 +77,408 @@ body {
             border-radius: 3px;
         }
 
+    #popup-content .btn-details {
+        background-color: #550b82;
+    }
+
+    #popup-content .InfoDiv {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
+        grid-gap: 50px;
+        grid-auto-rows: 120px;
+    }
+  /*Searchblock*/
+.SearchBox {
+    position:relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(95%, 1fr));
+    grid-gap: 50px;
+    grid-auto-rows: 50px;
+    z-index: 9999;
+
+}
+
+/*InputSearch*/
+.container-2 {
+    width: 300px;
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+}
+    .container-2 input#searchInput {
+        width: 50px;
+        height: 50px;
+        background: #2b303b;
+        border: none;
+        font-size: 10pt;
+        float: left;
+        color: #262626;
+        padding-left: 35px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        color: #fff;
+        -webkit-transition: width .55s ease;
+        -moz-transition: width .55s ease;
+        -ms-transition: width .55s ease;
+        -o-transition: width .55s ease;
+        transition: width .55s ease;
+    }
+    .container-2 .icon {
+        position: absolute;
+        top: 50%;
+        margin-left: 17px;
+        margin-top: 17px;
+        z-index: 1;
+        color: #4f5b66;
+    }
+    .container-2 input#searchInput:focus, .container-2 input#search:active {
+        outline: none;
+        width: 300px;
+    }
+    .container-2:hover input#searchInput {
+        width: 300px;
+    }
+
+    .container-2:hover .icon {
+        color: #93a2ad;
+    }
+
+#ContainerSearch {
+    position: fixed;
+    top: 20%;
+    left: 15%;
+    width: 70%;
+    height: 75%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: none;
+    display: grid;
+    place-items: center;
+    grid-template-rows: auto;
+    overflow: auto;
+}
+
+#searchResults {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    grid-gap: 10px;
+    grid-auto-flow: dense;
+    /* Agrega otros estilos deseados para el contenedor de resultados */
+}
+
+    #searchResults img {
+     width:200px;
+     height:200px;
+    }
+.FilterDiv {
+    width: 10px;
+    position: relative;
+    display: grid;
+}
+#filterButton {
+    background-color: transparent;
+    color:black;
+}
+#genreFilter {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300%, 1fr));
+  
+    position: relative;
+    right:300%;
+    bottom:30px
+}
+
+/*endSearchBlock*/
+
+@media (max-width: 912px) {
+    #popup-content {
+        position: relative;
+        width: 80%;
+    }
+
+    #popup-container {
+        
+    }
+
+    #genreFilter {
+        grid-template-columns: repeat(3, minmax(300%, 1fr));
+        position: relative;
+        right: 350px; /* mueve la caja de los filtros */
+        bottom: 20px;
+    }
+    .FilterDiv {
+        width: 10px;
+        position: relative;
+        display: grid;
+    }
+    #searchResults img {
+        width: 150px;
+        height: 150px;
+    }
+    #searchResults {
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+    }
+    #ContainerSearch {
+        top: 20%;
+        width: 75%;
+        height: 60%;
+    }
+}
 @media only screen and (max-width: 768px) {
-    /* Estilos para dispositivos móviles y tablets */
-   
-}
+        /* Estilos para dispositivos móviles y tablets */
+        .Image_Carrusel_NewAdd img {
+            width: 150px;
+            height: 150px;
+        }
 
-@media only screen and (max-width: 480px) {
-    /* Estilos para dispositivos móviles */
-   
-}
+        .Image_Carrusel img {
+            width: 100px;
+            height: 100px;
+        }
 
+        #popup-content {
+            position: relative;
+            width: 80%;
+        }
+    #popup-container {
+        left: -20px;
+    }
+
+    /*Fin del popup donde se muestra la info*/
+        .SearchBox {
+            grid-template-columns: repeat(2, minmax(90%, 1fr));
+        }
+
+        .FilterDiv {
+            width: 10px;
+            position: relative;
+            display: grid;
+        }
+
+        #filterButton {
+            width: 10px;
+
+        }
+
+        #genreFilter {
+            grid-template-columns: repeat(3, minmax(300%, 1fr));
+            position: relative;
+            right: 350px;
+            bottom: 20px;
+         
+        }
+
+        #searchResults {
+            grid-template-columns: repeat(2, minmax(250px, 1fr));
+        }
+
+      #searchResults img {
+          width: 150px;
+                height: 150px;
+            }
+
+        #ContainerSearch {
+            top: 16%;
+            width: 80%;
+            height: 70%;
+        }
+
+       
+    }
+
+    @media only screen and (max-width: 480px) {
+        /* Estilos para dispositivos móviles */
+        /* Estilos para pantallas de hasta 480px de ancho */
+        #popup-content {
+            position: relative;
+            width: 80%;
+            
+
+        }
+            #popup-content img {
+                
+                max-width: 80%;
+                height: auto;
+                margin-bottom: 10px;
+            }
+        #popup-container {
+            left:0px;
+        }
+        #popup-content .InfoDiv {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(100px, 1fr));
+            grid-gap: 50px;
+            grid-auto-rows: 120px;
+        }
+        #genreFilter {
+            grid-template-columns: repeat(3, minmax(300%, 1fr));
+            position: relative;
+            right: 240px; /* mueve la caja de los filtros */
+            bottom: 20px;
+        }
+
+        .FilterDiv {
+            width: 10px;
+            position: relative;
+            left:-15px;
+            display: grid;
+           
+        }
+
+        #searchResults img {
+            width: 150px;
+            height: 150px;
+        }
+
+        #searchResults {
+            grid-template-columns: repeat(2, minmax(100px, 1fr));
+        }
+
+        #ContainerSearch {
+            top: 20%;
+            width: 75%; /*ancho de donde se muestra la busquedad*/
+            height: 50%;
+        }
+        .container-2 {
+            width: 300px;
+            vertical-align: middle;
+            white-space: nowrap;
+            position: relative;
+        }
+
+            .container-2 input#searchInput {
+                width: 20px;
+                height: 30px;
+                background: #2b303b;
+                border: none;
+                font-size: 10pt;
+                float: left;
+                color: #fff;
+            }
+
+            .container-2 .icon {
+                position: absolute;
+                top: 30%;
+                margin-left: 12px;
+                margin-top: 6px;
+                z-index: 1;
+                color: #4f5b66;
+            }
+            .container-2 input#searchInput:focus, .container-2 input#search:active {
+                outline: none;
+                width: 200px;
+            }
+
+            .container-2:hover input#searchInput {
+                width: 140px;
+            }
+    }
+@media only screen and (max-width: 380px) {
+    #popup-content .InfoDiv {
+        display: flex;
+        flex-direction: column;
+        grid-gap: 2px;
+    }
+}
 @media only screen and (max-width: 374px) {
     /* Estilos para dispositivos móviles zfold*/
-}
+    #popup-content {
+        position: relative;
+        width: 80%;
+        left:140px
+    }
+
+        #popup-content img {
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+    #popup-container {
+        left: 0px;
+    }
+
+    #popup-content .InfoDiv {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+        grid-gap: 50px;
+        grid-auto-rows: 120px;
+    }
+    #popup-content .InfoDiv {
+        display: flex;
+        flex-direction: column;
+        grid-gap: 2px;
+    }
+    #genreFilter {
+        grid-template-columns: repeat(1, minmax(300%, 1fr));
+        position: relative;
+        right: 200px; /* mueve la caja de los filtros */
+        bottom: 20px;
+        font-size:8px;
+    }
+
+    .FilterDiv {
+        width: 10px;
+        position: relative;
+        left: -30px;
+        display: grid;
+    }
+
+    #searchResults img {
+        width: 150px;
+        height: 150px;
+    }
+
+    #searchResults {
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+    }
+
+    #ContainerSearch {
+        top: 20%;
+        width: 75%; /*ancho de donde se muestra la busquedad*/
+        height: 50%;
+    }
+
+    .container-2 {
+        width: 300px;
+        vertical-align: middle;
+        white-space: nowrap;
+        position: relative;
+    }
+
+        .container-2 input#searchInput {
+            width: 20px;
+            height: 30px;
+            background: #2b303b;
+            border: none;
+            font-size: 10pt;
+            float: left;
+            color: #fff;
+       
+            
+        }
+
+        .container-2 .icon {
+            position: absolute;
+            top: 30%;
+            margin-left: 12px;
+            margin-top: 6px;
+            z-index: 1;
+            color: #4f5b66;
+        }
+
+        .container-2 input#searchInput:focus, .container-2 input#search:active {
+            outline: none;
+            width: 200px;
+        }
+
+        .container-2:hover input#searchInput {
+            width: 200px;
+        }
+
+        .container-2:hover .icon {
+            color: #93a2ad;
+        }
+    }
+    

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Video_Teca.Models.MoviesAndSeries>
 
-
+    
 @foreach (var item in Model) {
 
 
-           <img src=@Html.DisplayFor(modelItem => item.movie_cover) style="width:50px; height:50px; "/>
+           <img src=@Html.DisplayFor(modelItem => item.movie_cover) />
           
 }
     
