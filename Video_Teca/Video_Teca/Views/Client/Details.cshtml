@@ -30,12 +30,38 @@
         {
             <h7>@genre,</h7>
         }
+            <form data-movie-id="@Model.id">
+                <h3>Rating</h3>
+                <p class="clasificacion">
+                    <input id="radio1" type="radio" name="estrellas" value="5">
+                    
+                    <label class="Start" for="radio1">★</label>
+                   
+                    <input id="radio2" type="radio" name="estrellas" value="4">
+                    
+                    <label class="Start" for="radio2">★</label>
+                   
+                    <input  id="radio3" type="radio" name="estrellas" value="3">
+                 
+                    <label class="Start" for="radio3">★</label>
+                   
+                    <input id="radio4" type="radio" name="estrellas" value="2">
+                   
+                    <label class="Start" for="radio4">★</label>
+                   
+                    <input class="Start" id="radio5" type="radio" name="estrellas" value="1">
+                    
+                    <label class="Start" for="radio5">★</label>
+                </p>
+                <div id="promedio"></div>
+            </form>
         </div>
         <div class="Additional">
             <button href="#" class="btn-popup" data-movie-id="@Model.id" data-popup-type="actors">Actors</button>
             <button href="#" class="btn-popup" data-movie-id="@Model.id" data-popup-type="reviews">Reviews</button>
         </div>
     </div>
+   
    
     <div id="popup-container">
         <div id="popup-content"></div>

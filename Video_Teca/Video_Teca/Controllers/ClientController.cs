@@ -187,6 +187,15 @@ namespace Video_Teca.Controllers
             Console.WriteLine(idUser + "Controllador" + username + ""+comment);
            //db.Comments.Add(new Comment { })
         }
+        public void SaveRating(string movieSeriesId, string userId, int rating)
+        {
+            var movieSeriesIdParameter = new SqlParameter("@movieSeriesId", movieSeriesId);
+            var userIdParameter = new SqlParameter("@userId", userId);
+            var ratingParameter = new SqlParameter("@rating", rating);
+
+            db.Database.ExecuteSqlRaw("EXEC SaveOrUpdateRating @movieSeriesId, @userId, @rating",
+                                            movieSeriesIdParameter, userIdParameter, ratingParameter);
+        }
         public IActionResult GetComments(string id)
         {
             var comments = db.Comments.FromSqlRaw("EXEC GetCommentsByMovieId @movieId", new SqlParameter("@movieId", id)).ToList();
