@@ -42,13 +42,14 @@ CREATE TABLE MovieGenre (
   FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
 );
 Create Table Ratings(
-rating_id int,
+ rating_id INT IDENTITY(1,1) PRIMARY KEY,
 movie_series_id varchar(50),
 user_id varchar(50),
 rating int, 
  FOREIGN KEY (movie_series_id) REFERENCES MoviesAndSeries(id),
 );
-
+Use Video_Teca_C13448_B98314
+Drop table  Ratings
 
 Insert into MovieGenre(movie_id,genre_id)
 values('MVS002', 1)
