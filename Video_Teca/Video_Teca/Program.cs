@@ -39,5 +39,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=UserAuthentication}/{action=Login}/{id?}");
+    //pattern: "{controller=MovieSerieA}/{action=MovAdmin}/{id?}");
 
 app.Run();
