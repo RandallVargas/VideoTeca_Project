@@ -40,14 +40,6 @@ namespace Video_Teca.Controllers
                 ViewBag.ImageBytes = imgByte.ToList();
             }
 
-
-            string procedimiento = "get_users_administration";
-
-            //obtiene todos los usuarios de la bases de datos          
-            List<UserModel> resultados = db.Set<UserModel>()
-                .FromSqlRaw(procedimiento)
-                .ToList();
-
             var resultado = new List<UserModel>();
 
             using (var client = new HttpClient())
@@ -61,39 +53,30 @@ namespace Video_Teca.Controllers
 
                 if (result.IsSuccessStatusCode)
                 {
-                    
+
                     var readTask = result.Content.ReadFromJsonAsync<List<UserModel>>();
                     readTask.Wait();
 
                     resultado = readTask.Result;
 
                 }
-            
-             
+
+
+
+
+                if (User.IsInRole("superAdmin"))
+                { //Al ser el superAdmin le muestra todos los usuarios menos el
+                    resultado.Remove(resultado.Where(x => x.Role == "superAdmin").First());
+                }
+
+                else
+                { //Los admin solo pueden ver los usuarios 
+                    resultado.RemoveAll(x => x.Role == "superAdmin" || x.Role == "admin");
+                }
+                return View(resultado.OrderBy(x => x.Name));
+
             }
-
-
-
-            if (User.IsInRole("superAdmin"))
-            { //Al ser el superAdmin le muestra todos los usuarios menos el
-                resultado.Remove(resultado.Where(x => x.Role == "superAdmin").First());
-            }
-
-            else
-            { //Los admin solo pueden ver los usuarios 
-                resultados.RemoveAll(x => x.Role == "superAdmin" || x.Role == "admin");
-            }
-
-            return View(resultados.OrderBy(x => x.Name));
-
-            else { //Los admin solo pueden ver los usuarios 
-                resultado.RemoveAll(x => x.Role=="superAdmin" || x.Role == "admin");
-            }
-                        
-            return View(resultado.OrderBy(x => x.Name));
-
         }
-
         // GET: PersonController/Details/5
         public ActionResult Details(int id)
         {

@@ -62,8 +62,6 @@ namespace API_UsersAdministration.Controllers
                 return NotFound(ex.Message);
 
             }
-        }
-
-       
+        }       
     }
 }
