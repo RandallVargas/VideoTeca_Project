@@ -36,3 +36,41 @@
     width: 35vmin;
     calc(8px + 1vmin)
 }
+
+.btn-cambiar {
+    background: rgb(230 231 39 / 82%);
+    border-color: rgb(230 231 39 / 82%);
+}
+
+    .btn-cambiar:hover {
+        background: rgb(230 231 39);
+        border-color: rgb(230 231 39);
+    }
+
+.btn-guardar {
+    background: rgb(1 49 73 / 85%);
+    border-color: rgb(1 49 73 / 85%);
+    color: white;
+}
+
+    .btn-guardar:hover {
+        background: rgb(1 49 73 );
+        color: white;
+    }
+
+.btn-cancelar{
+    background: rgb(121 0 0 / 80%);
+    border-color: rgb(121 0 0 / 80%);
+    color: white;
+}
+
+    .btn-cancelar:hover {
+        background: rgb(121 0 0 / 100%);
+        color: white;
+    }
+
+.content-delete-user {
+    background: rgb(0 109 167 / 100%);
+    color: white;
+    font-weight: initial;
+}
