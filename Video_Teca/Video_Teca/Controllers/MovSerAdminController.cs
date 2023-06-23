@@ -1,17 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using Video_Teca.Data;
 using Video_Teca.Models;
+using Video_Teca.Repositories.Abstract;
 
 namespace Video_Teca.Controllers
 {
     [Authorize(Roles = "admin, superAdmin")]
     public class MovSerAdminController : Controller
     {
-        private VideoTecaDbContext db = new VideoTecaDbContext();
+        private readonly VideoTecaDbContext db = new VideoTecaDbContext();
+        
         // GET: MovSerAdmin
         public ActionResult  AdminMovSer()
         {
@@ -27,17 +30,12 @@ namespace Video_Teca.Controllers
                 ViewBag.ImageBytes = imgByte.ToList();
 
             }
-            /*var personList = new List<tb_Person>();
-      /using (var dbContext = new TestUCRContext())
-       {
-         personList = dbContext.Person.ToList();
-       }
-       personList= db.Person.FromSqlRaw("exec dbo.GetPerson").ToList();*/
+         
             var msList = new List<MoviesAndSeries>();
             msList = db.MoviesAndSeries.FromSqlRaw("exec GetAllMoviesAndSeries").ToList();
 
             return View(msList);
-            return View();
+          
         }
 
         // GET: MovSerAdmin/Details/5
@@ -55,16 +53,12 @@ namespace Video_Teca.Controllers
         // POST: MovSerAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(MoviesAndSeries mvs)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            db.MoviesAndSeries.Add(mvs);
+            db.SaveChanges();
                 return View();
-            }
+            
         }
 
         // GET: MovSerAdmin/Edit/5
@@ -89,7 +83,7 @@ namespace Video_Teca.Controllers
         }
 
         // GET: MovSerAdmin/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             return View();
         }
@@ -97,7 +91,7 @@ namespace Video_Teca.Controllers
         // POST: MovSerAdmin/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string id, MoviesAndSeries mvs)
         {
             try
             {
@@ -107,6 +101,17 @@ namespace Video_Teca.Controllers
             {
                 return View();
             }
+        }
+        public async Task<IActionResult> DeleteMS(string id)
+        {
+            var ms = db.MoviesAndSeries.FindAsync(id);
+           // await db.MoviesAndSeries.Remove(ms);
+            //var parameter = new List<SqlParameter>();
+            //parameter.Add(new SqlParameter("@Username", id));
+
+            Console.WriteLine("Soy DeleteMS");
+            //db.Database.ExecuteSqlRaw(@"exec delete_user @Username", parameter.ToArray());
+            return Ok();
         }
     }
 }

@@ -87,7 +87,14 @@ namespace Video_Teca.Controllers
 
              ViewBag.actor = actor;
 
-           
+            if (movieInfo.media_type == "series")
+            {
+              
+                var episodes = db.Episodes.FromSqlRaw("EXEC GetEpisodesBySeries @seriesId", new SqlParameter("@seriesId", id)).ToList();
+             
+            }
+
+
             return PartialView("Details",movieInfo);
           
         }

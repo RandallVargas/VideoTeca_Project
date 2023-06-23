@@ -7,101 +7,103 @@
 <h1>AdminMovSer</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a  class="btn btn-detalles" asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.synopsis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.release_year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.clasification)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.director)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.num_seasons)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.num_episodes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.episode_duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.movie_cover)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.year_of_release)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.date_addded)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.media_type)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.synopsis)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.release_year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.clasification)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.num_seasons)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.num_episodes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.episode_duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.movie_cover)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.year_of_release)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.date_addded)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.media_type)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 container-cards">
+    @foreach (var item in Model)
+    {
+        <div class="col div-card">
+      
+                <div class="card" style="width: 12rem;">
+               
+                    <img src=@Html.DisplayFor(modelItem => item.movie_cover) class="card-img-top" alt="...">
+                    
+                    <div class="card-body">
+
+                    <p class="card-text"> <strong>Director:</strong>@Html.DisplayFor(modelItem => item.director).</p>
+                    
+                    </div>
+                 
+                 <div class="card-footer text-center d-flex justify-content-evenly">
+                    <a class="btn btn-detalles" asp-action="Details" asp-route-id="@item.id">Detalles</a>
+                    <button id="btn-eliminar" class="btn btn-eliminar" data-movie-series-id=@item.id>Eliminar</button>
+                    @*<a class="btn btn-detalles" asp-action="DeleteMS" asp-route-id="@item.id">DeleteS</a>*@
+                </div>
+                @if (item.media_type == "series")
+                {
+                    <a class="btn btn-detalles" asp-action="UpdateCaps" asp-route-id="@item.id">UpdateCaps</a>
+                }
+            </div>
+        </div>
+    }
+</div>
+<div class="modal fade" id="modal-delete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content content-delete-movie-series">
+
+            <div class="modal-body">
+                <h5>¿Estás seguro de que deseas eliminar la película o serie seleccionada?</h5>
+                <br />
+                <br />
+                <div class="d-flex justify-content-evenly">
+                    <button class="btn btn-detalles" id="cancelar-eliminar" data-bs-dismiss="modal" aria-label="Close">No</button>
+                    <button class="btn btn-validado-eliminar" id="btn-validado-eliminar-movie-series" data-bs-dismiss="modal" aria-label="Close">Sí</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade alert-danger" id="modal-movie-series-deleted" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <p id="text-movie-series-deleted">Ha ocurrido un error al intentar eliminar la película o serie.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="~/js/DeleteMovie.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          
+
+            window.onload = function () {
+                if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
+                    localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
+
+                    var UserId = '@ViewBag.UserId';
+                    localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
+
+                    var username = '@ViewBag.Username';
+                    localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
+
+                    $.ajax({
+                        url: '/Client/getBytesImage',
+                        type: 'GET',
+                        data: { id: UserId },
+                        success: function (response) {
+                            localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
+
+                            var outputElement = document.getElementById('img-perfil');
+                            outputElement.src = 'data:image/webp;base64,' + response;
+
+                        }
+                    });
+                } else {
+                    LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+                }
+            };
+           
+        });
+
+
+    </script>
+
+    }

@@ -72,6 +72,14 @@ CREATE TABLE Actors (
     actor_last_name VARCHAR(50),
     actor_img VARCHAR(500)
 );
+USE Video_Teca_C13448_B98314
+CREATE TABLE Actors (
+    actor_id INT IDENTITY(1,1) PRIMARY KEY,
+    actor_first_name VARCHAR(50),
+    actor_last_name VARCHAR(50),
+    actor_img VARCHAR(500)
+);
+
 
 CREATE TABLE MovieActor (
     movie_id VARCHAR(50),
