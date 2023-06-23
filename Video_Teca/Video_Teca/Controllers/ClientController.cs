@@ -35,6 +35,7 @@ namespace Video_Teca.Controllers
             var pelisRecientes = new List<MoviesAndSeries>();
             var pelisGenero1 = new List<MoviesAndSeries>();
             var pelisGenero2 = new List<MoviesAndSeries>();
+            var pelisGenero3 = new List<MoviesAndSeries>();
             var gns = new List<Genre>();
 
             using (var dbContext = new VideoTecaDbContext())
@@ -44,24 +45,27 @@ namespace Video_Teca.Controllers
                 // Obtener dos géneros aleatorios
                 var generos = dbContext.Genres.ToList();
                 var random = new Random();
-                var generosAleatorios = generos.OrderBy(x => random.Next()).Take(2).ToList();
+                var generosAleatorios = generos.OrderBy(x => random.Next()).Take(3).ToList();
 
                 // Obtener películas para cada género aleatorio
                 var genreId1 = generosAleatorios[0].genre_id;
                 var genreId2 = generosAleatorios[1].genre_id;
+                var genreId3 = generosAleatorios[2].genre_id;
                 var genreName1 = generosAleatorios[0].genre_name;
                 var genreName2 = generosAleatorios[1].genre_name;
+                var genreName3 = generosAleatorios[2].genre_name;
                 ViewBag.GenreName1 = genreName1;
                 ViewBag.GenreName2 = genreName2;
+                ViewBag.GenreName3 = genreName3;
 
                 pelisGenero1 = dbContext.MoviesAndSeries.FromSqlRaw("EXEC GetMoviesByGenre @GenreId", new SqlParameter("@GenreId", genreId1)).ToList();
                 pelisGenero2 = dbContext.MoviesAndSeries.FromSqlRaw("EXEC GetMoviesByGenre @GenreId", new SqlParameter("@GenreId", genreId2)).ToList();
-             
+                pelisGenero3 = dbContext.MoviesAndSeries.FromSqlRaw("EXEC GetMoviesByGenre @GenreId", new SqlParameter("@GenreId", genreId3)).ToList();
             }
             ViewBag.PelisRecientes = pelisRecientes;
             ViewBag.PelisGenero1 = pelisGenero1;
             ViewBag.PelisGenero2 = pelisGenero2;
-            
+            ViewBag.PelisGenero3 = pelisGenero3;
             return View();
            // return View(pelis);
         }
@@ -94,10 +98,10 @@ namespace Video_Teca.Controllers
                 var episodes = db.Episodes.FromSqlRaw("EXEC GetEpisodesBySeries @seriesId", new SqlParameter("@seriesId", id)).ToList();
                 ViewBag.episodes = episodes;
             }
-            //var averageRating = GetAverageRating(id);
+           var averageRating = GetAverageRating(id);
 
 
-           // ViewBag.averageRating = averageRating;
+            ViewBag.averageRating = averageRating;
 
           
 
@@ -223,12 +227,16 @@ namespace Video_Teca.Controllers
 
             db.Database.ExecuteSqlRaw("EXEC GetAverageRating @movieSeriesId, @averageRating OUTPUT",
                                         movieSeriesIdParameter, averageRatingParameter);
-          //  if( averageRatingParameter.Value != )
-           // {
-                var averageRating = (decimal)averageRatingParameter.Value;
-                return averageRating;
-            //}
-            //return 0;
+
+            var averageRating = averageRatingParameter.Value; // Obtener el valor de averageRatingParameter
+
+            if (averageRating != DBNull.Value)
+            {
+                var averageRatingValue = (decimal)averageRating;
+                // Hacer algo con averageRatingValue
+                return averageRatingValue;
+            }
+            return 0;
         }
 
         public IActionResult GetComments(string id)
