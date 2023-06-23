@@ -32,41 +32,13 @@
                 </div>
                 @if (item.media_type == "series")
                 {
-                    <a class="btn btn-detalles" asp-action="UpdateCaps" asp-route-id="@item.id">UpdateCaps</a>
+                    <a class="btn btn-detalles" asp-action="AddCaps" asp-route-id="@item.id">UpdateCaps</a>
                 }
             </div>
         </div>
     }
 </div>
-<div class="modal fade" id="modal-delete" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content content-delete-movie-series">
 
-            <div class="modal-body">
-                <h5>¿Estás seguro de que deseas eliminar la película o serie seleccionada?</h5>
-                <br />
-                <br />
-                <div class="d-flex justify-content-evenly">
-                    <button class="btn btn-detalles" id="cancelar-eliminar" data-bs-dismiss="modal" aria-label="Close">No</button>
-                    <button class="btn btn-validado-eliminar" id="btn-validado-eliminar-movie-series" data-bs-dismiss="modal" aria-label="Close">Sí</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade alert-danger" id="modal-movie-series-deleted" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <p id="text-movie-series-deleted">Ha ocurrido un error al intentar eliminar la película o serie.</p>
-            </div>
-
-        </div>
-    </div>
-</div>
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="~/js/DeleteMovie.js"></script>

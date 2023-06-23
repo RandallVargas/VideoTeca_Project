@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data;
 using Video_Teca.Data;
 using Video_Teca.Models;
@@ -112,6 +113,42 @@ namespace Video_Teca.Controllers
             Console.WriteLine("Soy DeleteMS");
             //db.Database.ExecuteSqlRaw(@"exec delete_user @Username", parameter.ToArray());
             return Ok();
+        }
+        public ActionResult AddCaps(string id)
+        {
+            ViewBag.MovieSeriesId = id;
+            return View();
+        }
+
+        // POST: MovSerAdmin/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCaps(string id, Episode eps)
+        {
+            var episodio = db.Episodes.Find(eps.episode_id);
+            if (episodio == null)
+            {
+                var parameter = new List<SqlParameter>();
+                parameter.Add(new SqlParameter("@episode_id", eps.episode_id));
+                parameter.Add(new SqlParameter("@title", eps.title));
+                parameter.Add(new SqlParameter("@duration", eps.duration));
+
+                int episodeNumber = eps.episode_number ?? 0; // Si eps.episode_number es nulo, se asigna 0 como valor predeterminado
+                parameter.Add(new SqlParameter("@episode_number", episodeNumber));
+
+                int seasonNumber = eps.season_number ?? 0; // Si eps.season_number es nulo, se asigna 0 como valor predeterminado
+                parameter.Add(new SqlParameter("@season_number", seasonNumber));
+
+                parameter.Add(new SqlParameter("@movie_series_id", eps.movie_series_id));
+
+                db.Database.ExecuteSqlRaw("exec InsertEpisode @episode_id, @title, @duration, @episode_number, @season_number, @movie_series_id", parameter.ToArray()); //db.Episodes.Add(eps);
+
+            }
+            //db.SaveChanges();
+
+
+            return View();
+            
         }
     }
 }
