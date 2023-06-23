@@ -8,22 +8,33 @@ $(document).ready(function () {
                 type: 'GET',
                 data: { searchText: searchText },
                 success: function (data) {
+                    if (data) {
+                        $('#ContainerSearch').show();
+                    } else {
+                        $('#ContainerSearch').hide();
+                    }
                     $('#searchResults').html(data);
                 }
             });
         } else {
+            $('#ContainerSearch').hide();
             $('#searchResults').html('');
         }
     });
+  
 
     // Resto del código onload
     // ...
 });
 
 $(document).ready(function () {
-    $('#filterButton').click(function () {
+    $('#genreFilterForm input[name="genre"]').change(function () {
+        filterByGenres();
+    });
+
+    function filterByGenres() {
         var selectedGenres = [];
-        $('input[name="genre"]:checked').each(function () {
+        $('#genreFilterForm input[name="genre"]:checked').each(function () {
             selectedGenres.push($(this).val());
         });
 
@@ -32,11 +43,32 @@ $(document).ready(function () {
             type: 'POST',
             data: { genres: selectedGenres },
             success: function (data) {
-                $('#filteredResults').html(data);
+                $('#searchResults').html(data);
+                toggleContainer();
             },
             error: function () {
                 alert('Error al filtrar los resultados.');
             }
         });
+    }
+
+    // Mostrar u ocultar el contenedor según si hay resultados
+    function toggleContainer() {
+        var hasResults = ($('#searchResults').children().length > 0);
+        if (hasResults) {
+            $('#ContainerSearch').show();
+        } else {
+            $('#ContainerSearch').hide();
+        }
+    }
+
+    // Llamar a toggleContainer al cargar la página
+    toggleContainer();
+});
+$(document).ready(function () {
+    $('#filterButton').click(function () {
+        $('#genreFilter').toggle();
     });
 });
+
+

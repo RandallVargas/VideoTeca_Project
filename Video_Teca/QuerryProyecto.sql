@@ -31,7 +31,7 @@ CREATE TABLE MovieGenre (
   FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
 );
 ALTER TABLE MoviesAndSeries
-DROP COLUMN genre_id;
+
 
 ALTER TABLE MoviesAndSeries
 ALTER COLUMN synopsis varchar(500);
@@ -55,22 +55,23 @@ values('MVS002', 1)
 Insert into MovieGenre(movie_id,genre_id)
 values('MVS002', 5)
 Create Table Episodes(
-episode_id int,
+episode_id varchar(50),
 title varchar(50),
 duration time,
 episode_number int,
 movie_series_id varchar(50)
 FOREIGN KEY (movie_series_id) REFERENCES MoviesAndSeries(id),
 );
-
+drop table Episodes
+ALTER TABLE Episodes
+ADD season_number INT;
 CREATE TABLE Actors (
     actor_id INT PRIMARY KEY,
     actor_first_name VARCHAR(50),
     actor_last_name VARCHAR(50),
     actor_img VARCHAR(500)
 );
-drop table MovieActor
-drop table Actors
+
 CREATE TABLE MovieActor (
     movie_id VARCHAR(50),
     actor_id INT,
@@ -82,11 +83,12 @@ CREATE TABLE Comments (
   comment_id VARCHAR(50) PRIMARY KEY,
   movie_series_id VARCHAR(50),
   userid int,
-  comment VARCHAR(250),
+  comment VARCHAR(max),
+  Username varchar(30)
   FOREIGN KEY (movie_series_id) REFERENCES MoviesAndSeries(id),
   FOREIGN KEY (userid) REFERENCES Users(id)
 );
-
+drop table Comments
 CREATE PROCEDURE GetCommentsByMovieId
 
     @movieId VARCHAR(50)
@@ -173,6 +175,9 @@ VALUES (6, 'Dominic', 'Cooper', 'https://www.themoviedb.org/t/p/w300_and_h450_be
 INSERT INTO MovieActor(movie_id, actor_id) VALUES
 
 ('MVS003', '1')
+
+DELETE FROM MovieActor
+WHERE movie_id = 'MVS003' AND actor_id = '1';
 INSERT INTO MovieActor(movie_id, actor_id) VALUES
 
 ('MVS002', '2')

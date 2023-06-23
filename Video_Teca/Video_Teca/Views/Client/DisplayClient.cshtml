@@ -14,23 +14,39 @@
     <script src="~/js/popup.js"></script>
     <script src="~/js/LoadData.js"></script>
     <script src="~/js/search.js"></script>
+   
     <link rel="stylesheet" type="text/css" href="~/css/Client.css">
 </head>
 <body>
-  
-    <input type="text" id="searchInput" />
-    <div id="searchResults"></div>
-
-
-    <div id="genreFilter">
-        <label><input type="checkbox" name="genre" value="Action" />Action</label>
-        <label><input type="checkbox" name="genre" value="Drama" />Drama</label>
-        <!-- Agrega más checkboxes para los otros géneros -->
+    <div class="SearchBox">
+        <div class="box">
+             <div class="container-2">
+                 <span class="icon"><i class="fa fa-search"></i></span>
+                 <input type="search" id="searchInput" placeholder="Search..." />
+            </div>
+          </div>
+    
+        <div class="FilterDiv">
+            <a class="fas fa-filter" id="filterButton"></a>
+            <div id="genreFilter" style="display:none">
+                <form id="genreFilterForm">
+                    <label><input type="checkbox" name="genre" value="Drama">Drama</label>
+                    <label><input type="checkbox" name="genre" value="Action">Action</label>
+                    <label><input type="checkbox" name="genre" value="Comedy">Comedy</label>
+                    <label><input type="checkbox" name="genre" value="Documentary"> Documentary</label>
+                    <label><input type="checkbox" name="genre" value="Adventure">Adventure</label>
+                    <label><input type="checkbox" name="genre" value="Science Fiction">Science Fiction</label>
+                    <label><input type="checkbox" name="genre" value="Thriller">Thriller</label>
+                    <label><input type="checkbox" name="genre" value="Romance">Romance</label>
+                    <label><input type="checkbox" name="genre" value="Animation">Animation</label>
+                    <label><input type="checkbox" name="genre" value=" Fantasy"> Fantasy</label>
+                </form>
+            </div>
+       </div>
+       <div id="ContainerSearch">
+        <div id="searchResults"></div>
+        </div>
     </div>
-
-    <button id="filterButton">Filtrar</button>
-
-    <div id="filteredResults"></div>
     <h2>New Release</h2>
     <div class="galery">
       
@@ -58,6 +74,16 @@
         {
             <div class="Image_Carrusel">
                 <img src="@pelicula.movie_cover" href="#" class="btn-popup" data-movie-id="@pelicula.id"  />
+            </div>
+        }
+    </div>
+    <h4>@ViewBag.GenreName2</h4>
+    <div class="galery">
+
+        @foreach (var pelicula in ViewBag.PelisGenero2)
+        {
+            <div class="Image_Carrusel">
+                <img src="@pelicula.movie_cover" href="#" class="btn-popup" data-movie-id="@pelicula.id" />
             </div>
         }
     </div>
