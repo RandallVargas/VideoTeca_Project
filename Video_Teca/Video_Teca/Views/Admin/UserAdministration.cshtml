@@ -35,7 +35,7 @@
 
                         <div class="card-footer text-center d-flex justify-content-evenly">
                             <a class="btn btn-detalles" asp-action="Details" asp-route-id="@item.Id">Detalles</a>
-                    <button id="btn-eliminar" class="btn btn-eliminar" data-user-username="@item.Username">Eliminar</button>
+                    <button onclick="deleteUser" id="btn-eliminar" class="btn btn-eliminar" data-user-username="@item.Username">Eliminar</button>
                         </div>
 
             </div>
@@ -116,7 +116,7 @@
                     };
 
 
-                    $('#btn-eliminar').click(deleteUser);
+                    $('.btn-eliminar').click(deleteUser);
                     
                 });
             </script>

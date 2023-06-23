@@ -105,13 +105,9 @@ namespace Video_Teca.Controllers
         }
         public async Task<IActionResult> DeleteMS(string id)
         {
-            var ms = db.MoviesAndSeries.FindAsync(id);
-           // await db.MoviesAndSeries.Remove(ms);
-            //var parameter = new List<SqlParameter>();
-            //parameter.Add(new SqlParameter("@Username", id));
-
-            Console.WriteLine("Soy DeleteMS");
-            //db.Database.ExecuteSqlRaw(@"exec delete_user @Username", parameter.ToArray());
+            var ms = db.MoviesAndSeries.Find(id);
+            db.MoviesAndSeries.Remove(ms);
+            
             return Ok();
         }
         public ActionResult AddCaps(string id)

@@ -27,7 +27,7 @@
                  
                  <div class="card-footer text-center d-flex justify-content-evenly">
                     <a class="btn btn-detalles" asp-action="Details" asp-route-id="@item.id">Detalles</a>
-                    <button id="btn-eliminar" class="btn btn-eliminar" data-movie-series-id=@item.id>Eliminar</button>
+                            <button id="btn-eliminar" class="btn btn-eliminar" data-movieseries-id="@item.id">Eliminar</button>
                     @*<a class="btn btn-detalles" asp-action="DeleteMS" asp-route-id="@item.id">DeleteS</a>*@
                 </div>
                 @if (item.media_type == "series")
@@ -35,43 +35,57 @@
                     <a class="btn btn-detalles" asp-action="AddCaps" asp-route-id="@item.id">UpdateCaps</a>
                 }
             </div>
+
+
         </div>
     }
+
+    <div class="modal fade" id="modal-delete" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content content-delete-user">
+
+                <div class="modal-body">
+                    <h5>¿Estas seguro que deseas eliminar al usuario seleccionado?</h5>
+                    <br />
+                    <br />
+                    <div class="d-flex justify-content-evenly">
+                        <button class="btn btn-detalles" id="cancelar-eliminar" data-bs-dismiss="modal" aria-label="Close">No</button>
+                        <a class="btn btn-validado-eliminar" id="btn-confirmed-delete" data-bs-dismiss="modal" aria-label="Close">Si</a>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade alert-danger" id="modal-movie-deleted" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content ">
+
+                <div class="modal-body">
+
+
+                    <p id="text-user-deleted">A ocurrido un error al intentar eliminar la pelicula o serie</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <script src="~/js/DeleteMovie.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
           
 
-            window.onload = function () {
-                if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
-                    localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
-
-                    var UserId = '@ViewBag.UserId';
-                    localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
-
-                    var username = '@ViewBag.Username';
-                    localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
-
-                    $.ajax({
-                        url: '/Client/getBytesImage',
-                        type: 'GET',
-                        data: { id: UserId },
-                        success: function (response) {
-                            localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
-
-                            var outputElement = document.getElementById('img-perfil');
-                            outputElement.src = 'data:image/webp;base64,' + response;
-
-                        }
-                    });
-                } else {
+            window.onload = function () {               
                     LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
-                }
+                
             };
+
+                $('.btn-eliminar').click(deleteMovie);
            
         });
 
