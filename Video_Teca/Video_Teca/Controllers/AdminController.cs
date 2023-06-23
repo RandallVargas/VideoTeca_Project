@@ -6,6 +6,9 @@ using Video_Teca.Models;
 using Video_Teca.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using System;
 
 namespace Video_Teca.Controllers
 {
@@ -37,6 +40,7 @@ namespace Video_Teca.Controllers
                 ViewBag.ImageBytes = imgByte.ToList();
             }
 
+
             string procedimiento = "get_users_administration";
 
             //obtiene todos los usuarios de la bases de datos          
@@ -44,32 +48,73 @@ namespace Video_Teca.Controllers
                 .FromSqlRaw(procedimiento)
                 .ToList();
 
+            var resultado = new List<UserModel>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7091/api/UserAdministrationService");
+                //HTTP GET
+                var responseTask = client.GetAsync("");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    
+                    var readTask = result.Content.ReadFromJsonAsync<List<UserModel>>();
+                    readTask.Wait();
+
+                    resultado = readTask.Result;
+
+                }
+            
+             
+            }
+
+
+
             if (User.IsInRole("superAdmin"))
             { //Al ser el superAdmin le muestra todos los usuarios menos el
-                resultados.Remove(resultados.Where(x => x.Role == "superAdmin").First());
+                resultado.Remove(resultado.Where(x => x.Role == "superAdmin").First());
             }
+
             else
             { //Los admin solo pueden ver los usuarios 
                 resultados.RemoveAll(x => x.Role == "superAdmin" || x.Role == "admin");
             }
 
             return View(resultados.OrderBy(x => x.Name));
+
+            else { //Los admin solo pueden ver los usuarios 
+                resultado.RemoveAll(x => x.Role=="superAdmin" || x.Role == "admin");
+            }
+                        
+            return View(resultado.OrderBy(x => x.Name));
+
         }
 
         // GET: PersonController/Details/5
         public ActionResult Details(int id)
         {
-            var parameter = new List<SqlParameter>();
-            parameter.Add(new SqlParameter("@Id", id));
+            var user = new UserModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7091/api/UserAdministrationService");
+                var responseTask = client.GetAsync("UserAdministrationService/" + id);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
 
-            string procedimiento = @"exec get_user_details_administration @Id";
+                    var readTask = result.Content.ReadFromJsonAsync<UserModel>();
+                    readTask.Wait();
 
-            //obtiene todos los usuarios de la bases de datos          
-            var resultado = db.Set<UserModel>()
-                .FromSqlRaw(procedimiento, parameter.ToArray())
-                .ToList().First();
-            resultado.imagen = db.UserImgs.First(x => x.UserID == resultado.Id).imagen;
-            return View(resultado);
+                    user = readTask.Result;
+
+                }
+            }
+            return View(user);
         }
 
         public IActionResult Registration()
@@ -123,6 +168,86 @@ namespace Video_Teca.Controllers
             }
 
             return RedirectToAction(nameof(Registration));
+        }
+
+
+
+        public IActionResult GeneratePDFReport()
+        {
+
+            string procedimiento = "get_users_administration";
+
+            //obtiene todos los usuarios de la bases de datos          
+            List<UserModel> usersList = db.Set<UserModel>()
+                .FromSqlRaw(procedimiento)
+                .ToList();
+
+            if (User.IsInRole("superAdmin"))
+            { //Al ser el superAdmin le muestra todos los usuarios menos el
+                usersList.Remove(usersList.Where(x => x.Role == "superAdmin").First());
+            }
+            else
+            { //Los admin solo pueden ver los usuarios 
+                usersList.RemoveAll(x => x.Role == "superAdmin" || x.Role == "admin");
+            }
+
+            using (var document = new PdfDocument())
+            {
+                var page = document.AddPage();
+
+                var graphics = XGraphics.FromPdfPage(page);
+
+                var fontTitle = new XFont("Arial", 18, XFontStyle.Bold);
+                var fontHeader = new XFont("Arial", 13, XFontStyle.Bold);
+                var fontBody = new XFont("Arial", 11, XFontStyle.Regular);
+
+                var yPosition = 40;
+                var padding = 10;
+
+                XColor customColor = XColor.FromArgb(204,11, 114, 130);
+                XSolidBrush background = new XSolidBrush(customColor);
+                // Draw Background
+                var backgroundRect = new XRect(0, 0, page.Width, page.Height);
+                graphics.DrawRectangle(background, backgroundRect);
+
+                
+                // Draw Title
+                graphics.DrawString("Reporte de usuarios en el sistema", fontTitle, XBrushes.LightGray, new XRect(10, yPosition, page.Width, page.Height), XStringFormats.TopLeft);
+                yPosition += 40;
+
+                XColor customColor2 = XColor.FromArgb(1, 49, 73);
+                XSolidBrush background2 = new XSolidBrush(customColor2);
+                // Draw Table Headers
+                graphics.DrawRectangle(background2, new XRect(10, yPosition, page.Width - 20, 20));
+                graphics.DrawString("Nombre", fontHeader, XBrushes.White, new XRect(15, yPosition, 150, 20), XStringFormats.TopLeft);
+                graphics.DrawString("Usuario", fontHeader, XBrushes.White, new XRect(160, yPosition, 150, 20), XStringFormats.TopLeft);
+                graphics.DrawString("Email", fontHeader, XBrushes.White, new XRect(330, yPosition, 200, 20), XStringFormats.TopLeft);
+                graphics.DrawString("Rol", fontHeader, XBrushes.White, new XRect(540, yPosition, 200, 20), XStringFormats.TopLeft);
+                yPosition += 20;
+
+                XColor customColor3 = XColor.FromArgb(0, 101, 125);
+                XSolidBrush background3 = new XSolidBrush(customColor3);
+                foreach (var user in usersList)
+                {
+                    graphics.DrawRectangle(background3, new XRect(10, yPosition, page.Width - 20, 20));
+                    graphics.DrawString(user.Name, fontBody, XBrushes.White, new XRect(15, yPosition, 150, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(user.Username, fontBody, XBrushes.White, new XRect(160, yPosition, 150, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(user.Email, fontBody, XBrushes.White, new XRect(330, yPosition, 200, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(user.Role, fontBody, XBrushes.White, new XRect(540, yPosition, 200, 20), XStringFormats.TopLeft);
+
+
+                    yPosition += 20;
+                }
+
+                var memoryStream = new MemoryStream();
+                document.Save(memoryStream);
+                memoryStream.Position = 0;
+
+                return new FileStreamResult(memoryStream, "application/pdf")
+                {
+                    FileDownloadName = "ReporteUsuarios.pdf"
+                };
+            }
         }
 
     }
