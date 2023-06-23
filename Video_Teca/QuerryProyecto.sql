@@ -60,6 +60,7 @@ episode_id varchar(50),
 title varchar(50),
 duration time,
 episode_number int,
+season_number INT,
 movie_series_id varchar(50)
 FOREIGN KEY (movie_series_id) REFERENCES MoviesAndSeries(id),
 );

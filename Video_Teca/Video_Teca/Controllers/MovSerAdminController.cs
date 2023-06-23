@@ -14,7 +14,7 @@ namespace Video_Teca.Controllers
     [Authorize(Roles = "admin, superAdmin")]
     public class MovSerAdminController : Controller
     {
-        private readonly VideoTecaDbContext db = new VideoTecaDbContext();
+        private  VideoTecaDbContext db = new VideoTecaDbContext();
         
         // GET: MovSerAdmin
         public ActionResult  AdminMovSer()
@@ -48,6 +48,8 @@ namespace Video_Teca.Controllers
         // GET: MovSerAdmin/Create
         public ActionResult Create()
         {
+            ViewBag.Generos = db.Genres.ToList(); 
+
             return View();
         }
 
@@ -121,9 +123,10 @@ namespace Video_Teca.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddCaps(string id, Episode eps)
         {
-            var episodio = db.Episodes.Find(eps.episode_id);
-            if (episodio == null)
-            {
+           //var ep = eps.episode_id;
+            //var episodio = db.Episodes.Find(ep);
+           // if (episodio == null)
+           // {
                 var parameter = new List<SqlParameter>();
                 parameter.Add(new SqlParameter("@episode_id", eps.episode_id));
                 parameter.Add(new SqlParameter("@title", eps.title));
@@ -139,7 +142,7 @@ namespace Video_Teca.Controllers
 
                 db.Database.ExecuteSqlRaw("exec InsertEpisode @episode_id, @title, @duration, @episode_number, @season_number, @movie_series_id", parameter.ToArray()); //db.Episodes.Add(eps);
 
-            }
+           // }
             //db.SaveChanges();
 
 
