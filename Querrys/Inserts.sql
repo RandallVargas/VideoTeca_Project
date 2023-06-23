@@ -188,3 +188,43 @@ VALUES ( 'Jamie', 'Foxx', 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/z
 	   INSERT INTO Actors ( actor_first_name, actor_last_name, actor_img)
 VALUES ('Ed','Fredricksen','https://www.themoviedb.org/t/p/w300_and_h450_bestv2/i9Akq9tqNwgcAc63QaSaiTYZtUB.jpg'),
 		('Cristopher','Plummer','https://www.themoviedb.org/t/p/w300_and_h450_bestv2/iZh3s9Vy9vYD4DYnAda6C1kdeco.jpg')
+
+
+		INSERT INTO MoviesAndSeries(id, title, synopsis, release_year, duration, clasification, director, num_seasons, num_episodes, episode_duration, movie_cover, year_of_release, date_addded, media_type)
+VALUES ('ROM001', 'Eternal Sunshine of the Spotless Mind', 'Joel Barish, desconsolado por su reciente ruptura, decide someterse a un procedimiento médico experimental para borrar todos los recuerdos de su exnovia, Clementine. A medida que los recuerdos comienzan a desvanecerse, Joel se da cuenta de que todavía está enamorado de Clementine y lucha por detener el proceso.', '2004-01-01', '01:48:00', 'R', 'Michel Gondry', NULL, NULL, NULL, 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/5MwkWH9tYHv3mV9OdYTMR5qreIz.jpg', '2023-01-01', '2023-06-23', 'movie');
+
+INSERT INTO MoviesAndSeries (id, title, synopsis, release_year, duration, clasification, director, num_seasons, num_episodes, episode_duration, movie_cover, year_of_release, date_addded, media_type)
+VALUES ('ROM002', '500 Days of Summer', 'La película sigue la historia de Tom Hansen, un romántico empedernido, y Summer Finn, una mujer que no cree en el amor. La historia se desarrolla en 500 días, explorando los altibajos de su relación y las expectativas románticas de Tom.', '2009-01-01', '01:35:00', 'PG-13', 'Marc Webb', NULL, NULL, NULL, 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/f9mbM0YMLpYemcWx6o2WeiYQLDP.jpg', '2023-01-01', '2023-06-23', 'movie');
+
+INSERT INTO MovieGenre (movie_id, genre_id)
+VALUES ('ROM001', '7');
+INSERT INTO MovieGenre (movie_id, genre_id)
+VALUES ('ROM002', '7');--Animation
+Use Video_Teca_C13448_B98314
+
+
+INSERT INTO MoviesAndSeries (id, title, synopsis, release_year, duration, clasification, director, num_seasons, num_episodes, episode_duration, movie_cover, year_of_release, date_addded, media_type)
+VALUES ('FAN001', 'El laberinto del fauno', 'En la España de 1944, durante la posguerra, una niña llamada Ofelia se adentra en un laberinto mágico donde se enfrenta a criaturas fantásticas y oscuros desafíos. Con el fin de escapar de la realidad cruel de su vida, Ofelia debe completar tres peligrosas tareas.', '2006-10-11', '01:58:00', 'R', 'Guillermo del Toro', NULL, NULL, NULL, 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/s8C4whhKtDaJvMDcyiMvx3BIF5F.jpg', '2023-01-01', '2023-06-23', 'movie');
+
+INSERT INTO MoviesAndSeries (id, title, synopsis, release_year, duration, clasification, director, num_seasons, num_episodes, episode_duration, movie_cover, year_of_release, date_addded, media_type)
+VALUES ('FAN002', 'El Señor de los Anillos: La Comunidad del Anillo', 'Frodo Baggins, un hobbit de la Tierra Media, emprende un peligroso viaje para destruir el Anillo Único y evitar que caiga en manos del Señor Oscuro Sauron. Con la ayuda de una comunidad de seres mágicos y guerreros, Frodo se enfrenta a numerosos desafíos en su misión épica.', '2001-12-19', '02:58:00', 'PG-13', 'Peter Jackson', NULL, NULL, NULL, 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg', '2023-01-01', '2023-06-23', 'movie');
+
+
+
+INSERT INTO MovieGenre (movie_id, genre_id)
+VALUES ('FAN001', '9');
+INSERT INTO MovieGenre (movie_id, genre_id)
+VALUES ('FAN002', '9');--Animation
+
+INSERT INTO MoviesAndSeries (id, title, synopsis, release_year, duration, clasification, director, num_seasons, num_episodes, episode_duration, movie_cover, year_of_release, date_addded, media_type)
+VALUES ('DOC001', 'Blackfish', 'Blackfish is a documentary that examines the lives of captive orcas and exposes the ethical and safety issues associated with their training and exhibition in water parks. Through interviews and testimonies from trainers and experts, the documentary reveals the shocking reality of the marine theme park industry.', '2013-07-19', '01:23:00', 'PG-13', 'Gabriela Cowperthwaite', NULL, NULL, NULL, 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/kCk4mDFE96Mn1AYfEcbxkIiw7ND.jpg', '2023-01-01', '2023-06-23', 'movie');
+
+INSERT INTO MoviesAndSeries (id, title, synopsis, release_year, duration, clasification, director, num_seasons, num_episodes, episode_duration, movie_cover, year_of_release, date_addded, media_type)
+VALUES ('DOC002', 'The Cove', 'The Cove is a documentary that follows a group of activists who embark on an undercover mission to expose dolphin hunting in Taiji, Japan. As they unveil the dark secrets of the industry, they face dangers and challenges to document the brutality of this practice and raise awareness about its impact on marine life.', '2009-07-31', '01:32:00', 'PG-13', 'Louie Psihoyos', NULL, NULL, NULL, 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/enQGYgQg8mEhkZnY2g9iEwH9qvZ.jpg', '2023-01-01', '2023-06-23', 'movie');
+
+INSERT INTO MovieGenre (movie_id, genre_id)
+VALUES ('DOC001', '10');
+INSERT INTO MovieGenre (movie_id, genre_id)
+VALUES ('DOC002', '10');
+
+
