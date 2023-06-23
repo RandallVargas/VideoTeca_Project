@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Dynamic;
 using Video_Teca.Data;
 using Video_Teca.Models;
@@ -69,7 +70,7 @@ namespace Video_Teca.Controllers
         public ActionResult Details(string id)
         {
             Console.WriteLine(id);
-
+            var movieSeriesIdParameter = new SqlParameter("movieSeriesId", id);
             var movieInfo = db.MoviesAndSeries.Find(id);
 
             //var genres = db.Genres.FromSqlRaw("EXEC GetGenresByMovieId @MovieId", new SqlParameter("@MovieId", id)).ToList();
@@ -87,7 +88,19 @@ namespace Video_Teca.Controllers
 
              ViewBag.actor = actor;
 
-           
+            if (movieInfo.media_type == "series")
+            {
+              
+                var episodes = db.Episodes.FromSqlRaw("EXEC GetEpisodesBySeries @seriesId", new SqlParameter("@seriesId", id)).ToList();
+                ViewBag.episodes = episodes;
+            }
+            //var averageRating = GetAverageRating(id);
+
+
+           // ViewBag.averageRating = averageRating;
+
+          
+
             return PartialView("Details",movieInfo);
           
         }
@@ -187,6 +200,37 @@ namespace Video_Teca.Controllers
             Console.WriteLine(idUser + "Controllador" + username + ""+comment);
            //db.Comments.Add(new Comment { })
         }
+        public void SaveRating(string movieSeriesId, string userId, int rating)
+        {
+            var movieSeriesIdParameter = new SqlParameter("@movieSeriesId", movieSeriesId);
+            var userIdParameter = new SqlParameter("@userId", userId);
+            var ratingParameter = new SqlParameter("@rating", rating);
+           
+
+            db.Database.ExecuteSqlRaw("EXEC SaveOrUpdateRating @movieSeriesId, @userId, @rating",
+                                            movieSeriesIdParameter, userIdParameter, ratingParameter);
+      
+
+
+        }
+        public decimal GetAverageRating(string movieSeriesId)
+        {
+            var movieSeriesIdParameter = new SqlParameter("@movieSeriesId", movieSeriesId);
+            var averageRatingParameter = new SqlParameter("@averageRating", SqlDbType.Decimal);
+            averageRatingParameter.Precision = 10;
+            averageRatingParameter.Scale = 2;
+            averageRatingParameter.Direction = ParameterDirection.Output;
+
+            db.Database.ExecuteSqlRaw("EXEC GetAverageRating @movieSeriesId, @averageRating OUTPUT",
+                                        movieSeriesIdParameter, averageRatingParameter);
+          //  if( averageRatingParameter.Value != )
+           // {
+                var averageRating = (decimal)averageRatingParameter.Value;
+                return averageRating;
+            //}
+            //return 0;
+        }
+
         public IActionResult GetComments(string id)
         {
             var comments = db.Comments.FromSqlRaw("EXEC GetCommentsByMovieId @movieId", new SqlParameter("@movieId", id)).ToList();

@@ -5,7 +5,7 @@ namespace Video_Teca.Models;
 
 public partial class Rating
 {
-    public int? rating_id { get; set; }
+    public int rating_id { get; set; }
 
     public string? movie_series_id { get; set; }
 

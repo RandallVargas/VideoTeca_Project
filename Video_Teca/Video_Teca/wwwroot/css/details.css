@@ -92,7 +92,49 @@ body {
     color: aliceblue;
     padding-bottom:20px;
 }
+/*inicio estrellas*/
+#form {
+    width: 20px;
+    margin: 0 auto;
+    height: 50px;
+   
+}
 
+    #form p {
+        text-align: center;
+
+    }
+
+    #form .label {
+        font-size: 50px;
+    }
+.Start{
+    font-size:50px;
+}
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    color: grey;
+}
+
+.clasificacion {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    position:relative;
+    right:56%;
+}
+
+label:hover,
+label:hover ~ label {
+    color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+    color: orange;
+}
+/*fin estrellas*/
 @media (max-width: 912px) {
     .btn-popup {
        display:flex;
@@ -266,6 +308,28 @@ body {
     @media only screen and (max-width: 390px) {
         #popup-container {
         }
+        .Start {
+            font-size: 40px;
+        }
+        .clasificacion {
+            direction: rtl;
+            position: relative;
+            left: -50px;
+        }
+        .Additional {
+            position: relative;
+            display: flex;
+            bottom: 250px;
+            left: 0%;
+        }
+        #popup-container {
+            display: flex;
+            position: relative;
+            top: -100px;
+            left: 8%;
+            width: 100%;
+            height: auto;
+        }
     }
 
     @media only screen and (max-width: 374px) {
@@ -344,11 +408,23 @@ body {
             font-family: 'Times New Roman', Times, serif;
             font-style: italic;
         }
-
+        .Start {
+            font-size: 20px;
+        }
+        .form.h3{
+            position:relative;
+            left 10px
+        }
+        .clasificacion {
+            direction:rtl;
+            position :relative;
+            left:-150px;
+        }
         .Additional {
             position: relative;
             display: flex;
-            bottom: 90px;
+            bottom: 130px;
             left: 0%;
+           
         }
     }

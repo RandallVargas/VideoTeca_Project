@@ -1,0 +1,59 @@
+﻿@model Video_Teca.Models.Episode
+
+@{
+    ViewData["Title"] = "AddCaps";
+}
+
+<h1>AddCaps</h1>
+
+<h4>Episode</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddCaps">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="episode_id" class="control-label"></label>
+                <input asp-for="episode_id" class="form-control" />
+                <span asp-validation-for="episode_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="title" class="control-label"></label>
+                <input asp-for="title" class="form-control" />
+                <span asp-validation-for="title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="duration" class="control-label"></label>
+                <input asp-for="duration" class="form-control" />
+                <span asp-validation-for="duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="episode_number" class="control-label"></label>
+                <input asp-for="episode_number" class="form-control" />
+                <span asp-validation-for="episode_number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="movie_series_id" class="control-label"></label>
+                <input asp-for="movie_series_id" class="form-control" value="@ViewBag.MovieSeriesId" readonly/>
+                <input type="hidden" asp-for="movie_series_id" />
+                <span asp-validation-for="movie_series_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="season_number" class="control-label"></label>
+                <input asp-for="season_number" class="form-control" />
+                <span asp-validation-for="season_number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ADD" class="btn btn-primary" asp-route-id="@ViewBag.MovieSeriesId" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AdminMovSer">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

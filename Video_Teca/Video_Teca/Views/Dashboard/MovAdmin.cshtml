@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Video_Teca.Models.MoviesAndSeries>
+
+@{
+    ViewData["Title"] = "MovAdmin";
+}
+
+<h1>MovAdmin</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.synopsis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.release_year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clasification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.director)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.num_seasons)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.num_episodes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.episode_duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.movie_cover)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.year_of_release)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date_addded)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.media_type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.synopsis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.release_year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clasification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.director)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.num_seasons)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.num_episodes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.episode_duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.movie_cover)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.year_of_release)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date_addded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.media_type)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -12,7 +12,7 @@ using System;
 
 namespace Video_Teca.Controllers
 {
-    
+
 
     [Authorize(Roles = "admin, superAdmin")]
     public class AdminController : Controller
@@ -24,20 +24,29 @@ namespace Video_Teca.Controllers
         {
             this._service = service;
         }
- 
-        public IActionResult UserAdministration() {
 
-            
+        public IActionResult UserAdministration()
+        {
+
+
             if (TempData.Keys.Count > 0)
             {
                 var username = TempData["username"].ToString();
                 var user = db.Users.First(x => x.Username == username);
                 byte[] imgByte = db.UserImgs.First(y => y.UserID == user.Id).imagen;
-                
+
                 ViewBag.UserId = user.Id;
                 ViewBag.Username = user.Username;
                 ViewBag.ImageBytes = imgByte.ToList();
             }
+
+
+            string procedimiento = "get_users_administration";
+
+            //obtiene todos los usuarios de la bases de datos          
+            List<UserModel> resultados = db.Set<UserModel>()
+                .FromSqlRaw(procedimiento)
+                .ToList();
 
             var resultado = new List<UserModel>();
 
@@ -64,15 +73,25 @@ namespace Video_Teca.Controllers
             }
 
 
+
             if (User.IsInRole("superAdmin"))
             { //Al ser el superAdmin le muestra todos los usuarios menos el
                 resultado.Remove(resultado.Where(x => x.Role == "superAdmin").First());
             }
+
+            else
+            { //Los admin solo pueden ver los usuarios 
+                resultados.RemoveAll(x => x.Role == "superAdmin" || x.Role == "admin");
+            }
+
+            return View(resultados.OrderBy(x => x.Name));
+
             else { //Los admin solo pueden ver los usuarios 
                 resultado.RemoveAll(x => x.Role=="superAdmin" || x.Role == "admin");
             }
                         
             return View(resultado.OrderBy(x => x.Name));
+
         }
 
         // GET: PersonController/Details/5
@@ -114,7 +133,7 @@ namespace Video_Teca.Controllers
             {
                 model.Role = "client";
             }
-                    
+
             var result = await _service.RegistrationAsync(model);
             TempData["msg"] = result.Message;
 
@@ -150,6 +169,8 @@ namespace Video_Teca.Controllers
 
             return RedirectToAction(nameof(Registration));
         }
+
+
 
         public IActionResult GeneratePDFReport()
         {
@@ -228,5 +249,6 @@ namespace Video_Teca.Controllers
                 };
             }
         }
+
     }
 }

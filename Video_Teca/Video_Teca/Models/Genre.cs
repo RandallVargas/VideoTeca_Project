@@ -7,5 +7,5 @@ public partial class Genre
 {
     public string genre_id { get; set; } = null!;
 
-    public string genre_name { get; set; }
+    public string? genre_name { get; set; }
 }

@@ -52,3 +52,50 @@ $(document).ready(function () {
         }
     });
 });
+$(document).ready(function () {
+
+    $('input[name="estrellas"]').click(function () {
+        $('input[name="estrellas"]').prop('checked', false);
+        $(this).prop('checked', true);
+    }).change(function () {
+        var rating = $(this).val(); // Obtiene el valor seleccionado
+
+        // Obtener el ID de la película desde el formulario
+        var movieSeriesId = $(this).closest('form').data('movie-id');
+
+        // Obtener el ID del usuario desde el localStorage
+        var userId = localStorage.getItem("idUser");
+
+        // Realiza la solicitud AJAX al controlador para guardar el rating
+        $.ajax({
+            url: '/Client/SaveRating',
+            type: 'POST',
+            data: {
+                movieSeriesId: movieSeriesId,
+                userId: userId,
+                rating: rating
+            },
+            success: function () {
+                // Realiza la solicitud AJAX al controlador para obtener el promedio
+                $.ajax({
+                    url: '/Client/GetAverageRating',
+                    type: 'POST',
+                    data: {
+                        movieSeriesId: movieSeriesId
+                    },
+                    success: function (data) {
+                        
+                        // Actualiza el elemento HTML que muestra el promedio
+                        $('#promedio').text('Promedio: ' + data);
+                    },
+                    error: function () {
+                        alert('Error al obtener el promedio de calificaciones.');
+                    }
+                });
+            },
+            error: function () {
+                alert('Error al guardar la calificación.');
+            }
+        });
+    });
+});

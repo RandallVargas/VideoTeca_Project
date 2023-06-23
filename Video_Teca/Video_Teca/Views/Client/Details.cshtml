@@ -26,19 +26,85 @@
         <h2>Synopsis:</h2>
         <p>@Model.synopsis</p>
         <h2>Genres:</h2>
-        @foreach (var genre in ViewBag.Genres)
+           
+                @foreach (var genre in ViewBag.Genres)
         {
             <h7>@genre,</h7>
         }
+            <div class="mb-3">
+            <form class="Rating" data-movie-id="@Model.id">
+                <h3>Rating</h3>
+                <p class="clasificacion">
+                    <input id="radio1" type="radio" name="estrellas" value="5">
+                    
+                    <label class="Start" for="radio1">★</label>
+                   
+                    <input id="radio2" type="radio" name="estrellas" value="4">
+                    
+                    <label class="Start" for="radio2">★</label>
+                   
+                    <input  id="radio3" type="radio" name="estrellas" value="3">
+                 
+                    <label class="Start" for="radio3">★</label>
+                   
+                    <input id="radio4" type="radio" name="estrellas" value="2">
+                   
+                    <label class="Start" for="radio4">★</label>
+                   
+                    <input class="Start" id="radio5" type="radio" name="estrellas" value="1">
+                    
+                    <label class="Start" for="radio5">★</label>
+                </p>
+                    <div id="promedio"></div>
+            </form>
+            </div>
+            @if(Model.media_type == "series")
+            {
+              
+                var uniqueSeasons = new List<object>();
+                foreach (var episode in ViewBag.episodes)
+                {
+                    var seasonNumber = episode.GetType().GetProperty("season_number").GetValue(episode, null);
+                    if (seasonNumber != null && !uniqueSeasons.Contains(seasonNumber))
+                    {
+                        uniqueSeasons.Add(seasonNumber);
+                    }
+                }
+                
+             <div class="SeasonDiv">
+                @foreach (var seasonNumber in uniqueSeasons)
+                {
+
+                    <select class="form-select">
+                        <option selected disabled>Season @seasonNumber</option> <!-- Encabezado como primera opción -->
+                        @foreach (var epi in ViewBag.episodes)
+                        {
+                            var epiSeasonNumber = epi.GetType().GetProperty("season_number").GetValue(epi, null);
+
+                            if (epiSeasonNumber != null && epiSeasonNumber.Equals(seasonNumber))
+                            {
+                                <option value="@epi.GetType().GetProperty("episode_id").GetValue(epi, null)">@epi.GetType().GetProperty("title").GetValue(epi, null)</option>
+                            }
+                        }
+                    </select>
+                }
+            </div>   
+            }
+           
         </div>
+
+       
         <div class="Additional">
             <button href="#" class="btn-popup" data-movie-id="@Model.id" data-popup-type="actors">Actors</button>
             <button href="#" class="btn-popup" data-movie-id="@Model.id" data-popup-type="reviews">Reviews</button>
         </div>
     </div>
    
+   
     <div id="popup-container">
         <div id="popup-content"></div>
     </div>
+    
 </body>
 </html>
+

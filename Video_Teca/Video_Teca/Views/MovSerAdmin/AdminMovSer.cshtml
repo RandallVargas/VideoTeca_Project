@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Video_Teca.Models.MoviesAndSeries>
+
+@{
+    ViewData["Title"] = "AdminMovSer";
+}
+
+<h1>AdminMovSer</h1>
+
+<p>
+    <a  class="btn btn-detalles" asp-action="Create">Create New</a>
+</p>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 container-cards">
+    @foreach (var item in Model)
+    {
+        <div class="col div-card">
+      
+                <div class="card" style="width: 12rem;">
+               
+                    <img src=@Html.DisplayFor(modelItem => item.movie_cover) class="card-img-top" alt="...">
+                    
+                    <div class="card-body">
+
+                    <p class="card-text"> <strong>Director:</strong>@Html.DisplayFor(modelItem => item.director).</p>
+                    
+                    </div>
+                 
+                 <div class="card-footer text-center d-flex justify-content-evenly">
+                    <a class="btn btn-detalles" asp-action="Details" asp-route-id="@item.id">Detalles</a>
+                    <button id="btn-eliminar" class="btn btn-eliminar" data-movie-series-id=@item.id>Eliminar</button>
+                    @*<a class="btn btn-detalles" asp-action="DeleteMS" asp-route-id="@item.id">DeleteS</a>*@
+                </div>
+                @if (item.media_type == "series")
+                {
+                    <a class="btn btn-detalles" asp-action="AddCaps" asp-route-id="@item.id">UpdateCaps</a>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="~/js/DeleteMovie.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          
+
+            window.onload = function () {
+                if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
+                    localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
+
+                    var UserId = '@ViewBag.UserId';
+                    localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
+
+                    var username = '@ViewBag.Username';
+                    localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
+
+                    $.ajax({
+                        url: '/Client/getBytesImage',
+                        type: 'GET',
+                        data: { id: UserId },
+                        success: function (response) {
+                            localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
+
+                            var outputElement = document.getElementById('img-perfil');
+                            outputElement.src = 'data:image/webp;base64,' + response;
+
+                        }
+                    });
+                } else {
+                    LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+                }
+            };
+           
+        });
+
+
+    </script>
+
+    }

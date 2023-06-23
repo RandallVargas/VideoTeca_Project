@@ -1,0 +1,153 @@
+﻿@model Video_Teca.Models.MoviesAndSeries
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MoviesAndSeries</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+</head>
+<body>
+    <h4>MoviesAndSeries</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="media_type" class="control-label">Movie o Series</label>
+                    <select id="media_type" asp-for="media_type" class="form-control">
+                        <option value="movie">movie</option>
+                        <option value="series">series</option>
+                    </select>
+                    <span asp-validation-for="media_type" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="id" class="control-label">Movie Identificator</label>
+                    <input asp-for="id" class="form-control" />
+                    <span asp-validation-for="id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="title" class="control-label">Title</label>
+                    <input asp-for="title" class="form-control" />
+                    <span asp-validation-for="title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="synopsis" class="control-label">
+                        Synopsis
+                    </label>
+                    <input asp-for="synopsis" class="form-control" />
+                    <span asp-validation-for="synopsis" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="release_year" class="control-label">Release Year</label>
+                    <input asp-for="release_year" class="form-control" type="date" />
+                    <span asp-validation-for="release_year" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="duration" class="control-label">Duration</label>
+                    <input asp-for="duration" class="form-control" placeholder="HH:MM:SS" />
+                    <span asp-validation-for="duration" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="clasification" class="control-label">Clasification</label>
+                    <input asp-for="clasification" class="form-control" />
+                    <span asp-validation-for="clasification" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="director" class="control-label">Director</label>
+                    <input asp-for="director" class="form-control" />
+                    <span asp-validation-for="director" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="num_seasons" class="control-label">Num Seasons</label>
+                    <input id="num_seasons" asp-for="num_seasons" class="form-control" />
+                    <span asp-validation-for="num_seasons" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="num_episodes" class="control-label">Num Episodes</label>
+                    <input id="num_episodes" asp-for="num_episodes" class="form-control" />
+                    <span asp-validation-for="num_episodes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="episode_duration" class="control-label">Average duration of episodes</label>
+                    <input id="episode_duration" asp-for="episode_duration" class="form-control" />
+                    <span asp-validation-for="episode_duration" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="movie_cover" class="control-label">Cover</label>
+                    <input asp-for="movie_cover" class="form-control" />
+                    <span asp-validation-for="movie_cover" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="year_of_release" class="control-label">Year of Release</label>
+                    <input asp-for="year_of_release" class="form-control" type="date" />
+                    <span asp-validation-for="year_of_release" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="date_addded" class="control-label">Date Added</label>
+                    <input asp-for="date_addded" class="form-control" type="date" />
+                    <span asp-validation-for="date_addded" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        <script src="~/js/ValidMoS.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+
+                window.onload = function () {
+                    if ('@ViewBag.UserId' != "@ViewBag.Username") { //Determina si recibio el id del usuario, es decir, si es la primera llamada a index
+                        localStorage.clear(); //Elimina todo lo que este en localstorage antes de guardar datos en el
+
+                        var UserId = '@ViewBag.UserId';
+                        localStorage.setItem('idUser', UserId); //Guarda el id del usuario en localstorage
+
+                        var username = '@ViewBag.Username';
+                        localStorage.setItem('username', username); //Guarda el id del usuario en localstorage
+
+                        $.ajax({
+                            url: '/Client/getBytesImage',
+                            type: 'GET',
+                            data: { id: UserId },
+                            success: function (response) {
+                                localStorage.setItem('bytesImg', response); //Guarda la imagen del usuario en localstorage
+
+                                var outputElement = document.getElementById('img-perfil');
+                                outputElement.src = 'data:image/webp;base64,' + response;
+
+                            }
+                        });
+                    } else {
+                        LoadUserData(); //Carga la imagen y el username al nav de la aplicacion
+                    }
+                };
+
+            });
+
+
+        </script>
+    }
+</body>
+</html>
