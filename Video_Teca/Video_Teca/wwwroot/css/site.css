@@ -120,10 +120,6 @@ header {
     font-weight: initial;
 }
 
-#img-usuario {
-    width: calc(50px + 50vmin);
-}
-
 .container-card {
     margin: 0 auto;
     width: calc(52px + 50vmin);

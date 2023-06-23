@@ -308,4 +308,6 @@ public partial class DatabaseContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public DbSet<API_UsersAdministration.Models.UserModel>? UserModel { get; set; }
 }

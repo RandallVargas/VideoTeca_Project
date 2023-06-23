@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using System;
 
 namespace Video_Teca.Controllers
 {
@@ -38,38 +39,63 @@ namespace Video_Teca.Controllers
                 ViewBag.ImageBytes = imgByte.ToList();
             }
 
-            string procedimiento = "get_users_administration";
+            var resultado = new List<UserModel>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7091/api/UserAdministrationService");
+                //HTTP GET
+                var responseTask = client.GetAsync("");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    
+                    var readTask = result.Content.ReadFromJsonAsync<List<UserModel>>();
+                    readTask.Wait();
+
+                    resultado = readTask.Result;
+
+                }
             
-            //obtiene todos los usuarios de la bases de datos          
-            List<UserModel> resultados = db.Set<UserModel>()
-                .FromSqlRaw(procedimiento)
-                .ToList();
+             
+            }
+
 
             if (User.IsInRole("superAdmin"))
             { //Al ser el superAdmin le muestra todos los usuarios menos el
-                resultados.Remove(resultados.Where(x => x.Role == "superAdmin").First());
+                resultado.Remove(resultado.Where(x => x.Role == "superAdmin").First());
             }
             else { //Los admin solo pueden ver los usuarios 
-                resultados.RemoveAll(x => x.Role=="superAdmin" || x.Role == "admin");
+                resultado.RemoveAll(x => x.Role=="superAdmin" || x.Role == "admin");
             }
                         
-            return View(resultados.OrderBy(x => x.Name));
+            return View(resultado.OrderBy(x => x.Name));
         }
 
         // GET: PersonController/Details/5
         public ActionResult Details(int id)
         {
-            var parameter = new List<SqlParameter>();
-            parameter.Add(new SqlParameter("@Id", id));
+            var user = new UserModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7091/api/UserAdministrationService");
+                var responseTask = client.GetAsync("UserAdministrationService/" + id);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
 
-            string procedimiento = @"exec get_user_details_administration @Id";
+                    var readTask = result.Content.ReadFromJsonAsync<UserModel>();
+                    readTask.Wait();
 
-            //obtiene todos los usuarios de la bases de datos          
-            var resultado = db.Set<UserModel>()
-                .FromSqlRaw(procedimiento, parameter.ToArray())
-                .ToList().First();
-            resultado.imagen = db.UserImgs.First(x => x.UserID == resultado.Id).imagen;
-            return View(resultado);
+                    user = readTask.Result;
+
+                }
+            }
+            return View(user);
         }
 
         public IActionResult Registration()
